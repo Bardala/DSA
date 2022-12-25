@@ -1,0 +1,1896 @@
+/*
+ *1. Ugly number
+ */
+
+//  var isUgly = function (n) {
+//   if (n < 0) return false;
+//   function keepDividingWhileDivisible(dividend, divisor) {
+//     while (dividend % divisor == 0) dividend /= divisor;
+//     return dividend;
+//   }
+//   for (let factor of [2, 3, 5]) {
+//     n = keepDividingWhileDivisible(n, factor);
+//   }
+//   return n == 1;
+// };
+
+function isUgly(n) {
+  if (n === 0) return false;
+  while (n % 2 === 0) n /= 2;
+  while (n % 3 === 0) n /= 3;
+  while (n % 5 === 0) n /= 5;
+  return n === 1;
+}
+console.log(isUgly(20));
+
+/**
+ * Two Sum
+ */
+function twoSum(nums, target) {
+  let map = new Map();
+  for (let i = 0; i < nums.length; i++) {
+    let complement = target - nums[i];
+    if (map.has(complement)) {
+      return [map.get(complement), i];
+    }
+    map.set(nums[i], i);
+  }
+  return [];
+}
+console.log(twoSum([2, 7, 11, 15], 9));
+
+/**
+ * 2. Palindrome Number
+ */
+// function isPalindrome(x) {
+//   return x == x.toString().split("").reverse().join("");
+// }
+
+console.log(isPalindrome(123));
+
+function isPalindrome(x) {
+  let rev = 0;
+  let num = x;
+  while (num > 0) {
+    rev = (num % 10) + rev * 10;
+    num = Math.floor(num / 10);
+  }
+  return x == rev;
+}
+
+/**
+ * 3. Roman to Integer
+ * 
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+ */
+// function romanToInt(s) {
+//   let map = new Map();
+//   map.set("I", 1);
+//   map.set("V", 5);
+//   map.set("IV", 4);
+//   map.set("X", 10);
+//   map.set("IX", 9);
+//   map.set("L", 50);
+//   map.set("XL", 40);
+//   map.set("C", 100);
+//   map.set("XC", 90);
+//   map.set("D", 500);
+//   map.set("CD", 400);
+//   map.set("M", 1000);
+//   map.set("CM", 900);
+
+//   let arr = s.split("");
+//   let res = 0;
+//   let val = "";
+//   if (arr.length === 1) return map.get(arr[0]);
+//   while (arr.length > 0) {
+//     let i = arr.length - 2;
+//     val = arr[i] + arr[i + 1];
+//     if (map.has(val)) {
+//       res += map.get(val);
+//       arr.pop();
+//       arr.pop();
+//     } else {
+//       res += map.get(arr[i + 1]);
+//       arr.pop();
+//     }
+//     if (arr.length == 1) {
+//       res += map.get(arr[0]);
+//       arr.pop();
+//     }
+//   }
+//   return res;
+// }
+
+var romanToInt = (s) => {
+  let res = 0;
+  let map = {
+    I: 1,
+    V: 5,
+    X: 10,
+    L: 50,
+    C: 100,
+    D: 500,
+    M: 1000,
+  };
+  for (let i = 0; i < s.length; i++) {
+    const num = map[s[i]];
+    const nextNum = map[s[i + 1]];
+    if (num < nextNum) {
+      res += nextNum - num;
+      i++;
+    } else res += num;
+  }
+  return res;
+};
+
+console.log(romanToInt("MCMXCIV"));
+
+/**
+ *4. Longest Common Prefix
+ */
+
+function longestCommonPrefix(strs) {
+  if (strs.length === "") return "";
+  let prefix = strs[0];
+  for (let i = 1; i < strs.length; i++) {
+    while (strs[i].indexOf(prefix) !== 0)
+      prefix = prefix.substring(0, prefix.length - 1);
+  }
+  return prefix;
+}
+
+const strs = ["flower", "flow", "flight"];
+console.log(longestCommonPrefix(strs));
+
+/**
+ * 5. Remove Duplicates from Sorted Array
+ */
+function removeDuplicates(nums) {
+  if (nums.length == 0) return [];
+  for (let i = 0; i < nums.length; )
+    nums[i] === nums[i + 1] ? nums.splice(i, 1) : i++;
+  return console.log(nums);
+}
+removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3]);
+removeDuplicates([1, 1, 2]);
+
+/**
+ * 6. Remove Element
+ */
+var removeElement = function (nums, val) {
+  for (let i = 0; i < nums.length; ) nums[i] == val ? nums.splice(i, 1) : i++;
+  return [nums.length, nums];
+};
+
+var nums = [0, 1, 2, 2, 3, 0, 4, 2],
+  val = 2;
+console.log(removeElement(nums, val));
+
+/**
+ *7. Reverse String
+ */
+// var reverseString = function (s) {
+//   let temp = "";
+//   for (let i = 0; i < s.length / 2; i++) {
+//     temp = s[i];
+//     s[i] = s[s.length - 1 - i];
+//     s[s.length - 1 - i] = temp;
+//   }
+//   return s;
+// };
+
+function reverseString(s) {
+  let start = 0,
+    end = s.length - 1;
+  while (start < end) {
+    [s[start], s[end]] = [s[end], s[start]];
+    start++, end--;
+  }
+  return s;
+}
+console.log(reverseString(["o", "l", "l", "e", "h"]));
+
+/**
+ * 8. Reverse String II
+ */
+function reverseStr(s, k) {
+  let arr = s.split("");
+  arr = arr.splice(0, k).reverse();
+  return arr.join("") + s.slice(k);
+}
+console.log(reverseStr("abcdefg", 3));
+
+/**
+ *9. Factorial Trailing Zeroes
+ */
+// var trailingZeroes = function (n) {
+//   let count = 0;
+//   for (let i = 5; Math.floor(n / i) >= 1; i *= 5) count += Math.floor(n / i);
+//   return count;
+// };
+
+// function zeros(n) {
+//   return n/5 < 1 ? 0 : Math.floor(n/5) + zeros(n/5);
+// }
+function trailingZeroes(num) {
+  const divider = Math.floor(num / 5);
+  let res = 0;
+  for (let val = Math.floor(divider / 5); val > 0; ) {
+    res += val;
+    val = Math.floor(val / 5);
+  }
+  return divider + res;
+}
+//test
+// for (let i = 0; i <= 200; i++) {
+//   console.log(`${i}! = ` + trailingZeroes(i));
+// }
+
+/**
+ *10. Is Subsequence
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+function isSubsequence(s, t) {
+  if (t.indexOf(s) > 0) return true;
+  let map = new Map();
+  let tSequence = "";
+  for (let i = 0; i < s.length; i++) {
+    if (!map.has(s[i])) {
+      map.set(s[i], s[i]);
+    }
+  }
+  for (let i of t) if (map.has(i)) tSequence += i;
+  return s === tSequence;
+}
+let s = "leeeeeetcode";
+let t =
+  "yyyyylyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyytyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyycyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyoyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyydyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy";
+console.log(isSubsequence(s, t));
+
+/**
+ *11. Find Pivot Index
+ * @param {number[]} nums
+ * @return {number}
+ */
+var pivotIndex = function (nums) {
+  if (nums.length === 0) return 0;
+  let leftSum = 0,
+    sum = 0;
+  for (let i of nums) sum += i;
+  for (let i = 0; i < nums.length; i++) {
+    if (i !== 0) leftSum += nums[i - 1];
+    if (leftSum === sum - leftSum - nums[i]) return i;
+  }
+  return -1;
+};
+var arr = [1, 7, 3, 6, 5, 6];
+console.log(pivotIndex(arr));
+
+/**
+ * 12. Running Sum of 1d Array
+ */
+function runningSum(nums) {
+  for (let i = 1; i < nums.length; i++) nums[i] = nums[i] + nums[i - 1];
+  return nums;
+}
+var arr = [1, 2, 3, 4];
+console.log(runningSum(arr));
+// Output: [1,3,6,10]
+
+/**
+ * 13. The kth Factor of n
+ */
+function kthFactor(n, k) {
+  let arr = [];
+  for (let i = 1; i <= n; i++) if (n % i === 0) arr.push(i);
+  return k > arr.length ? -1 : arr[k - 1];
+}
+console.log(kthFactor(7, 3));
+
+/**
+ * 14. Longest Subarray of 1's After Deleting One Element
+ */
+
+// var longestSubarray = function (A) {
+//   let i = 0,
+//     j,
+//     k = 1;
+//   for (j = 0; j < A.length; ++j) {
+//     if (A[j] == 0) k--;
+//     if (k < 0 && A[i++] == 0) k++;
+//   }
+//   return j - i - 1;
+// };
+
+var longestSubarray = function (nums) {
+  let repo = [0],
+    counter = 0,
+    max = 0,
+    temp = 0;
+  for (let i of nums) {
+    i ? repo.push(repo.pop() + 1) : repo.push(0);
+    counter += i;
+  }
+  if (counter === nums.length) return counter - 1;
+  for (let i = 0; i < repo.length - 1; i++) {
+    temp = repo[i] + repo[i + 1];
+    max > temp ? max : (max = temp);
+  }
+  return max;
+};
+console.log(longestSubarray([0, 1, 1, 1, 0, 1, 1, 0, 1]));
+
+/**
+ * 15. Check If Two String Arrays are Equivalent
+ */
+var arrayStringsAreEqual = function (word1, word2) {
+  return word1.join("") == word2.join("");
+};
+
+/**
+ * 16. Binary Search
+ */
+var search = function (nums, target) {
+  if (target === nums[0]) {
+    return 0;
+  }
+  let end = nums.length - 1,
+    start = 0,
+    res = 0,
+    mid = Math.ceil(nums.length / 2);
+  for (let i = 1; i <= Math.ceil(Math.log2(nums.length)); i++) {
+    if (target === nums[mid]) {
+      res = mid;
+      break;
+    } else if (target > nums[mid]) start = mid;
+    else end = mid;
+    mid = Math.ceil((end + start) / 2);
+  }
+  return res ? res : -1;
+};
+
+var nums = [-1, 0, 3, 5, 9, 12],
+  target = 6;
+console.log(search(nums, target));
+console.log(search([0], 0));
+
+/**
+ *17. Search Insert Position
+ */
+var searchInsert = function (nums, target) {
+  let end = nums.length - 1,
+    start = 0,
+    res = 0,
+    mid = Math.ceil(nums.length / 2);
+  if (target === nums[0] || target < nums[0]) {
+    return 0;
+  } else if (target > nums[nums.length - 1]) {
+    return nums.length;
+  }
+  for (let i = 1; i <= Math.ceil(Math.log2(nums.length)); i++) {
+    if (target === nums[mid]) {
+      res = mid;
+      break;
+    } else if (target > nums[mid]) start = mid;
+    else end = mid;
+    mid = Math.ceil((end + start) / 2);
+  }
+  return mid;
+};
+var nums = [1, 3, 5, 6],
+  target = 88;
+console.log(searchInsert(nums, target));
+
+/**
+ * 18. Binary Tree Postorder Traversal
+ */
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var postorderTraversal = function (root) {
+  let res = [];
+  function helper(root) {
+    if (root) {
+      helper(root.left);
+      helper(root.right);
+      res.push(root.val);
+    }
+  }
+  helper(root);
+  return res;
+};
+// Input: root = [1,null,2,3]
+// Output: [3,2,1]
+
+/**
+ *00. First Bad Version
+ */
+var solution = function (isBadVersion) {
+  /**
+     * @param {leteger} n Total versions
+     * @return {leteger} The first bad version
+     * 
+     Scenario #1: isBadVersion(mid) => false
+      1 2 3 4 5 6 7 8 9
+      G G G G G G B B B       G = Good, B = Bad
+      |       |       |
+      left    mid    right
+
+      Scenario #2: isBadVersion(mid) => true
+      1 2 3 4 5 6 7 8 9
+      G G G B B B B B B       G = Good, B = Bad
+      |       |       |
+      left    mid    right
+
+     */
+  return function (n) {
+    let lo = 0;
+    let hi = n - 1;
+    while (lo <= hi) {
+      let mid = lo + Math.floor((hi - lo) / 2);
+      if (isBadVersion(mid)) hi = mid - 1;
+      else lo = mid + 1;
+    }
+    return lo;
+  };
+};
+
+/**
+ * 19. Squares of a Sorted Array
+ */
+var sortedSquares = function (nums) {
+  for (let i = 0; i < nums.length; i++) nums[i] = nums[i] ** 2;
+  return nums.sort((a, b) => a - b);
+};
+var nums = [-4, -1, 0, 3, 10];
+
+/**
+ * 20. Rotate Array
+ */
+// var rotate = function(nums, k) {
+//   for (let i = 0; i < k; i++) {
+//        nums.unshift(nums.pop());
+//    }
+// };
+// var rotate = function(nums, k) {
+//   nums.splice(nums.length - k, k)
+// };
+var rotate = function (nums, k) {
+  if (k > nums.length && k % 2 !== 0) return nums.reverse();
+  return nums.splice(nums.length - k, k).concat(...nums);
+};
+
+var nums = [1, 2],
+  k = 5;
+console.log(rotate(nums, k));
+
+/**
+ *21. Valid Parentheses
+ * Set is better than Map to store () {} [], Map doesn't work with me
+ */
+var isValid = (str) => {
+  let set = new Set(),
+    arr = str.split(""),
+    check = "";
+  set.add("()");
+  set.add("[]");
+  set.add("{}");
+  if (str.length % 2 !== 0) return false;
+  for (let i = 0; i < str.length && i >= 0; ) {
+    check = arr[i] + arr[i + 1];
+    if (set.has(check) && i == 0) {
+      arr.splice(i, 2);
+      if (arr.length == 0) return true;
+    } else if (set.has(check)) arr.splice(i, 2), i--;
+    else i++;
+  }
+  return arr.length == 0;
+};
+
+var isValid = (str) => {
+  if (str.length % 2 !== 0) return false;
+  for (let i = str.length / 2; i > 0; i--) {
+    str = str.replace(/\(\)|\[\]|\{\}/, "");
+  }
+  return str.length == 0;
+};
+//test
+console.log(isValid("([{({})}])"));
+console.log(isValid("([{})}])"));
+console.log(isValid("()[]{}"));
+
+/**
+ * 22. Move Zeroes
+ */
+var moveZeroes = function (nums) {
+  for (let i = 0, j = 0; i < nums.length; i++)
+    nums[j] === 0 ? nums.push(...nums.splice(j, 1)) : j++;
+  return nums;
+};
+//tests
+var nums = [0, 1, 0, 3, 12];
+console.log(moveZeroes(nums));
+console.log(moveZeroes([0, 0]));
+console.log(moveZeroes([0, 0, 1]));
+
+/**
+ * 23. Two Sum II - Input Array Is Sorted
+ *
+ * the function below help you to get key from Map by its value :
+ function getByValue(map, searchValue) { 
+  for (let [key, value] of map.entries()) {
+    if (value === searchValue) return key;
+  }
+}
+ */
+var twoSum = function (numbers, target) {
+  let map = new Map();
+  for (let i = 0; i < numbers.length; i++) map.set(numbers[i], i);
+  for (let i = 0; i < numbers.length; i++) {
+    if (map.has(target - numbers[i]))
+      return [i + 1, map.get(target - numbers[i]) + 1];
+  }
+};
+// test
+var numbers = [2, 7, 11, 15],
+  target = 9;
+console.log(twoSum(numbers, target));
+var numbers = [2, 3, 4],
+  target = 6;
+console.log(twoSum(numbers, target));
+var numbers = [-1, 0],
+  target = -1;
+console.log(twoSum(numbers, target));
+
+/**
+ * 24. Merge Two Sorted Lists
+ */
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} list1
+ * @param {ListNode} list2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function (list1, list2) {
+  let head = new ListNode(0); // dummy node to start the result list with a dummy node
+  let current = head; // current node to build the result list
+
+  while (list1 && list2) {
+    // if list1 or list2 is null, the loop will stop
+    if (list1.val < list2.val) {
+      current.next = list1; // add list1 node to the result list
+      list1 = list1.next; // move list1 to the next node
+    } else {
+      current.next = list2; // add list2 node to the result list
+      list2 = list2.next; // move list2 to the next node
+    }
+    current = current.next; // move current to the next node
+  }
+  current.next = list1 || list2; // add the remaining nodes to the result list
+  return head.next; // return the result list without the dummy node
+};
+
+/**
+ * 25. Length of Last Word
+ */
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLastWord = function (s) {
+  let match = s.match(/\w+/gi);
+  return match[match.length - 1].length;
+};
+console.log(lengthOfLastWord("   fly me   to   the moon  "));
+
+/**
+ * 26. Plus One
+ */
+/**
+ * @param {number[]} digits
+ * @return {number[]}
+ */
+/**
+ * Your solution must deal with big numbers like:
+     [6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 0, 0, 0] and bigger.
+ */
+// var plusOne = function (digits) {
+//   let num = 0;
+//   let str = digits.join("");
+//   num = parseInt(str);
+//   num++;
+//   console.log(num);
+//   str = num.toString(); // my mistake was -> str = toString(num)
+//   digits = str.split("");
+//   return digits;
+// };// this solution does not work with big numbers.
+
+var plusOne = (digits) => {
+  let length = digits.length;
+  for (let i = 1; i < length + 1; i++) {
+    if (digits[length - i] + 1 == 10) {
+      digits.splice(length - i, 1, 0);
+      if (digits.length - i == 0) {
+        digits.unshift(0);
+        length = digits.length;
+      }
+    } else {
+      digits.splice(length - i, 1, digits[length - i] + 1);
+      break;
+    }
+  }
+  return digits;
+};
+
+// test
+console.log(plusOne([9]));
+console.log(plusOne([9, 1]));
+console.log(plusOne([1, 9, 9, 9]));
+console.log(plusOne([6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 0, 0, 0]));
+
+/**
+ * 27. Add Binary
+ * to convert binary to decimal : parseInt(binary, 2)
+ * to convert decimal to binary : decimal.toString(2)
+ */
+/**
+ * @param {string} a
+ * @param {string} b
+ * @return {string}
+ */
+var addBinary = function (a, b) {
+  let sum = parseInt(a, 2) + parseInt(b, 2);
+  return sum.toString(2);
+};
+// test
+console.log(addBinary("11", "1"));
+
+var addBinary = function (a, b) {
+  let sum = "";
+  let carry = 0;
+  let i = a.length - 1;
+  let j = b.length - 1;
+  while (i >= 0 || j >= 0) {
+    let x = i >= 0 ? a[i] - "0" : 0;
+    let y = j >= 0 ? b[j] - "0" : 0;
+    let temp = x + y + carry;
+    sum = (temp % 2) + sum;
+    carry = Math.floor(temp / 2);
+    i--;
+    j--;
+  }
+  if (carry != 0) sum = carry + sum;
+  return sum;
+};
+
+console.log(addBinary("1010", "1011"));
+console.log(5 % 6);
+
+/**
+ * 28. Sqrt(x)
+ */
+var mySqrt = function (x) {
+  for (let i = 1; ; i++) {
+    if (x == i ** 2) return i;
+    else if (x < i ** 2) return i - 1;
+  }
+};
+console.log(mySqrt(9));
+
+var mySqrt = function (x) {
+  let left = 0;
+  let right = x;
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    if (mid ** 2 == x) return mid;
+    else if (mid ** 2 < x) left = mid + 1;
+    else right = mid - 1;
+  }
+  return right;
+};
+
+/**
+ * 29. Climbing Stairs
+ */
+var climbStairs = function (n) {
+  let dp = new Array(n + 1).fill(0);
+  dp[0] = 1;
+  dp[1] = 1;
+  for (let i = 2; i <= n; i++) {
+    dp[i] = dp[i - 1] + dp[i - 2];
+  }
+  return dp[n];
+};
+console.log(climbStairs(3));
+console.log(climbStairs(4));
+console.log(climbStairs(5));
+/**
+ * 30. Substring with Concatenation of All Words
+ */
+var merge = function (nums1, m, nums2, n) {
+  if (m === 0) return (nums1 = nums2);
+  nums1 = nums1.splice(0, m).concat(...nums2);
+  nums1 = nums1.sort((a, b) => a - b);
+  return nums1;
+};
+console.log(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3));
+console.log(merge([1], 1, [], 0));
+// var merge = function (nums1, m, nums2, n) {
+//   let i = m - 1;
+//   let j = n - 1;
+//   let k = m + n - 1;
+//   while (i >= 0 && j >= 0) {
+//     if (nums1[i] > nums2[j]) {
+//       nums1[k] = nums1[i];
+//       i--;
+//     } else {
+//       nums1[k] = nums2[j];
+//       j--;
+//     }
+//     k--;
+//   }
+//   while (j >= 0) {
+//     nums1[k] = nums2[j];
+//     j--;
+//     k--;
+//   }
+//   return nums1;
+// }
+
+/**
+ * 31. Longest Substring Without Repeating Characters
+ * By Hash Map Data Structure
+ */
+var lengthOfLongestSubstring = function (s) {
+  let arr = s.split(""),
+    repeats = 0,
+    set = new Set(),
+    i = 0;
+  if (arr.length === 1) return 1;
+  while (arr.length !== 0 && arr.length >= i) {
+    if (set.has(arr[i]) || i == arr.length) {
+      i > repeats ? (repeats = i) : repeats;
+      arr.shift();
+      set.clear();
+      i = 0;
+    } else {
+      set.add(arr[i]);
+      if (arr.length === 1) i;
+      else i++;
+    }
+  }
+  return repeats;
+};
+//test
+console.log(lengthOfLongestSubstring("abcabcbb"));
+console.log(lengthOfLongestSubstring("bbbbb"));
+console.log(lengthOfLongestSubstring("b"));
+console.log(lengthOfLongestSubstring("pwwkew"));
+console.log(lengthOfLongestSubstring("au"));
+
+var lengthOfLongestSubstring = function (s) {
+  let i = 0,
+    j = 0,
+    max = 0;
+  let set = new Set();
+  while (i < s.length && j < s.length) {
+    if (!set.has(s[j])) {
+      set.add(s[j]);
+      j++;
+      max = Math.max(max, j - i);
+    } else {
+      set.delete(s[i]);
+      i++;
+    }
+  }
+  return max;
+};
+//test
+console.log(lengthOfLongestSubstring("abcabcbb"));
+
+/**
+ * 32. Longest Palindromic Substring
+ */
+var longestPalindrome = function (s) {};
+// console.log(longestPalindrome("babad"));
+// console.log(longestPalindrome("aa"));
+// console.log(longestPalindrome("cbbbd"));
+
+/**
+ * 32. Reverse Words in a String III
+ *
+ * @param {string} s
+ * @returns string
+ */
+
+var reverseWords = function (s) {
+  let reversed = "",
+    reversedString = "";
+  for (let i of s) {
+    if (i !== " ") {
+      reversed = i + reversed;
+    } else {
+      reversedString.length !== 0
+        ? (reversedString += " " + reversed)
+        : (reversedString += reversed);
+      reversed = "";
+    }
+  }
+  return reversedString.length === 0
+    ? reversed
+    : reversedString + " " + reversed;
+};
+console.log(reverseWords(`Let's take LeetCode contest`));
+console.log(reverseWords(`ehhhhhheh`));
+
+var revereseWords = function (s) {
+  let arr = s.split(" ");
+  let reversed = "";
+  for (let i of arr) {
+    reversed += i.split("").reverse().join("") + " ";
+  }
+  return reversed.trim();
+};
+console.log(reverseWords(`Let's take LeetCode contest`));
+console.log(reverseWords(`ehhhhhheh`));
+
+var reverseWords = function (s) {
+  return s
+    .split(" ")
+    .map((word) => word.split("").reverse().join(""))
+    .join(" ");
+};
+console.log(reverseWords(`Let's take LeetCode contest`));
+console.log(reverseWords(`ehhhhhheh`));
+
+var reverseWords = function (s) {
+  return s.split("").reverse().join("").split(" ").reverse().join(" ");
+};
+
+/**
+ * 33. Middle of the Linked List
+ */
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var middleNode = function (head) {
+  let index = 0;
+  let indexOfMiddleVal = Math.ceil(lengthOfLinkedList(head) / 2);
+
+  function lengthOfLinkedList(head) {
+    let count = 0;
+    while (head.next) {
+      head = head.next;
+      count++;
+    }
+    return count;
+  } // O(N)
+
+  while (head.next) {
+    if (index === indexOfMiddleVal) return head;
+    head = head.next;
+    index++;
+  }
+  return head;
+}; // O(0.5 N) -> O(N)
+// total -> O(N)*O(N) = O(N^2)
+
+// [65,66,26,77,96,  86,11,21,13,80], length = 9;
+// [00,01,02,03,04,  05,06]
+// indexOfMiddleVal = (9 / 2) + 1 = 4 + 1 = 5
+
+// [1,2,3,4,5], length = 4
+// [0,1,2,3,4]
+// indexOfMiddleVal = (4 / 2) + 1 = 3
+
+var middleNode = function (head) {
+  let A = [head];
+  while (A[A.length - 1].next != null) A.push(A[A.length - 1].next);
+  return A[Math.trunc(A.length / 2)];
+};
+/**
+ * Complexity Analysis
+    Time Complexity: O(N), where NNN is the number of nodes in the given list.
+    Space Complexity: O(N), the space used by A.
+ */
+
+var middleNode = function (head) {
+  // I like that solution
+  slow = fast = head;
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  return slow;
+};
+//  Complexity Analysis
+//     Time Complexity: O(N), where NNN is the number of nodes in the given list.
+//     Space Complexity: O(1), the space used by slow and fast.
+
+/**
+ * 34. Remove Nth Node From End of List
+ */
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = (head, n) => {
+  let tempList = new ListNode(0);
+  tempList.next = head;
+  slow = fast = tempList;
+  for (let i = 0; i < n; i++) fast = fast.next;
+  while (fast.next) (slow = slow.next), (fast = fast.next);
+  slow.next = slow.next.next;
+  return tempList.next;
+};
+
+var removeNthFromEnd = function (head, n) {
+  let root = head;
+  let clone = head;
+  let len = 0;
+
+  while (clone) {
+    len++;
+    clone = clone.next;
+  }
+
+  let count = len - n;
+  if (count === 0) return head.next;
+  while (root && count > 1) {
+    root = root.next;
+    count--;
+  }
+
+  root.next = root.next && root.next.next;
+  return head;
+};
+
+var removeNthFromEnd = function (head, n) {
+  const help = (root, count) => {
+    if (root.next) count = help(root.next, count);
+
+    if (count === n) root.next = root.next.next;
+    return ++count;
+  };
+  const count = help(head, 0);
+  return count === n ? head.next : head;
+};
+
+var removeNthFromEnd = function (head, n) {
+  const root = new ListNode(0);
+  root.next = head;
+  let front = root;
+  let back = root;
+  while (n >= 0) {
+    front = front.next;
+    n--;
+  }
+  while (front) {
+    front = front.next;
+    back = back.next;
+  }
+  back.next = back.next.next;
+  return root.next;
+};
+
+var removeNthFromEnd = function (head, n) {
+  let tempList = new ListNode(0);
+  tempList.next = head;
+
+  // set variables for next node and current node
+  let slow = tempList;
+  let fast = tempList;
+
+  // set fast to n nodes ahead of slow
+  for (let i = 0; i <= n; i++) {
+    fast = fast.next;
+  }
+
+  // While we haven't reached the end of the list
+  // set slow to n nodes behind fast
+  while (fast) {
+    slow = slow.next;
+    fast = fast.next;
+  }
+
+  // set slow.next to two nodes ahead of slow
+  // then return the nth node of the list
+  slow.next = slow.next.next;
+  return tempList.next;
+};
+// Time complexity is 0(n)
+// Space complexity 0(1)
+
+/**
+ * 35. Maximum Subarray with fixed length
+ *
+ * Two Poleters Algorithm
+ */
+var nums = [1, 2, 3, 4, 5, 6, -3],
+  m = 4;
+console.log(maxSubArrayWithFixedLength(nums, m));
+// 1+2+3+4 = 10
+//   2+3+4+5 = 14 // 10-1+5
+//     3+4+5+6 = 18 // 14-2+6
+//       4+5+6-3 = 12 // 18-3-3
+function maxSubArrayWithFixedLength(nums, m) {
+  let left = 0,
+    right = 0,
+    sum = 0,
+    max = 0;
+  for (let i = 0; i < m; i++) {
+    sum += nums[i];
+  }
+  max = sum;
+  while (left + m < nums.length) {
+    right = left + m;
+    sum = sum - nums[left] + nums[right];
+    max = Math.max(max, sum);
+    right = left + m;
+    left++;
+  }
+  return max;
+}
+
+/**
+ * 36. Maximum Subarray
+ *
+ * Two Poleters Algorithm
+ */
+var nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
+console.log(maxSubArray(nums));
+function maxSubArray(nums) {
+  let l = 0,
+    r = 1,
+    sum = 0,
+    max = 0;
+  for (let i = 0; i < nums.length; i++) {
+    sum = nums[i];
+    for (let j = i + 1; j < nums.length; j++) {
+      sum += nums[j];
+      max = Math.max(max, sum);
+    }
+  }
+  return max;
+}
+//Two Poleters
+/**
+ * 37. Maximum SubArray
+ */
+
+// if nums[i] + "the Sum of elements before this element" is negative :
+//  That means the value of the current index is bigger than the last sum,
+// so we won't need this element
+// so we will remove this index and all the indexes before it
+var maxSubArray = (nums) => {
+  let sum = 0,
+    max = nums[0];
+  for (let i = 0; i < nums.length; ) {
+    sum += nums[i];
+    max = Math.max(sum, max);
+    if (nums[i] + (sum - nums[i]) < 0) {
+      nums.splice(0, i + 1);
+      i = 0;
+      sum = 0;
+    } else i++;
+  }
+  return max;
+};
+
+// var maxSubArray = function (nums) {
+//   let max = nums[0];
+//   let sum = 0;
+//   for (let i = 0; i < nums.length; i++) {
+//     sum += nums[i];
+//     if (sum > max) {
+//       max = sum;
+//     }
+//     if (sum < 0) {
+//       sum = 0;
+//     }
+//   }
+//   return max;
+// };
+
+var maxSubArray = function (nums) {
+  // Initialize the max sum...
+  let maxSum = nums[0];
+  // Traverse all the element through the loop...
+  for (let i = 1; i < nums.length; i++) {
+    // nums[i] represents the largest sum of all subarrays ending with index i...
+    // then its value should be the larger one between nums[i]...
+    // nums[i-1] + nums[i] (largest sum plus current number with using prefix)...
+    // calculate nums[0], nums[1]…, nums[n] while comparing each one with current largest sum...
+    nums[i] = Math.max(0, nums[i - 1]) + nums[i];
+    // if nums[i] > maxSum then maxSum = nums[i]...
+    if (nums[i] > maxSum) maxSum = nums[i];
+  }
+  return maxSum; // return the contiguous subarray which has the largest sum...
+};
+
+console.log(maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
+console.log(maxSubArray([1]));
+console.log(maxSubArray([5, 4, -1, 7, 8]));
+console.log(maxSubArray([-2, -1]));
+console.log(maxSubArray([2, -1, 1, 1]));
+console.log(maxSubArray([8, -19, 5, -4, 20]));
+console.log(maxSubArray([31, -41, 59, 26, -53, 58, 97, -93, -23, 84]));
+
+/**
+ * 31(again). Longest Substring Without Repeating Characters
+ */
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function (s) {
+  let set = new Set(),
+    left = 0,
+    right = 0,
+    max = 0;
+  while (right < s.length) {
+    if (!set.has(s[right])) {
+      set.add(s[right]);
+      right++;
+    } else {
+      while (set.has(s[right])) {
+        set.delete(s[left]);
+        left++;
+      }
+      set.add(s[right]);
+      right++;
+    }
+    max = Math.max(max, set.size);
+  }
+  return max;
+};
+console.log(lengthOfLongestSubstring("abcabcbb"));
+console.log(lengthOfLongestSubstring("qrsvbspk"));
+
+/**
+ * 38. Permutation in String
+ */
+/**
+ * @param {string} s1
+ * @param {string} s2
+ * @return {boolean}
+ */
+var checkInclusion = function (s1, s2) {
+  let map = new Map();
+  let weight = 0;
+  for (let i = 0; i < s1.length; i++) {
+    if (!map.has(s1[i])) {
+      map.set(s1[i], i + 1);
+    }
+    weight += map.get(s1[i]);
+  }
+  for (let i = 0; i < s2.length; i++) {
+    let permutationWeight = 0;
+    let set = new Set();
+    if (map.has(s2[i])) {
+      for (let j = i; j < s1.length + i; j++) {
+        if (map.has(s2[j])) {
+          set.add(s2[j]);
+          permutationWeight += map.get(s2[j]);
+        } else if (permutationWeight > weight) break;
+      }
+      if (permutationWeight == weight && isMapHasSetKeys(map, set)) {
+        return true;
+      }
+    }
+  }
+  function isMapHasSetKeys(map, set) {
+    let count = 0;
+    for (i of set) {
+      map.has(i);
+      count++;
+    }
+    return map.size == count;
+  }
+  return false;
+};
+
+console.log(checkInclusion("abo", "eidbaooo"));
+console.log(checkInclusion("ab", "eidboaoo"));
+console.log(checkInclusion("hello", "ooolleoooleh"));
+console.log(checkInclusion("abc", "ccccbbbbaaaa"));
+console.log(checkInclusion("abc", "bbbca"));
+
+/**
+ * 39. Longest Palindromic Substring
+ */
+var longestPalindrome = function (s) {
+  let res = "";
+  for (let i = 0; i < s.length; i++) {
+    let subStr = "";
+    let reverse = "";
+    for (let j = i; j <= s.length; j++) {
+      reverse = s[j] + reverse;
+      subStr = s.slice(i, j + 1);
+      if (subStr == reverse) subStr.length > res.length ? (res = subStr) : res;
+    }
+  }
+  return res;
+};
+// improve the solution
+// var longestPalindrome = function (s) {
+//   let res = " ";
+//   for (let i = 0; i < s.length; i++) {
+//     let subStr = "";
+//     for (let j = res.length; j <= s.length; j++) {
+//       subStr = s.slice(i, j);
+//       let reverse = "";
+//       for (let i of subStr) {
+//         reverse = i + reverse;
+//       }
+//       if (subStr == reverse) subStr.length > res.length ? (res = subStr) : res;
+//     }
+//   }
+//   return res == " " ? (res = s[0]) : res;
+// };
+
+console.log(longestPalindrome("eabcb"));
+console.log(longestPalindrome("abb"));
+console.log(longestPalindrome("bananas"));
+console.log(longestPalindrome("babad"));
+console.log(longestPalindrome("cbbd"));
+
+// Enhanced Java Solution O(n)
+
+// class Solution {
+//   public String longestPalindrome(String s) {
+//       if (s == null || s.length() < 1) return "";
+//       let start = 0, end = 0;
+//       for (let i = 0; i < s.length(); i++) {
+//           let len1 = expandAroundCenter(s, i, i);
+//           let len2 = expandAroundCenter(s, i, i + 1);
+//           let len = Math.max(len1, len2);
+//           if (len > end - start) {
+//               start = i - (len - 1) / 2;
+//               end = i + len / 2;
+//           }
+//       }
+//       return s.substring(start, end + 1);
+//   }
+
+//   private let expandAroundCenter(String s, let left, let right) {
+//       let L = left, R = right;
+//       while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
+//           L--;
+//           R++;
+//       }
+//       return R - L - 1;
+//   }
+// }
+
+/**
+ * 40.
+ *
+ */
+function SubArraySum(arr, s) {
+  let left = 0;
+  let right = 1;
+  let sum = arr[left] + arr[right];
+  while (left < right) {
+    if (sum > s) {
+      sum -= arr[left];
+      left++;
+    } else if (sum < s) {
+      right++;
+      sum += arr[right];
+    } else {
+      return [left + 1, right + 1];
+    }
+  }
+}
+console.log(SubArraySum([1, 2, 3, 7, 5], 12));
+console.log(SubArraySum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 15));
+
+/**
+ * 41. Flood Fill
+ * Depth First Search (DFS) Algorithm
+ */
+/**
+ * @param {number[][]} image
+ * @param {number} sr
+ * @param {number} sc
+ * @param {number} color
+ * @return {number[][]}
+ */
+
+var floodFill = (image, sr, sc, color) => {
+  let oldColor = image[sr][sc];
+  if (oldColor == color) return image; // if the old color is the same as the new color, return the image
+  dfs(sr, sc); // start from the source
+  function dfs(sr, sc) {
+    if (
+      sr < 0 ||
+      sc < 0 ||
+      sr >= image.length || // if you put this at the first it will make an error
+      sc >= image[sr].length ||
+      image[sr][sc] != oldColor
+    )
+      return; // if the source is out of the image or the color is not the old color, return
+    image[sr][sc] = color; // change the color
+    dfs(sr - 1, sc);
+    dfs(sr + 1, sc);
+    dfs(sr, sc - 1);
+    dfs(sr, sc + 1);
+  }
+  return image;
+};
+
+var image = [
+    [1, 1, 1],
+    [1, 1, 0],
+    [1, 0, 1],
+  ],
+  sr = 1,
+  sc = 1, // [1, 1]
+  color = 2;
+console.log(floodFill(image, sr, sc, color));
+//[[2,2,2],
+// [2,2,0],
+// [2,0,1]]
+
+var floodFill = function (image, sr, sc, newColor) {
+  if (image[sr][sc] == newColor) return image;
+  let oldColor = image[sr][sc];
+  let queue = [[sr, sc]];
+  while (queue.length) {
+    let [x, y] = queue.shift();
+    image[x][y] = newColor;
+    if (x > 0 && image[x - 1][y] == oldColor) queue.push([x - 1, y]);
+    if (x < image.length - 1 && image[x + 1][y] == oldColor)
+      queue.push([x + 1, y]);
+    if (y > 0 && image[x][y - 1] == oldColor) queue.push([x, y - 1]);
+    if (y < image[0].length - 1 && image[x][y + 1] == oldColor)
+      queue.push([x, y + 1]);
+  }
+  return image;
+};
+console.log(floodFill(image, sr, sc, color));
+
+/**
+ * 42. Number of Islands
+ */
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var maxAreaOfIsland = function (grid) {
+  let maxArea = 0;
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[0].length; j++) {
+      maxArea = Math.max(maxArea, search(i, j));
+    }
+  }
+  return maxArea;
+
+  function search(row, colum) {
+    if (
+      row < 0 ||
+      colum < 0 ||
+      row >= grid.length ||
+      colum >= grid[0].length ||
+      grid[row][colum] == 5 ||
+      grid[row][colum] == 0
+    )
+      return 0;
+    grid[row][colum] = 5;
+    return (
+      1 +
+      search(row + 1, colum) +
+      search(row - 1, colum) +
+      search(row, colum + 1) +
+      search(row, colum - 1)
+    );
+  }
+};
+
+let grid = [
+  [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+  [0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+  [0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+];
+console.log(maxAreaOfIsland(grid));
+
+/**
+ * 43. Merge Two Binary Trees
+ * Binary Tree
+ */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     let val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(let x) { val = x; }
+ * }
+ */
+var mergeTrees = (root1, root2) => {
+  if (root1 == null) return root2;
+  if (root2 == null) return root1;
+  root1.val += root2.val;
+  root1.left = mergeTrees(root1.left, root2.left);
+  root1.right = mergeTrees(root1.right, root2.right);
+  return root1;
+};
+//  Input: root1 = [1,3,2,5], root2 = [2,1,3,null,4,null,7]
+// Output: [3,4,5,5,4,null,7]
+
+/**
+ * 44. Reverse Linked List
+ * LinkedList
+ */
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+
+//recursive solution
+var reverseList = function (head) {
+  if (head == null || head.next == null) return head;
+  let newHead = reverseList(head.next);
+  head.next.next = head;
+  head.next = null;
+  return newHead;
+};
+
+/**
+ * 45. Isomorphic Strings
+ */
+var isIsomorphic = function (s, t) {
+  let map = new Map(),
+    map2 = new Map();
+  let arr = [],
+    arr2 = [];
+  for (let i = 0; i < s.length; i++) {
+    if (!map.has(s[i])) {
+      map.set(s[i], i + 1);
+    }
+    arr.push(map.get(s[i]));
+    if (!map2.has(t[i])) {
+      map2.set(t[i], i + 1);
+    }
+    arr2.push(map2.get(t[i]));
+  }
+  return arr.join("") == arr2.join("");
+};
+// enhanced solution
+var isIsomorphic = function (s, t) {
+  let map = new Map(),
+    map2 = new Map();
+  for (let i = 0; i < s.length; i++) {
+    if (!map.has(s[i])) {
+      map.set(s[i], i + 1);
+    }
+    if (!map2.has(t[i])) {
+      map2.set(t[i], i + 1);
+    }
+    if (map.get(s[i]) != map2.get(t[i])) return false;
+  }
+  return true;
+};
+// console.log(isIsomorphic("egg", "add"));
+// console.log(isIsomorphic("badc", "baba"));
+
+/**
+ * 46. Remove Duplicates from Sorted List
+ * LinkedList
+ */
+var deleteDuplicates = function (head) {
+  let currentNode = head;
+  if (head == null) return null;
+  while (currentNode.next) {
+    if (currentNode.val == currentNode.next.val) {
+      currentNode.next = currentNode.next.next;
+    } else {
+      currentNode = currentNode.next;
+    }
+  }
+  return head;
+};
+
+/**
+ * 47.  Add Two Numbers
+ ** linkedList
+ */
+
+// Definition for singly-linked list.
+class ListNode {
+  constructor(val, next) {
+    this.val = val === undefined ? 0 : val;
+    this.next = next === undefined ? null : next;
+  }
+}
+//    l1 = 2-> 4-> 3
+//    l2 = 5-> 6-> 4
+
+// list1 = 0-> 2-> 4-> 3
+// list2 = 0-> 5-> 6-> 4
+//         0-> 7-> 0-> 8
+
+//342 + 465 = 807.
+function addTwoNumbers(l1, l2) {
+  let dummyHead = new ListNode(0);
+  let curr = dummyHead;
+  let carry = 0;
+
+  while (l1 || l2 || carry !== 0) {
+    let x = l1 ? l1.val : 0;
+    let y = l2 ? l2.val : 0;
+    let sum = x + y + carry;
+    carry = Math.floor(sum / 10);
+    curr.next = new ListNode(sum % 10);
+    if (l1) l1 = l1.next;
+    if (l2) l2 = l2.next;
+    curr = curr.next;
+  }
+
+  return dummyHead.next;
+}
+
+var l1 = new ListNode(2);
+l1.next = new ListNode(4);
+l1.next.next = new ListNode(3);
+
+var l2 = new ListNode(5);
+l2.next = new ListNode(6);
+l2.next.next = new ListNode(4);
+
+console.log(addTwoNumbers(l1, l2));
+console.log(addTwoNumbers(new ListNode(0), new ListNode(0)));
+
+/**
+ * 48. Reverse LinkedList
+ *
+ ** LinkedList & Recursion
+ */
+
+// 1-> 2-> 3-> 4
+
+// head = 1-> 2-> 3-> 4
+// prev = null
+// next = 2-> 3-> 4
+// head.next = null
+// null-> 2
+
+// head = 2-> 3-> 4
+// prev = 1-> 2-> 3-> 4
+// next = 3-> 4
+// head.next = prev
+
+// head = 3-> 4
+// prev = 2-> 3-> 4
+// next = 4
+// head.next = prev
+
+// head = 4
+// prev = 3-> 4
+// next = null
+// head.next = prev
+
+// head = null
+// prev = 4
+
+function reverse(head, prev = null) {
+  if (!head) return prev;
+  const next = head.next;
+  head.next = prev;
+  return reverse(next, head);
+}
+var l1 = new ListNode(1);
+l1.next = new ListNode(2);
+l1.next.next = new ListNode(3);
+l1.next.next.next = new ListNode(4);
+// console.log(reverse(l1));
+
+// 3 Hours
+/**
+ * 49. Swap Nodes in Pairs
+ *
+ ** LinkedList
+ */
+//https://leetcode.com/problems/swap-nodes-in-pairs/
+var swapPairs = function (head) {};
+
+/**
+ * 00. Contains Duplicate
+ *
+ * Brute Force - Linear Search
+ * HeapSort
+ * QuickSort
+ * Hash Set
+ */
+// Brute Force - Linear Search
+// Time O(N^2) | Space O(1)
+var containsDuplicate = function (nums) {
+  for (let i = 0; i < nums.length; i++)
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] === nums[j]) return true;
+    }
+  return false;
+};
+// console.log(containsDuplicate([0, 4, 5, 0, 3, 6]));
+// console.log(containsDuplicate([1, 2, 3, 4]));
+
+// Sort - HeapSort Space O(1) | QuickSort Space O(log(N))
+// Time O(N * log(N)) | Space O(1)
+var containsDuplicate = function (nums) {
+  nums.sort((a, b) => a - b);
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i] == nums[i + 1]) return true;
+  }
+  return false;
+};
+
+// Hash Set
+// Time O(N) | Space O(N)
+var containsDuplicate = function (nums) {
+  let set = new Set();
+  for (let i = 0; i < nums.length - 1; i++) {
+    set.add(nums[i]);
+    if (set.has(nums[i + 1])) return true;
+  }
+  return false;
+};
+
+/**
+ * 50. Valid Anagram
+ *
+ * Hash Map
+ * Heap Sort
+ * Quick Sort
+ *
+ ** String.prototype.localeCompare()
+ */
+
+// Hash Map
+// * Hash Map - Frequency Counter
+// * Time O(s + t) | Space O(N)
+
+// var isAnagram = function (s, t) {
+//   let map = new Map();
+//   let firstSum = 0,
+//     secondSum = 0;
+//   if (s.length !== t.length) return false;
+
+//   for (let i = 0; i < s.length; i++) {
+//     if (!map.has(s[i])) {
+//       map.set(s[i], i + 1);
+//       firstSum += i + 1;
+//     } else {
+//       firstSum += map.get(s[i]);
+//     }
+//   }
+
+//   for (let j = 0; j < t.length; j++) {
+//     console.log(t[j]);
+//     if (map.has(t[j])) {
+//       secondSum += map.get(t[j]);
+//     }
+//   }
+
+//   return firstSum === secondSum;
+// };
+
+// Time complexity O(n + m)
+// Space complexity O(n)
+// Perfect Solution
+
+var isAnagram = (s, t) => {
+  let counts = {};
+  for (let i of s) counts[i] = (counts[i] || 0) + 1; // O(n) -> n = s.length
+  for (let j of t) if (!counts[j]--) return false; // O(m) -> m = t.length
+  return Object.values(m).every((v) => !v);
+};
+var isAnagram = (s, t) => {
+  let counts = {};
+  if (t.length !== s.length) return false;
+  for (let i of s) counts[i] = (counts[i] || 0) + 1; // O(n) -> n = s.length
+  for (let j of t) if (!counts[j]--) return false; // O(m) -> m = t.length
+  return false;
+};
+// console.log(isAnagram("anagram", "nagaram"));
+
+/**
+ * Sort - HeapSort Space O(1) | QuickSort Space O(log(N))
+ * Time O(N * logN) | Space O(N)
+ * https://leetcode.com/problems/valid-anagram/
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+
+var isAnagram = (s, t) => {
+  const isEqual = s.length === t.length;
+  if (!isEqual) return false;
+
+  return reorder(s) === reorder(t); /* Time O(N * logN) | Space O(N) */
+};
+
+const reorder = (str) =>
+  str
+    .split("") /* Time O(N)          | Space O(N) */
+    .sort((a, b) =>
+      a.localeCompare(b)
+    ) /* Time O(N * log(N)) | Space O(1 || log(N)) */
+    .join(""); /* Time O(N)          | Space O(N) */
+// console.log(isAnagram("anagram", "nagaram"));
+
+/**
+ * 51. Reverse Integer
+ *
+ ** Tail recursion
+ */
+
+// Time complexity O(log n) ,There are roughly (log n) digits in x
+// Space complexity O(1), because of Tail Recursion
+function reverseInt(x, rev = 0, sign = 1) {
+  if (rev / 10 > 2 ** 31 - 1 || rev / 10 < (-2) ** 31) return 0;
+  if (x < 0) sign = -1;
+  if (x == 0) return (sign * rev) / 10;
+
+  rev += Math.abs(x) % 10;
+  x = Math.floor(Math.abs(x) / 10);
+  return reverseInt(x, rev * 10, sign);
+}
+// console.log(reverseInt(-2143847412));
+
+/**
+ * 52. Group Anagrams
+ *
+ */
+
+// time complexity O(n*l*log l) n-> strs.length l-> str.length
+// space complexity O(n*l) n-> strs.length l-> str.length
+
+const groupAnagrams = function (strs) {
+  let groups = {};
+  strs.forEach((str) => {
+    // O(n) n-> strs.length
+    const sortedStr = [...str].sort().join(""); // O(log l) l-> str.length  // O(l)
+    if (groups[sortedStr]) groups[sortedStr].push(str);
+    else groups[sortedStr] = [str];
+  });
+  return Object.values(groups);
+};
+
+// var st = ["eat", "tea", "tan", "ate", "nat", "bat"];
+// console.log(groupAnagrams(st));
+// console.log(groupAnagrams(st));
+// console.log(
+//   groupAnagrams([
+//     "cab",
+//     "tin",
+//     "pew",
+//     "duh",
+//     "may",
+//     "ill",
+//     "buy",
+//     "bar",
+//     "max",
+//     "doc",
+//   ])
+// );
+
+// var groupAnagrams = function (strs) {
+//   let map = setValueForEachStr();
+//   let stringsAfterOrdered = orderStrs(strs);
+//   let output = compareStrs(stringsAfterOrdered);
+//   return output;
+
+//   function setValueForEachStr() {
+//     let map = new Map();
+//     let j = 1;
+//     let letters = "abcdefghijklmnopqrstuvwxyz";
+//     for (let i of letters) {
+//       map.set(i, j);
+//       j++;
+//     }
+//     return map;
+//   }
+
+//   function orderStrs(strs) {
+//     let arr = [];
+//     for (let j of strs) {
+//       let sum = 0;
+//       for (let i of j) sum += map.get(i);
+//       arr.push([j, sum, j.length]);
+//     }
+//     arr.sort((a, b) => a[1] - b[1]);
+//     return arr;
+//   }
+
+//   function compareStrs(arr) {
+//     let res = [];
+
+//     for (let i = 0, k = 0; i < arr.length; k++, i++) {
+//       res.push([arr[i][0]]);
+//       while (
+//         i < arr.length - 1 &&
+//         arr[i][1] == arr[i + 1][1] &&
+//         arr[i][2] == arr[i + 1][2]
+//       ) {
+//         res[k].push(arr[i + 1][0]);
+//         i++;
+//       }
+//     }
+//     return res;
+//   }
+// };
+
+/**
+ * 53. Top K Frequent Elements
+ */
+var topKFrequent = function (nums, k) {
+  let map = {};
+
+  nums.forEach((num) => {
+    // O(n) n-> nums.length
+    if (map[num]) map[num][1] += 1;
+    else map[num] = [num, 1];
+  });
+
+  return Object.values(map)
+    .sort((a, b) => b[1] - a[1]) // O(n log n) n-> nums.length
+    .map((d) => d[0]) // O(n) n-> nums.length
+    .splice(0, k); // O(1)
+};
+// Time complexity O(n log n) n-> nums.length
+// Space complexity O(n) n-> nums.length
+console.log(topKFrequent([1, 1, 1, 2, 2, 3], 2));
