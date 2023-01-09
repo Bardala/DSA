@@ -1893,4 +1893,45 @@ var topKFrequent = function (nums, k) {
 };
 // Time complexity O(n log n) n-> nums.length
 // Space complexity O(n) n-> nums.length
-console.log(topKFrequent([1, 1, 1, 2, 2, 3], 2));
+// console.log(topKFrequent([1, 1, 1, 2, 2, 3], 2));
+
+/**
+ * 54. Product of Array Except Self
+ */
+
+// Time complexity O(n) n-> nums.length
+// Space complexity O(n) n-> nums.length
+// var productExceptSelf = function (nums) {
+//   let leftPrefix = [1];
+//   let rightPrefix = [1];
+
+//   for (let i = 0; i < nums.length; i++) {
+//     leftPrefix[i + 1] = leftPrefix[i] * nums[i];
+//   }
+//   console.log(leftPrefix);
+//   for (let j = nums.length - 1, i = 0; j >= 0; j--, i++) {
+//     rightPrefix.unshift(rightPrefix[0] * nums[j]);
+//   }
+//   console.log(rightPrefix);
+
+//   for (let i = 0; i < nums.length; i++) {
+//     nums[i] = leftPrefix[i] * rightPrefix[i + 1];
+//   }
+//   return nums;
+// };
+var productExceptSelf = (nums) => {
+  let val = 1;
+  let res = [1];
+
+  for (let j = nums.length - 1; j >= 0; j--) {
+    res.unshift(res[0] * nums[j]);
+  }
+
+  for (let i = 0; i <= nums.length; i++) {
+    res[i] = val * res[i + 1];
+    val *= nums[i];
+  }
+  res.pop();
+  return res;
+};
+console.log(productExceptSelf([2, 3, 4, 5]));
