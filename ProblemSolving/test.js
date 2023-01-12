@@ -1,30 +1,42 @@
-var isAnagram = function (s, t) {
-  if (t.length !== s.length) return false;
+function isSubsequence(s, t) {
+  if (t.indexOf(s) > 0) return true;
 
-  const counts = {};
+  let map = new Map();
+  let tSequence = "";
 
-  for (let c of s) {
-    counts[c] = (counts[c] || 0) + 1;
+  for (let i = 0; i < s.length; i++) {
+    if (!map.has(s[i])) {
+      map.set(s[i], s[i]);
+    }
   }
 
-  for (let c of t) {
-    if (!counts[c]) return false;
-    counts[c]--;
+  for (let i of t) if (map.has(i)) tSequence += i;
+
+  return s === tSequence;
+}
+let s = "leeeeeetcode";
+let t = "cte";
+// console.log(isSubsequence(t, s));
+
+var solution = (nums) => {
+  let map = new Map();
+  let max = 0;
+  for (let i of nums) {
+    if (!map.has(i)) map.set(i, 1);
   }
 
-  return true;
+  for (let i of nums) {
+    if (map.has(i + 1)) {
+      if (map.get(i + 1) > 1) {
+        map.set(i, map.get(i) + map.get(i + 1));
+      } else map.set(i, map.get(i) + 1);
+    }
+
+    max = Math.max(max, map.get(i));
+  }
+  console.log(map);
+  return max + 1;
 };
 
-// var isAnagram = function (s, t, m = {}) {
-//   for (let c of s) m[c] = (m[c] || 0) + 1;
-//   for (let c of t) if (!m[c]--) return false;
-//   return Object.values(m).every((v) => !v);
-// };
-
-// var isAnagram = (s, t) => {
-//   let counts = {};
-//   for (let i of s) counts[i] = (counts[i] || 0) + 1;
-//   for (let j of t) if (!counts[j]--) return false;
-//   return true;
-// };
-console.log(isAnagram("ab", "a"));
+console.log(solution([100, 1, 200, 3, 2, 4]));
+console.log(solution([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]));
