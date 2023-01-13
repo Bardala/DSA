@@ -1,102 +1,27 @@
-// var isPalindrome = function (s) {
-//   const alphabet = [
-//     "a",
-//     "b",
-//     "c",
-//     "d",
-//     "e",
-//     "f",
-//     "g",
-//     "h",
-//     "i",
-//     "j",
-//     "k",
-//     "l",
-//     "m",
-//     "n",
-//     "o",
-//     "p",
-//     "q",
-//     "r",
-//     "s",
-//     "t",
-//     "u",
-//     "v",
-//     "w",
-//     "x",
-//     "y",
-//     "z",
-//   ];
-//   let set = new Set(alphabet);
-//   for (let l = 0, r = s.length - 1; l < r; ) {
-//     let leftLetter = "";
-//     let rightLetter = "";
-//     if ()
-//     if (set.has(s[l].toLowerCase())) {
-//       leftLetter = s[l].toLowerCase();
-//       l++;
-//     }
+var threeSum = function (nums) {
+  nums.sort((a, b) => a - b);
+  const result = [];
 
-//     if (set.has(s[r].toLowerCase())) {
-//       rightLetter = s[r].toLowerCase();
-//       r--;
-//     }
+  for (let i = 0; i < nums.length; i++) {
+    let low = i + 1,
+      high = nums.length - 1,
+      sum = 0;
 
-//     if (leftLetter !== rightLetter) return false;
-//   }
-//   return true;
-// };
-// console.log(isPalindrome("A man, a plan, a canal: Panama"));
-var isPalindrome = function (s) {
-  const alphabet = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-  ];
-  let set = new Set(alphabet);
-  let word = "",
-    reverse = "",
-    letter = "";
-  for (let l of s) {
-    letter = l.toLowerCase();
-    if (set.has(letter)) {
-      word += letter;
-      reverse = letter + reverse;
+    while (low < high) {
+      sum = nums[i] + nums[low] + nums[high];
+
+      if (sum === 0) {
+        result.push([nums[i], nums[low], nums[high]]);
+        while (nums[low + 1] === nums[low]) low++;
+        while (nums[high - 1] === nums[high]) high--;
+        low++;
+        high--;
+      } else if (sum < 0) low++;
+      else high--;
     }
+    while (nums[i + 1] === nums[i]) i++;
   }
-  return word === reverse;
+  return result;
 };
-console.log(isPalindrome("0P"));
+console.log(threeSum([-2, 0, 0, 2, 2]));
+console.log(threeSum([-1, 0, 1, 2, -1, -4]));

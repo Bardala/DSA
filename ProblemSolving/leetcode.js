@@ -37,7 +37,7 @@ function twoSum(nums, target) {
   }
   return [];
 }
-console.log(twoSum([2, 7, 11, 15], 9));
+// console.log(twoSum([2, 7, 11, 15], 9));
 
 /**
  * 2. Palindrome Number
@@ -46,7 +46,7 @@ console.log(twoSum([2, 7, 11, 15], 9));
 //   return x == x.toString().split("").reverse().join("");
 // }
 
-console.log(isPalindrome(123));
+// console.log(isPalindrome(123));
 
 function isPalindrome(x) {
   let rev = 0;
@@ -130,7 +130,7 @@ var romanToInt = (s) => {
   return res;
 };
 
-console.log(romanToInt("MCMXCIV"));
+//console.log(romanToInt("MCMXCIV"));
 
 /**
  *4. Longest Common Prefix
@@ -147,7 +147,7 @@ function longestCommonPrefix(strs) {
 }
 
 const strs = ["flower", "flow", "flight"];
-console.log(longestCommonPrefix(strs));
+//console.log(longestCommonPrefix(strs));
 
 /**
  * 5. Remove Duplicates from Sorted Array
@@ -156,7 +156,7 @@ function removeDuplicates(nums) {
   if (nums.length == 0) return [];
   for (let i = 0; i < nums.length; )
     nums[i] === nums[i + 1] ? nums.splice(i, 1) : i++;
-  return console.log(nums);
+  return; //console.log(nums);
 }
 removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3]);
 removeDuplicates([1, 1, 2]);
@@ -171,7 +171,7 @@ var removeElement = function (nums, val) {
 
 var nums = [0, 1, 2, 2, 3, 0, 4, 2],
   val = 2;
-console.log(removeElement(nums, val));
+//console.log(removeElement(nums, val));
 
 /**
  *7. Reverse String
@@ -195,7 +195,7 @@ function reverseString(s) {
   }
   return s;
 }
-console.log(reverseString(["o", "l", "l", "e", "h"]));
+//console.log(reverseString(["o", "l", "l", "e", "h"]));
 
 /**
  * 8. Reverse String II
@@ -205,7 +205,7 @@ function reverseStr(s, k) {
   arr = arr.splice(0, k).reverse();
   return arr.join("") + s.slice(k);
 }
-console.log(reverseStr("abcdefg", 3));
+//console.log(reverseStr("abcdefg", 3));
 
 /**
  *9. Factorial Trailing Zeroes
@@ -277,7 +277,7 @@ var pivotIndex = function (nums) {
   return -1;
 };
 var arr = [1, 7, 3, 6, 5, 6];
-console.log(pivotIndex(arr));
+//console.log(pivotIndex(arr));
 
 /**
  * 12. Running Sum of 1d Array
@@ -287,7 +287,7 @@ function runningSum(nums) {
   return nums;
 }
 var arr = [1, 2, 3, 4];
-console.log(runningSum(arr));
+//console.log(runningSum(arr));
 // Output: [1,3,6,10]
 
 /**
@@ -298,7 +298,7 @@ function kthFactor(n, k) {
   for (let i = 1; i <= n; i++) if (n % i === 0) arr.push(i);
   return k > arr.length ? -1 : arr[k - 1];
 }
-console.log(kthFactor(7, 3));
+//console.log(kthFactor(7, 3));
 
 /**
  * 14. Longest Subarray of 1's After Deleting One Element
@@ -331,7 +331,7 @@ var longestSubarray = function (nums) {
   }
   return max;
 };
-console.log(longestSubarray([0, 1, 1, 1, 0, 1, 1, 0, 1]));
+//console.log(longestSubarray([0, 1, 1, 1, 0, 1, 1, 0, 1]));
 
 /**
  * 15. Check If Two String Arrays are Equivalent
@@ -364,8 +364,8 @@ var search = function (nums, target) {
 
 var nums = [-1, 0, 3, 5, 9, 12],
   target = 6;
-console.log(search(nums, target));
-console.log(search([0], 0));
+//console.log(search(nums, target));
+//console.log(search([0], 0));
 
 /**
  *17. Search Insert Position
@@ -392,7 +392,7 @@ var searchInsert = function (nums, target) {
 };
 var nums = [1, 3, 5, 6],
   target = 88;
-console.log(searchInsert(nums, target));
+//console.log(searchInsert(nums, target));
 
 /**
  * 18. Binary Tree Postorder Traversal
@@ -484,7 +484,7 @@ var rotate = function (nums, k) {
 
 var nums = [1, 2],
   k = 5;
-console.log(rotate(nums, k));
+//console.log(rotate(nums, k));
 
 /**
  *21. Valid Parentheses
@@ -517,9 +517,9 @@ var isValid = (str) => {
   return str.length == 0;
 };
 //test
-console.log(isValid("([{({})}])"));
-console.log(isValid("([{})}])"));
-console.log(isValid("()[]{}"));
+//console.log(isValid("([{({})}])"));
+//console.log(isValid("([{})}])"));
+//console.log(isValid("()[]{}"));
 
 /**
  * 22. Move Zeroes
@@ -531,9 +531,9 @@ var moveZeroes = function (nums) {
 };
 //tests
 var nums = [0, 1, 0, 3, 12];
-console.log(moveZeroes(nums));
-console.log(moveZeroes([0, 0]));
-console.log(moveZeroes([0, 0, 1]));
+//console.log(moveZeroes(nums));
+//console.log(moveZeroes([0, 0]));
+//console.log(moveZeroes([0, 0, 1]));
 
 /**
  * 23. Two Sum II - Input Array Is Sorted
@@ -556,13 +556,13 @@ var twoSum = function (numbers, target) {
 // test
 var numbers = [2, 7, 11, 15],
   target = 9;
-console.log(twoSum(numbers, target));
+//console.log(twoSum(numbers, target));
 var numbers = [2, 3, 4],
   target = 6;
-console.log(twoSum(numbers, target));
+//console.log(twoSum(numbers, target));
 var numbers = [-1, 0],
   target = -1;
-console.log(twoSum(numbers, target));
+//console.log(twoSum(numbers, target));
 
 /**
  * 24. Merge Two Sorted Lists
@@ -609,7 +609,7 @@ var lengthOfLastWord = function (s) {
   let match = s.match(/\w+/gi);
   return match[match.length - 1].length;
 };
-console.log(lengthOfLastWord("   fly me   to   the moon  "));
+//console.log(lengthOfLastWord("   fly me   to   the moon  "));
 
 /**
  * 26. Plus One
@@ -651,10 +651,10 @@ var plusOne = (digits) => {
 };
 
 // test
-console.log(plusOne([9]));
-console.log(plusOne([9, 1]));
-console.log(plusOne([1, 9, 9, 9]));
-console.log(plusOne([6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 0, 0, 0]));
+//console.log(plusOne([9]));
+//console.log(plusOne([9, 1]));
+//console.log(plusOne([1, 9, 9, 9]));
+//console.log(plusOne([6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 0, 0, 0]));
 
 /**
  * 27. Add Binary
@@ -671,7 +671,7 @@ var addBinary = function (a, b) {
   return sum.toString(2);
 };
 // test
-console.log(addBinary("11", "1"));
+//console.log(addBinary("11", "1"));
 
 var addBinary = function (a, b) {
   let sum = "";
@@ -691,8 +691,8 @@ var addBinary = function (a, b) {
   return sum;
 };
 
-console.log(addBinary("1010", "1011"));
-console.log(5 % 6);
+//console.log(addBinary("1010", "1011"));
+//console.log(5 % 6);
 
 /**
  * 28. Sqrt(x)
@@ -703,7 +703,7 @@ var mySqrt = function (x) {
     else if (x < i ** 2) return i - 1;
   }
 };
-console.log(mySqrt(9));
+//console.log(mySqrt(9));
 
 var mySqrt = function (x) {
   let left = 0;
@@ -729,9 +729,9 @@ var climbStairs = function (n) {
   }
   return dp[n];
 };
-console.log(climbStairs(3));
-console.log(climbStairs(4));
-console.log(climbStairs(5));
+//console.log(climbStairs(3));
+//console.log(climbStairs(4));
+//console.log(climbStairs(5));
 /**
  * 30. Substring with Concatenation of All Words
  */
@@ -741,8 +741,8 @@ var merge = function (nums1, m, nums2, n) {
   nums1 = nums1.sort((a, b) => a - b);
   return nums1;
 };
-console.log(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3));
-console.log(merge([1], 1, [], 0));
+//console.log(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3));
+//console.log(merge([1], 1, [], 0));
 // var merge = function (nums1, m, nums2, n) {
 //   let i = m - 1;
 //   let j = n - 1;
@@ -790,11 +790,11 @@ var lengthOfLongestSubstring = function (s) {
   return repeats;
 };
 //test
-console.log(lengthOfLongestSubstring("abcabcbb"));
-console.log(lengthOfLongestSubstring("bbbbb"));
-console.log(lengthOfLongestSubstring("b"));
-console.log(lengthOfLongestSubstring("pwwkew"));
-console.log(lengthOfLongestSubstring("au"));
+//console.log(lengthOfLongestSubstring("abcabcbb"));
+//console.log(lengthOfLongestSubstring("bbbbb"));
+//console.log(lengthOfLongestSubstring("b"));
+//console.log(lengthOfLongestSubstring("pwwkew"));
+//console.log(lengthOfLongestSubstring("au"));
 
 var lengthOfLongestSubstring = function (s) {
   let i = 0,
@@ -814,7 +814,7 @@ var lengthOfLongestSubstring = function (s) {
   return max;
 };
 //test
-console.log(lengthOfLongestSubstring("abcabcbb"));
+//console.log(lengthOfLongestSubstring("abcabcbb"));
 
 /**
  * 32. Longest Palindromic Substring
@@ -848,8 +848,8 @@ var reverseWords = function (s) {
     ? reversed
     : reversedString + " " + reversed;
 };
-console.log(reverseWords(`Let's take LeetCode contest`));
-console.log(reverseWords(`ehhhhhheh`));
+//console.log(reverseWords(`Let's take LeetCode contest`));
+//console.log(reverseWords(`ehhhhhheh`));
 
 var revereseWords = function (s) {
   let arr = s.split(" ");
@@ -859,8 +859,8 @@ var revereseWords = function (s) {
   }
   return reversed.trim();
 };
-console.log(reverseWords(`Let's take LeetCode contest`));
-console.log(reverseWords(`ehhhhhheh`));
+//console.log(reverseWords(`Let's take LeetCode contest`));
+//console.log(reverseWords(`ehhhhhheh`));
 
 var reverseWords = function (s) {
   return s
@@ -868,8 +868,8 @@ var reverseWords = function (s) {
     .map((word) => word.split("").reverse().join(""))
     .join(" ");
 };
-console.log(reverseWords(`Let's take LeetCode contest`));
-console.log(reverseWords(`ehhhhhheh`));
+//console.log(reverseWords(`Let's take LeetCode contest`));
+//console.log(reverseWords(`ehhhhhheh`));
 
 var reverseWords = function (s) {
   return s.split("").reverse().join("").split(" ").reverse().join(" ");
@@ -1053,7 +1053,7 @@ var removeNthFromEnd = function (head, n) {
  */
 var nums = [1, 2, 3, 4, 5, 6, -3],
   m = 4;
-console.log(maxSubArrayWithFixedLength(nums, m));
+//console.log(maxSubArrayWithFixedLength(nums, m));
 // 1+2+3+4 = 10
 //   2+3+4+5 = 14 // 10-1+5
 //     3+4+5+6 = 18 // 14-2+6
@@ -1083,7 +1083,7 @@ function maxSubArrayWithFixedLength(nums, m) {
  * Two Poleters Algorithm
  */
 var nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
-console.log(maxSubArray(nums));
+//console.log(maxSubArray(nums));
 function maxSubArray(nums) {
   let l = 0,
     r = 1,
@@ -1153,13 +1153,13 @@ var maxSubArray = function (nums) {
   return maxSum; // return the contiguous subarray which has the largest sum...
 };
 
-console.log(maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
-console.log(maxSubArray([1]));
-console.log(maxSubArray([5, 4, -1, 7, 8]));
-console.log(maxSubArray([-2, -1]));
-console.log(maxSubArray([2, -1, 1, 1]));
-console.log(maxSubArray([8, -19, 5, -4, 20]));
-console.log(maxSubArray([31, -41, 59, 26, -53, 58, 97, -93, -23, 84]));
+//console.log(maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
+//console.log(maxSubArray([1]));
+//console.log(maxSubArray([5, 4, -1, 7, 8]));
+//console.log(maxSubArray([-2, -1]));
+//console.log(maxSubArray([2, -1, 1, 1]));
+//console.log(maxSubArray([8, -19, 5, -4, 20]));
+//console.log(maxSubArray([31, -41, 59, 26, -53, 58, 97, -93, -23, 84]));
 
 /**
  * 31(again). Longest Substring Without Repeating Characters
@@ -1189,8 +1189,8 @@ var lengthOfLongestSubstring = function (s) {
   }
   return max;
 };
-console.log(lengthOfLongestSubstring("abcabcbb"));
-console.log(lengthOfLongestSubstring("qrsvbspk"));
+//console.log(lengthOfLongestSubstring("abcabcbb"));
+//console.log(lengthOfLongestSubstring("qrsvbspk"));
 
 /**
  * 38. Permutation in String
@@ -1235,11 +1235,11 @@ var checkInclusion = function (s1, s2) {
   return false;
 };
 
-console.log(checkInclusion("abo", "eidbaooo"));
-console.log(checkInclusion("ab", "eidboaoo"));
-console.log(checkInclusion("hello", "ooolleoooleh"));
-console.log(checkInclusion("abc", "ccccbbbbaaaa"));
-console.log(checkInclusion("abc", "bbbca"));
+//console.log(checkInclusion("abo", "eidbaooo"));
+//console.log(checkInclusion("ab", "eidboaoo"));
+//console.log(checkInclusion("hello", "ooolleoooleh"));
+//console.log(checkInclusion("abc", "ccccbbbbaaaa"));
+//console.log(checkInclusion("abc", "bbbca"));
 
 /**
  * 39. Longest Palindromic Substring
@@ -1274,11 +1274,11 @@ var longestPalindrome = function (s) {
 //   return res == " " ? (res = s[0]) : res;
 // };
 
-console.log(longestPalindrome("eabcb"));
-console.log(longestPalindrome("abb"));
-console.log(longestPalindrome("bananas"));
-console.log(longestPalindrome("babad"));
-console.log(longestPalindrome("cbbd"));
+//console.log(longestPalindrome("eabcb"));
+//console.log(longestPalindrome("abb"));
+//console.log(longestPalindrome("bananas"));
+//console.log(longestPalindrome("babad"));
+//console.log(longestPalindrome("cbbd"));
 
 // Enhanced Java Solution O(n)
 
@@ -1328,8 +1328,8 @@ function SubArraySum(arr, s) {
     }
   }
 }
-console.log(SubArraySum([1, 2, 3, 7, 5], 12));
-console.log(SubArraySum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 15));
+//console.log(SubArraySum([1, 2, 3, 7, 5], 12));
+//console.log(SubArraySum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 15));
 
 /**
  * 41. Flood Fill
@@ -1373,7 +1373,7 @@ var image = [
   sr = 1,
   sc = 1, // [1, 1]
   color = 2;
-console.log(floodFill(image, sr, sc, color));
+//console.log(floodFill(image, sr, sc, color));
 //[[2,2,2],
 // [2,2,0],
 // [2,0,1]]
@@ -1394,7 +1394,7 @@ var floodFill = function (image, sr, sc, newColor) {
   }
   return image;
 };
-console.log(floodFill(image, sr, sc, color));
+//console.log(floodFill(image, sr, sc, color));
 
 /**
  * 42. Number of Islands
@@ -1443,7 +1443,7 @@ let grid = [
   [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
 ];
-console.log(maxAreaOfIsland(grid));
+//console.log(maxAreaOfIsland(grid));
 
 /**
  * 43. Merge Two Binary Trees
@@ -1596,8 +1596,8 @@ var l2 = new ListNode(5);
 l2.next = new ListNode(6);
 l2.next.next = new ListNode(4);
 
-console.log(addTwoNumbers(l1, l2));
-console.log(addTwoNumbers(new ListNode(0), new ListNode(0)));
+//console.log(addTwoNumbers(l1, l2));
+//console.log(addTwoNumbers(new ListNode(0), new ListNode(0)));
 
 /**
  * 48. Reverse LinkedList
@@ -1748,7 +1748,7 @@ var isAnagram = function (s, t) {
   }
   return true;
 };
-console.log(isAnagram("anagram", "nagaram"));
+//console.log(isAnagram("anagram", "nagaram"));
 
 // var isAnagram = (s, t) => {
 //   let counts = {};
@@ -1958,7 +1958,7 @@ var productExceptSelf = (nums) => {
   res.pop();
   return res;
 };
-console.log(productExceptSelf([2, 3, 4, 5]));
+// console.log(productExceptSelf([2, 3, 4, 5]));
 
 /**
  * 54. Longest Consecutive Sequence
@@ -1983,13 +1983,13 @@ var longestConsecutive = (nums) => {
   }
   return longest;
 };
-console.log(longestConsecutive([100, 1, 200, 3, 2, 4]));
-console.log(longestConsecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]));
+// console.log(longestConsecutive([100, 1, 200, 3, 2, 4]));
+// console.log(longestConsecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]));
 
 /**
  * 55. Valid Palindrome
  ** Hash Set
- ** Reverse Approach & Two Pointers
+ ** Two Pointers & Reverse Approach
  ** Time complexity O(n) n-> nums.length
  ** Space complexity O(1)
  */
@@ -2109,3 +2109,85 @@ var isPalindrome = (s) => {
 // console.log(isPalindrome("A man, a plan, a canal: Panama"));
 // console.log(isPalindrome("0P"));
 // console.log(isPalindrome(".,"));
+
+/**
+ * 56. 3Sum
+ ** Two Pointers && Divide and Conquer
+ ** Time Complexity O(n^2) -> O(n log(n)) + O(n^2)
+ ** Space Complexity O(n)
+ */
+// Brute Force
+// Time Complexity O(n^3)
+// Space Complexity O(strArr.length + n ) n -> nums.length
+var threeSum = (nums) => {
+  let res = [],
+    strArr = [],
+    newArr = [];
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      for (let k = j + 1; k < nums.length; k++) {
+        if (nums[i] + nums[j] + nums[k] === 0) {
+          newArr = [nums[i], nums[j], nums[k]].sort((a, b) => a - b);
+          !strArr.includes(newArr.join("")) ? res.push(newArr) : res;
+          strArr.push(newArr.join(""));
+        }
+      }
+    }
+  }
+  return res;
+};
+
+// Two Pointers && Divide and Conquer
+// Time Complexity O(n^2) -> O(n log(n)) + O(n^2)
+//
+var threeSum = (nums) => {
+  let res = [],
+    set = new Set();
+  nums = nums.sort((a, b) => a - b); // O(n log(n))
+  for (let i = 0; i < nums.length; i++) {
+    // O(n)
+    let sortedArr = nums.slice(i + 1);
+    for (let l = 0, r = sortedArr.length - 1; l < r; ) {
+      // O(n)
+      let action = nums[i] + sortedArr[l] + sortedArr[r];
+      action > 0 && r--;
+      action < 0 && l++;
+      if (action === 0) {
+        let newArr = [nums[i], sortedArr[l], sortedArr[r]].sort(
+          //join -> O(1)
+          (a, b) => a - b
+        );
+        !set.has(newArr.join("")) && res.push(newArr); //join -> O(1)
+        l++;
+        r--;
+        set.add(newArr.join("")); //join -> O(1)
+      }
+    }
+  }
+  return res;
+};
+
+var threeSum = (nums) => {
+  let res = [];
+  nums = nums.sort((a, b) => a - b);
+
+  for (let i = 0; i < nums.length; i++) {
+    for (let l = i + 1, r = nums.length - 1; l < r; ) {
+      let sum = nums[i] + nums[l] + nums[r];
+
+      if (sum === 0) {
+        res.push([nums[i], nums[l], nums[r]]);
+        while (nums[l] === nums[l + 1]) l++;
+        while (nums[r] === nums[r - 1]) r--;
+        l++, r--;
+      } else if (sum > 0) r--;
+      else l++;
+    }
+    while (nums[i] === nums[i + 1]) i++;
+  }
+  return res;
+};
+// console.log(threeSum([-1, 0, 1, 2, -1, -4]));
+// console.log(threeSum([0, 1, 1]));
+// console.log(threeSum([1, -1, -1, 0]));
+// console.log(threeSum([-2, 0, 0, 2, 2]));
