@@ -1985,3 +1985,127 @@ var longestConsecutive = (nums) => {
 };
 console.log(longestConsecutive([100, 1, 200, 3, 2, 4]));
 console.log(longestConsecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]));
+
+/**
+ * 55. Valid Palindrome
+ ** Hash Set
+ ** Reverse Approach & Two Pointers
+ ** Time complexity O(n) n-> nums.length
+ ** Space complexity O(1)
+ */
+
+//* Hash Set
+//* Reverse String Approach
+//* Time complexity O(n) n-> nums.length
+//* Space complexity O(n) n-> nums.length
+
+var isPalindrome = function (s) {
+  const alphabet = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+  ];
+  let set = new Set(alphabet);
+  let word = "",
+    reverse = "",
+    letter = "";
+  for (let l of s) {
+    letter = l.toLowerCase();
+    if (set.has(letter)) {
+      word += letter;
+      reverse = letter + reverse;
+    }
+  }
+  return word === reverse;
+};
+
+//* Hash Set
+//* Two Pointers Approach
+//* Time complexity O(n) n-> nums.length
+//* Space complexity O(1) constant because it is O(2*set.length)
+
+var isPalindrome = (s) => {
+  const alphabet = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+  ];
+  let set = new Set(alphabet);
+
+  for (let l = 0, r = s.length - 1; l < r; ) {
+    while (!set.has(s[l].toLowerCase()) && l < r) l++;
+    while (!set.has(s[r].toLowerCase()) && l < r) r--;
+
+    if (s[l++].toLowerCase() !== s[r--].toLowerCase()) return false;
+  }
+  return true;
+};
+// console.log(isPalindrome("A man, a plan, a canal: Panama"));
+// console.log(isPalindrome("0P"));
+// console.log(isPalindrome(".,"));
