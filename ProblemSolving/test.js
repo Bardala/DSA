@@ -1,75 +1,70 @@
-var maxArea = function (height) {
-  let max = 0,
-    small = 0,
-    big = 0,
-    biggestAreaBetweenTwins = 0,
-    area = 0;
-  let twins = {};
+// var isValid = (s, stack = []) => {
+//   const map = {
+//     "}": "{",
+//     "]": "[",
+//     ")": "(",
+//   };
 
-  height = [0, ...height];
+//   for (const char of s) {
+//     /* Time O(N) */
+//     const isBracket = char in map;
+//     if (!isBracket) {
+//       stack.push(char);
+//       continue;
+//     } /* Space O(N) */
 
-  for (let i = 0; i < height.length; i++) {
-    // O(n)
-    for (let l = i + 1, r = height.length - 1; l < r; ) {
-      // O(n)
-      if (height[l] < height[r]) {
-        small = height[l];
-        big = height[r];
-        area = small * (r - l);
-        biggestAreaBetweenTwins = checkTwins(twins, r, l);
-        l++;
-      } else if (height[l] > height[r]) {
-        small = height[r];
-        big = height[l];
-        area = small * (r - l);
-        biggestAreaBetweenTwins = checkTwins(twins, r, l);
-        r--;
-      } else {
-        small = height[r];
-        // check is there a value between twins is bigger than its value
-        twins.left = l;
-        twins.right = r;
-        twins.value = small;
-        area = small * (r - l);
-        l++;
-      }
+//     const isEqual = stack[stack.length - 1] === map[char];
+//     if (isEqual) {
+//       stack.pop();
+//       continue;
+//     }
 
-      max = Math.max(area, max, biggestAreaBetweenTwins || 0);
+//     return false;
+//   }
+
+//   return stack.length === 0;
+// };
+
+// var isValid = function (s) {
+//   // Initialize stack to store the closing brackets expected...
+//   let stack = [];
+//   // Traverse each charater in input string...
+//   for (let idx = 0; idx < s.length; idx++) {
+//     // If open parentheses are present, push it to stack...
+//     if (s[idx] == "{") {
+//       stack.push("}");
+//     } else if (s[idx] == "[") {
+//       stack.push("]");
+//     } else if (s[idx] == "(") {
+//       stack.push(")");
+//     }
+//     // If a close bracket is found, check that it matches the last stored open bracket
+//     else if (stack.pop() !== s[idx]) {
+//       return false;
+//     }
+//   }
+//   return !stack.length;
+// };
+
+var isValid = (str) => {
+  let stack = [];
+
+  for (let c of str)
+    switch (c) {
+      case "{":
+        stack.push("}");
+        break;
+      case "[":
+        stack.push("]");
+        break;
+      case "(":
+        stack.push(")");
+        break;
+      default:
+        if (stack.pop() !== c) return false;
     }
-  }
-  return max;
 
-  function checkTwins(twins, r, l, big) {
-    // is big bigger than twins value ?
-    if (big > twins?.value) {
-      // if yes which is big nearest to left or right ?
-      let leftDistance = Math.abs(l - twins?.left);
-      let rightDistance = Math.abs(r - twins?.right);
-      let biggestDistance = 0;
-
-      if (leftDistance > rightDistance) {
-        biggestDistance = leftDistance;
-      } else if (leftDistance > rightDistance) {
-        biggestDistance = rightDistance;
-      }
-
-      // calculate the area between big and the farest element
-      return biggestDistance * twins.value;
-    }
-  }
+  return stack.length === 0;
 };
-console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]));
-console.log(maxArea([1, 1]));
-
-var maxArea = function (height) {
-  let maxArea = 0;
-
-  for (let l = 0, r = height.length - 1; l < r; ) {
-    min = Math.min(height[l], height[r]);
-    area = min * (r - l);
-    maxArea = Math.max(maxArea, area);
-
-    height[l] > height[r] ? r-- : l++;
-  }
-  return maxArea;
-};
+console.log(isValid("([]){}"));
+console.log(isValid("(}"));

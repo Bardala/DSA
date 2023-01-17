@@ -490,7 +490,9 @@ var nums = [1, 2],
 //console.log(rotate(nums, k));
 
 /**
- *21. Valid Parentheses
+ * 21. Valid Parentheses
+ ** Regex
+ ** stack O(n) ,
  * Set is better than Map to store () {} [], Map doesn't work with me
  */
 var isValid = (str) => {
@@ -513,11 +515,32 @@ var isValid = (str) => {
 };
 
 var isValid = (str) => {
-  if (str.length % 2 !== 0) return false;
   for (let i = str.length / 2; i > 0; i--) {
     str = str.replace(/\(\)|\[\]|\{\}/, "");
   }
   return str.length == 0;
+};
+
+// Stack
+var isValid = (str) => {
+  let stack = [];
+
+  for (let c of str)
+    switch (c) {
+      case "{":
+        stack.push("}");
+        break;
+      case "[":
+        stack.push("]");
+        break;
+      case "(":
+        stack.push(")");
+        break;
+      default:
+        if (stack.pop() !== c) return false;
+    }
+
+  return stack.length === 0;
 };
 //test
 //console.log(isValid("([{({})}])"));
