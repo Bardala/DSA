@@ -25,6 +25,9 @@ console.log(isUgly(20));
 
 /**
  * Two Sum
+ ** Hash Table
+ ** Time Complexity O(n)
+ ** Space Complexity O(n)
  */
 function twoSum(nums, target) {
   let map = new Map();
@@ -2175,13 +2178,14 @@ var threeSum = (nums) => {
     for (let l = i + 1, r = nums.length - 1; l < r; ) {
       let sum = nums[i] + nums[l] + nums[r];
 
-      if (sum === 0) {
+      if (sum < 0) l++;
+      else if (sum > 0) r--;
+      else {
         res.push([nums[i], nums[l], nums[r]]);
         while (nums[l] === nums[l + 1]) l++;
         while (nums[r] === nums[r - 1]) r--;
         l++, r--;
-      } else if (sum > 0) r--;
-      else l++;
+      }
     }
     while (nums[i] === nums[i + 1]) i++;
   }
@@ -2191,3 +2195,25 @@ var threeSum = (nums) => {
 // console.log(threeSum([0, 1, 1]));
 // console.log(threeSum([1, -1, -1, 0]));
 // console.log(threeSum([-2, 0, 0, 2, 2]));
+
+/**
+ * 57. Container With Most Water
+ *
+ ** Two Pointers
+ ** TC : O(n), SC : O(1)
+ */
+var maxArea = function (height) {
+  let maxArea = 0;
+
+  for (let l = 0, r = height.length - 1; l < r; ) {
+    min = Math.min(height[l], height[r]);
+    area = min * (r - l);
+    maxArea = Math.max(maxArea, area);
+
+    height[l] > height[r] ? r-- : l++;
+  }
+  return maxArea;
+};
+
+console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]));
+console.log(maxArea([1, 1]));
