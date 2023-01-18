@@ -793,7 +793,8 @@ var merge = function (nums1, m, nums2, n) {
 
 /**
  * 31. Longest Substring Without Repeating Characters
- * By Hash Map Data Structure
+ ** Sliding Window && Hash Map
+ ** TC : O(n), SC : O(n)
  */
 var lengthOfLongestSubstring = function (s) {
   let arr = s.split(""),
@@ -823,32 +824,22 @@ var lengthOfLongestSubstring = function (s) {
 //console.log(lengthOfLongestSubstring("au"));
 
 var lengthOfLongestSubstring = function (s) {
-  let i = 0,
-    j = 0,
+  let left = 0,
+    right = 0,
     max = 0;
   let set = new Set();
-  while (i < s.length && j < s.length) {
-    if (!set.has(s[j])) {
-      set.add(s[j]);
-      j++;
-      max = Math.max(max, j - i);
+  while (right < s.length) {
+    if (!set.has(s[right])) {
+      set.add(s[right++]);
+      max = Math.max(max, right - left);
     } else {
-      set.delete(s[i]);
-      i++;
+      set.delete(s[left++]);
     }
   }
   return max;
 };
 //test
 //console.log(lengthOfLongestSubstring("abcabcbb"));
-
-/**
- * 32. Longest Palindromic Substring
- */
-var longestPalindrome = function (s) {};
-// console.log(longestPalindrome("babad"));
-// console.log(longestPalindrome("aa"));
-// console.log(longestPalindrome("cbbbd"));
 
 /**
  * 32. Reverse Words in a String III
@@ -2240,3 +2231,24 @@ var maxArea = function (height) {
 
 console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]));
 console.log(maxArea([1, 1]));
+
+/**
+ * 58. Best Time to Buy and Sell Stock
+ *
+ **Sliding Window / Two Pointers
+ ** TC : O(n), SC : O(1)
+ */
+var maxProfit = function (prices) {
+  let max = 0;
+  for (let l = 0, r = l + 1; r < prices.length; ) {
+    if (prices[l] < prices[r]) {
+      max = Math.max(prices[r++] - prices[l], max);
+    } else {
+      l = r;
+      r++;
+    }
+  }
+  return max;
+};
+console.log(maxProfit([7, 1, 5, 3, 6, 4]));
+console.log(maxProfit([1, 2, 4, 2, 5, 7, 2, 4, 9, 0, 9]));
