@@ -868,7 +868,7 @@ var reverseWords = function (s) {
 //console.log(reverseWords(`Let's take LeetCode contest`));
 //console.log(reverseWords(`ehhhhhheh`));
 
-var revereseWords = function (s) {
+var reverseWords = function (s) {
   let arr = s.split(" ");
   let reversed = "";
   for (let i of arr) {
@@ -1815,10 +1815,10 @@ const reorder = (str) =>
  * 51. Reverse Integer
  *
  ** Tail recursion
+ ** Time complexity O(log n) ,There are roughly (log n) digits in x
+ // TC | O(n) n-> number of digits in x
+ ** Space complexity O(1), because of Tail Recursion
  */
-
-// Time complexity O(log n) ,There are roughly (log n) digits in x
-// Space complexity O(1), because of Tail Recursion
 function reverseInt(x, rev = 0, sign = 1) {
   if (rev / 10 > 2 ** 31 - 1 || rev / 10 < (-2) ** 31) return 0;
   if (x < 0) sign = -1;
@@ -1832,11 +1832,10 @@ function reverseInt(x, rev = 0, sign = 1) {
 
 /**
  * 52. Group Anagrams
- *
+ ** Hash Map
+ ** time complexity O(n*l*log l) n-> strs.length l-> str.length
+ ** space complexity O(n*l) n-> strs.length l-> str.length
  */
-
-// time complexity O(n*l*log l) n-> strs.length l-> str.length
-// space complexity O(n*l) n-> strs.length l-> str.length
 
 const groupAnagrams = function (strs) {
   let groups = {};
@@ -1915,6 +1914,9 @@ const groupAnagrams = function (strs) {
 
 /**
  * 53. Top K Frequent Elements
+ ** Hash Map
+ ** Time complexity O(n log n) n-> nums.length
+ ** Space complexity O(n) n-> nums.length
  */
 var topKFrequent = function (nums, k) {
   let map = {};
@@ -1930,12 +1932,14 @@ var topKFrequent = function (nums, k) {
     .map((d) => d[0]) // O(n) n-> nums.length
     .splice(0, k); // O(1)
 };
-// Time complexity O(n log n) n-> nums.length
-// Space complexity O(n) n-> nums.length
+
 // console.log(topKFrequent([1, 1, 1, 2, 2, 3], 2));
 
 /**
  * 54. Product of Array Except Self
+ *
+ ** Prefix Sum || division
+ ** TC|O(n) SC|O(n)
  */
 
 // var productExceptSelf = function (nums) {
@@ -1957,22 +1961,70 @@ var topKFrequent = function (nums, k) {
 //   return nums;
 // };
 
+// -> fastest Solution By Division
+// var productExceptSelf = function(nums) {
+//   let res = [];
+//   let pro = 1, zeros = 0;
+
+//   for (let i of nums){
+//       if (i !== 0) pro *= i;
+//       else {
+//           zeros ++;
+//           if(zeros === 2) break;
+//           };
+//   }
+
+//   for(let j of nums){
+//       switch (zeros) {
+//           case 0 :
+//               res.push(pro / j);
+//               break;
+//           case 1 :
+//               if (j !== 0) res.push(0);
+//               else res.push(pro);
+//               break;
+//           default :
+//               res.push(0);
+//               break;
+
+//       }
+//   }
+
+//   return res;
+// };
+
 // Time complexity O(n) n-> nums.length
 // Space complexity O(n) n-> nums.length
 // my own solution
+// var productExceptSelf = (nums) => {
+//   let val = 1;
+//   let res = [1];
+
+//   for (let j = nums.length - 1; j >= 0; j--) {
+//     res.unshift(res[0] * nums[j]);
+//   }//[[120,]60,20,5,1]
+
+//   for (let i = 0; i <= nums.length; i++) {
+//     res[i] = val * res[i + 1];
+//     val *= nums[i];
+//   }//[60,]
+//   res.pop();
+//   return res;
+// };
+
+// Enhancing last solution
 var productExceptSelf = (nums) => {
   let val = 1;
   let res = [1];
 
-  for (let j = nums.length - 1; j >= 0; j--) {
+  for (let j = nums.length - 1; j > 0; j--) {
     res.unshift(res[0] * nums[j]);
   }
 
-  for (let i = 0; i <= nums.length; i++) {
-    res[i] = val * res[i + 1];
+  for (let i = 0; i < nums.length; i++) {
+    res[i] = val * res[i];
     val *= nums[i];
   }
-  res.pop();
   return res;
 };
 // console.log(productExceptSelf([2, 3, 4, 5]));
@@ -2229,8 +2281,8 @@ var maxArea = function (height) {
   return maxArea;
 };
 
-console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]));
-console.log(maxArea([1, 1]));
+// console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]));
+// console.log(maxArea([1, 1]));
 
 /**
  * 58. Best Time to Buy and Sell Stock
@@ -2250,5 +2302,5 @@ var maxProfit = function (prices) {
   }
   return max;
 };
-console.log(maxProfit([7, 1, 5, 3, 6, 4]));
-console.log(maxProfit([1, 2, 4, 2, 5, 7, 2, 4, 9, 0, 9]));
+// console.log(maxProfit([7, 1, 5, 3, 6, 4]));
+// console.log(maxProfit([1, 2, 4, 2, 5, 7, 2, 4, 9, 0, 9]));

@@ -1,14 +1,13 @@
-var maxProfit = function (prices) {
-  let max = 0;
-  for (let l = 0, r = l + 1; r < prices.length; ) {
-    if (prices[l] < prices[r]) {
-      max = Math.max(prices[r++] - prices[l], max);
-    } else if (prices[l] > prices[r]) {
-      l = r;
-      r++;
-    }
+var isAnagram = function (s, t) {
+  if (t.length !== s.length) return false;
+  const counts = {};
+  for (let c of s) {
+    counts[c] = (counts[c] || 0) + 1;
   }
-  return max;
+  for (let c of t) {
+    if (!counts[c]) return false;
+    counts[c]--;
+  }
+  return true;
 };
-console.log(maxProfit([7, 1, 5, 3, 6, 4]));
-console.log(maxProfit([1, 2, 4, 2, 5, 7, 2, 4, 9, 0, 9]));
+console.log(isAnagram("amm", "maa"));
