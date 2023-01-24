@@ -2398,5 +2398,115 @@ var largestNumber = (nums) => {
 
   return nums == 0 ? '0' : nums
 }
-
 // console.log(largestNumber([123,897,89, 4, 99]))
+
+/**
+ * 61. Convert Integer to the Sum of Two No-Zero Integers
+ ** Math
+ */
+
+var getNoZeroIntegers = function(n) {
+    for (let i = 1;i < n; i++) 
+        if (isNoZeros(n - i, n - (n - i))) return [n - i, n - (n - i)];
+        
+    function isNoZeros(n1, n2) {
+        while (n1 > 0) {
+            if (n1 % 10 === 0 && n1 > 0) return false;
+            n1 = Math.floor(n1 / 10);
+            if (n2 % 10 === 0 && n2 > 0) return false;
+            n2 = Math.floor(n2 / 10);
+        }    
+        return true;
+    }
+};
+// console.log(getNoZeroIntegers(1010));
+// console.log(getNoZeroIntegers(4040));
+
+/**
+ * 61. Minimum Flips to Make a OR b Equal to c
+ ** Math
+ */
+
+var minFlips = function(a, b, c) {
+  let map = {
+    '000': 0,
+      '001': 1,
+      '010': 1,
+      '011': 0,
+      '100': 1,
+      '101': 0,
+      '110': 2,
+      '111': 0,
+    }
+  let flips = 0;
+  let zeros= '000000000000000000000000000000000000000000000000000000000000'
+
+  a = (a).toString(2)
+  b = (b).toString(2)
+  c = (c).toString(2)
+
+  let maxLength = Math.max(a.length, b.length, c.length);
+
+  a = zeros.substring(0, (maxLength - a.length)) + a
+  b = zeros.substring(0, (maxLength - b.length)) + b
+  c = zeros.substring(0, (maxLength - c.length)) + c
+
+  for(let i = 0; i < maxLength; i++){
+      flips += map[a[i]+b[i]+c[i]]
+  }
+
+  return flips
+};
+
+var minFlips = (a, b, c) => {
+  let ret = 0;
+  while (a > 0 || b > 0 || c > 0) {
+    if (((a & 1) | (b & 1)) !== (c & 1)) {
+      ret += (a & 1) === 1 && (b & 1) === 1 ? 2 : 1;
+    }
+    a >>>= 1;
+    b >>>= 1;
+    c >>>= 1;
+  }
+  return ret;
+};
+
+// Since the a, b and c are all int, we could set the traversal times and calculate with a mask.
+// The code could be like this:
+var minFlips = (a, b, c) => {
+  let ret = 0;
+  let mask = 1;
+  for (let i = 1; i < 32; ++i) {
+    if (((a & mask) | (b & mask)) !== (c & mask)) {
+      ret += (a & mask) === mask && (b & mask) === mask ? 2 : 1;
+    }
+    mask <<= 1;
+  }
+  return ret;
+};
+
+// console.log(minFlips(2,6,5))
+// console.log(minFlips(2,4,7))
+// console.log(minFlips(10,9,1))
+
+/**
+ * 62. Power of Two
+ ** Bit Manipulation
+ */
+
+var isPowerOfTwo = n => n > 0 && !(n & (n - 1))
+// console.log(isPowerOfTwo(1))
+
+/**
+ * 63. Number of 1 Bits
+ ** Bit Manipulation
+ */
+var hammingWeight = function(n) {
+  let counter = 0;
+  while (n) {
+      n = n & (n - 1)
+      counter ++
+  }
+  return counter;
+};
+console.log(hammingWeight(00000000000000000000000000001011))
