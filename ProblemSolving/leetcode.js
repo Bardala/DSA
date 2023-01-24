@@ -1211,12 +1211,10 @@ var lengthOfLongestSubstring = function (s) {
 
 /**
  * 38. Permutation in String
+ ** Sliding Window
+ ** TC|O(n) SC|O(1)
  */
-/**
- * @param {string} s1
- * @param {string} s2
- * @return {boolean}
- */
+
 var checkInclusion = function (s1, s2) {
   let map = new Map();
   let weight = 0;
@@ -1250,6 +1248,37 @@ var checkInclusion = function (s1, s2) {
     return map.size == count;
   }
   return false;
+};
+
+var checkInclusion = (s1, s2) => {
+  let start = 0,
+    end = s1.length - 1,
+    windowWeight = 0,
+    weight = 0;
+
+  for (let i = 0; i < s1.length; i++) {
+    weight += s1.charCodeAt(i);
+    windowWeight += s2.charCodeAt(i);
+  }
+
+  while (end < s2.length) {
+    if (
+      windowWeight === weight &&
+      isPermutation(s1, s2.substring(start, end + 1))
+    )
+      return true;
+    end++;
+    if (end === s2.length) return false;
+    windowWeight += s2[end].charCodeAt(0);
+    windowWeight -= s2[start++].charCodeAt(0);
+  }
+  return false;
+
+  function isPermutation(s1, s2) {
+    for (let i of s1) if (!s2.includes(i)) return false;
+
+    return true;
+  }
 };
 
 //console.log(checkInclusion("abo", "eidbaooo"));
@@ -2304,3 +2333,70 @@ var maxProfit = function (prices) {
 };
 // console.log(maxProfit([7, 1, 5, 3, 6, 4]));
 // console.log(maxProfit([1, 2, 4, 2, 5, 7, 2, 4, 9, 0, 9]));
+
+/**
+ * 59. Letter Combinations of a Phone Number
+ ** Tail Recursion, Iteration, HashMap,BackTracking
+ ** TC|O(n* 4^n) n-> res.length, SC|O(n)
+ */
+var letterCombinations = function(digits) {
+  const map = {
+      '2': ['a', 'b', 'c'],
+      '3': ['d', 'e', 'f'],
+      '4': ['g', 'h', 'i'],
+      '5': ['j', 'k', 'l'],
+      '6': ['m', 'n', 'o'],
+      '7': ['p', 'q', 'r', 's'],
+      '8': ['t', 'u', 'v'],
+      '9': ['w', 'x', 'y', 'z'],
+  }
+
+  function iterate (digits, res = ['']) {
+    if (digits === '') return res
+
+    let lastIndex = digits.length - 1;
+    let next = []
+    let arr = map[digits[lastIndex]]
+
+    for (let c of arr)
+      for (let i of res) 
+        next.push(c + i) // O(n* 4^n) n-> res.length
+
+    digits = digits.substring(0, digits.length - 1)
+    return iterate(digits, next);
+  }
+
+  return iterate(digits)
+};
+
+// console.log(letterCombinations('23'))
+
+/**
+ * 60. Largest Number
+ ** Sorting TC|O(n log(n)) SC|O(1)
+ */
+// Brute Force TC|O(n^2) SC|O(n)
+var largestNumber = function(nums) {
+  nums = nums.map(n => n.toString())
+  
+  for (let i = 0; i < nums.length; i++){
+    for (let j = i + 1; j < nums.length; j++) {
+        if (nums[i] + nums[j] < nums[j] + nums[i]){
+            temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+        }
+    }
+}
+res = nums.join('');
+return res == 0 ? '0' : res;
+};
+
+// TC|O(n log(n)) SC|O(1)
+var largestNumber = (nums) => {
+  nums = nums.sort((a, b) => (b + '' + a ) - (a + '' + b)).join('');
+
+  return nums == 0 ? '0' : nums
+}
+
+// console.log(largestNumber([123,897,89, 4, 99]))
