@@ -2423,7 +2423,7 @@ var getNoZeroIntegers = function(n) {
 // console.log(getNoZeroIntegers(4040));
 
 /**
- * 61. Minimum Flips to Make a OR b Equal to c
+ * 62. Minimum Flips to Make a OR b Equal to c
  ** Math
  */
 
@@ -2490,7 +2490,7 @@ var minFlips = (a, b, c) => {
 // console.log(minFlips(10,9,1))
 
 /**
- * 62. Power of Two
+ * 63. Power of Two
  ** Bit Manipulation
  */
 
@@ -2498,7 +2498,7 @@ var isPowerOfTwo = n => n > 0 && !(n & (n - 1))
 // console.log(isPowerOfTwo(1))
 
 /**
- * 63. Number of 1 Bits
+ * 64. Number of 1 Bits
  ** Bit Manipulation
  */
 var hammingWeight = function(n) {
@@ -2509,4 +2509,57 @@ var hammingWeight = function(n) {
   }
   return counter;
 };
-console.log(hammingWeight(00000000000000000000000000001011))
+// console.log(hammingWeight(00000000000000000000000000001011))
+
+/**
+ * 65. Longest Substring with At Least K Repeating Characters
+ ** Sliding Window
+ ** TC|O(n), SC|O(1)  
+ */
+// My solution
+var characterReplacement = function (s, k) {
+  let st = 0, e = 0, map = {}, max = 0, strLength = 0, mostRepeating = 0
+
+  while (e < s.length) {
+      map[s[e]] = (map[s[e]] || 0) + 1
+      strLength = (e - st) + 1
+      // mostRepeating = Object.keys(map)
+      //     .reduce((acc, x) => Math.max(acc, map[x]), 0)
+      mostRepeating = Math.max(mostRepeating, map[s[e]])
+
+      if (strLength - mostRepeating > k) {
+          map[s[st]]--
+          st++, e ++
+          max = Math.max(max, strLength - 1)
+          continue
+      }
+
+      e++
+      max = Math.max(max, strLength)
+  }
+  return max
+}
+// 
+
+var characterReplacement = function (s, k) {
+  let st = 0, map = [], max = 0, strLength = 0, mostRepeating = 0
+
+  for (let e = 0;e < s.length; e++) {
+      map[s[e]] = (map[s[e]] || 0) + 1
+      strLength = (e - st) + 1
+      mostRepeating = Math.max(mostRepeating, map[s[e]])
+
+      if (strLength - mostRepeating > k) {
+          map[s[st]]--
+          st++ 
+      }
+
+      max = Math.max(max, (e - st) + 1)
+  }
+  return max
+}
+
+
+console.log(characterReplacement('ABAB', 2))
+console.log(characterReplacement("AABA", 0))
+console.log(characterReplacement('AABABBA', 1))
