@@ -12,6 +12,7 @@ class BST {
   constructor() {
     this.root = null;
   }
+
   add(data) {
     const node = this.root;
     if (node === null) {
