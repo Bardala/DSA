@@ -1,11 +1,12 @@
 /**
  * Reverse String
  */
+
 function reverseString(str) {
   if (str === "") return "";
   return reverseString(str.substring(1)) + str[0];
 }
-console.log(reverseString("hello"));
+// console.log(reverseString("hello"));
 
 // hello
 
@@ -25,26 +26,26 @@ console.log(reverseString("hello"));
 
 function isPalindromeStr(str) {
   // base case
-  if (str.length === 0 || str.legnth === 1) return true;
+  if (str.length === 0 || str.length === 1) return true;
 
   if (str[0] === str[str.length - 1])
     return isPalindromeStr(str.substring(1, str.length - 2));
   // Addition base case to handle non-palindromes
   return false;
 }
-console.log(isPalindromeStr("racecar"));
+// console.log(isPalindromeStr("racecar"));
 
 /**
  * Convert Decimal to Binary
  */
 
 var decimalToBinary = (num, str = "") => {
-  if (num === 0) return str;
+  if (num === 0) return str || 0;
 
   str = (num % 2) + str;
   return decimalToBinary(Math.floor(num / 2), str);
 };
-console.log(typeof decimalToBinary(233));
+// console.log(typeof decimalToBinary(233));
 
 // 233 / 2   1
 // 116 / 2   0
@@ -62,12 +63,12 @@ console.log(typeof decimalToBinary(233));
 // 10 + (10 - 1);
 
 function sum(num, res = 0) {
-  if (num <= 1) return res;
+  if (num === 0) return res;
 
   res += num;
   return sum(num - 1, res);
 }
-console.log(sum(10));
+// console.log(sum(10));
 
 function sum(num) {
   if (num <= 1) return num;
@@ -82,7 +83,6 @@ console.log(sum(10));
  ** The number is in order
  */
 
-console.log("\n");
 function search(arr, num, left = 0, right = arr.length - 1) {
   if (left > right) return -1;
 
@@ -99,8 +99,7 @@ var arr = [];
 for (let i = 0; i <= 10; i++) {
   arr.push(i);
 }
-console.log(search(arr, 6));
-console.log("\n");
+// console.log(search(arr, 6));
 
 /**
  * Merge Sort
@@ -137,8 +136,7 @@ var mergeSort = (arr, start = 0, end = arr.length - 1) => {
 };
 
 var arr = [-5, 20, 10, 3, 2, 0];
-console.log(mergeSort(arr));
-console.log("\n");
+// console.log(mergeSort(arr));
 
 /**
  * Reverse LinkedList
@@ -152,11 +150,13 @@ class Node {
     this.next = next || null;
   }
 }
-var list = new Node(1);
-list.next = new Node(2);
-list.next.next = new Node(3);
-list.next.next.next = new Node(4);
-list.next.next.next.next = new Node(5);
+
+// var list = new Node(1);
+// list.next = new Node(2);
+// list.next.next = new Node(3);
+// list.next.next.next = new Node(4);
+// list.next.next.next.next = new Node(5);
+var list = new Node(1, new Node(2, new Node(3, new Node(4, new Node(5)))));
 
 // Head Recursion
 var reverseList = (list) => {
@@ -168,6 +168,7 @@ var reverseList = (list) => {
   return pointer;
 };
 // console.log("Head Recursion\n", reverseList(list));
+// 1-> 2-> 3-> 4->  5-> 4-> null
 
 // Tail Recursion
 var reverseList = (list, prev = null) => {
@@ -177,7 +178,7 @@ var reverseList = (list, prev = null) => {
   list.next = prev;
   return reverseList(next, list);
 };
-console.log("Tail Recursion\n", reverseList(list));
+// console.log("Tail Recursion\n", reverseList(list));
 
 /**
  * Merge Sorted LinkedList
@@ -229,6 +230,19 @@ var sortedMerge = (list1, list2, res = new Node()) => {
 };
 console.log(sortedMerge(list, list2));
 
+// Tail Recursion
+var mergeTwoLists = (l1, l2, head) => {
+  if (!l1 || !l2) return l1 || l2;
+
+  if (l1.val < l2.val) {
+    head = l1;
+    head.next = mergeTwoLists(l1.next, l2);
+  } else {
+    head = l2;
+    head.next = mergeTwoLists(l1, l2.next);
+  }
+  return head;
+};
 /**
  * factorial
  */
@@ -267,7 +281,7 @@ var fibonacci = (num, res = 1, prev = 0) => {
   return fibonacci(num - 1, res + prev, res);
 };
 
-console.log(fibonacci(500));
+// console.log(fibonacci(500));
 // 1.394232245616977e+104
 // [Done] exited with code=0 in 0.159 seconds
 

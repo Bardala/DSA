@@ -1,5 +1,20 @@
+class ListNode {
+  constructor(val, next) {
+    this.val = val === undefined ? 0 : val;
+    this.next = next === undefined ? null : next;
+  }
+}
+class TreeNode {
+  constructor(val, left, right) {
+    this.val = val === undefined ? 0 : val;
+    this.left = left === undefined ? null : left;
+    this.right = right === undefined ? null : right;
+  }
+}
 /*
  *1. Ugly number
+ ** Time complexity: O(log⁡(N))
+ ** SC|O(1)
  */
 
 //  var isUgly = function (n) {
@@ -61,9 +76,20 @@ function isPalindrome(x) {
   return x == rev;
 }
 
+function isPalindrome(x, num = x, rev = 0) {
+  if (x <= 0) return num === rev;
+
+  rev = (x % 10) + rev * 10;
+  x = Math.floor(x / 10);
+
+  return isPalindrome(x, num, rev);
+}
+console.log(isPalindrome(010));
+
 /**
  * 3. Roman to Integer
- * 
+ ** Hash Table
+ ** TC|O(N)   SC|O(N)
 I             1
 V             5
 X             10
@@ -592,6 +618,8 @@ var numbers = [-1, 0],
 
 /**
  * 24. Merge Two Sorted Lists
+ ** Tail Recursion
+ ** TC: O(n + m) , SC: O(n + m)
  */
 /**
  * Definition for singly-linked list.
@@ -623,6 +651,42 @@ var mergeTwoLists = function (list1, list2) {
   current.next = list1 || list2; // add the remaining nodes to the result list
   return head.next; // return the result list without the dummy node
 };
+
+var mergeTwoLists = function (list1, list2) {
+  if (!list1 || !list2) return list1 || list2;
+
+  if (list1.val < list2.val) {
+    list1.next = mergeTwoLists(list1.next, list2);
+    return list1;
+  } else {
+    list2.next = mergeTwoLists(list1, list2.next);
+    return list2;
+  }
+};
+
+// Tail Recursion
+var mergeTwoLists = (l1, l2, head) => {
+  if (!l1 || !l2) return l1 || l2;
+
+  if (l1.val < l2.val) {
+    head = l1;
+    head.next = mergeTwoLists(l1.next, l2);
+  } else {
+    head = l2;
+    head.next = mergeTwoLists(l1, l2.next);
+  }
+  return head;
+};
+
+const list1 = new ListNode(1);
+list1.next = new ListNode(2);
+list1.next.next = new ListNode(4);
+
+const list2 = new ListNode(1);
+list2.next = new ListNode(3);
+list2.next.next = new ListNode(4);
+
+// console.log(mergeTwoLists(list1, list2))
 
 /**
  * 25. Length of Last Word
@@ -1601,12 +1665,6 @@ var deleteDuplicates = function (head) {
  */
 
 // Definition for singly-linked list.
-class ListNode {
-  constructor(val, next) {
-    this.val = val === undefined ? 0 : val;
-    this.next = next === undefined ? null : next;
-  }
-}
 //    l1 = 2-> 4-> 3
 //    l2 = 5-> 6-> 4
 
@@ -2339,34 +2397,32 @@ var maxProfit = function (prices) {
  ** Tail Recursion, Iteration, HashMap,BackTracking
  ** TC|O(n* 4^n) n-> res.length, SC|O(n)
  */
-var letterCombinations = function(digits) {
+var letterCombinations = function (digits) {
   const map = {
-      '2': ['a', 'b', 'c'],
-      '3': ['d', 'e', 'f'],
-      '4': ['g', 'h', 'i'],
-      '5': ['j', 'k', 'l'],
-      '6': ['m', 'n', 'o'],
-      '7': ['p', 'q', 'r', 's'],
-      '8': ['t', 'u', 'v'],
-      '9': ['w', 'x', 'y', 'z'],
-  }
+    2: ["a", "b", "c"],
+    3: ["d", "e", "f"],
+    4: ["g", "h", "i"],
+    5: ["j", "k", "l"],
+    6: ["m", "n", "o"],
+    7: ["p", "q", "r", "s"],
+    8: ["t", "u", "v"],
+    9: ["w", "x", "y", "z"],
+  };
 
-  function iterate (digits, res = ['']) {
-    if (digits === '') return res
+  function iterate(digits, res = [""]) {
+    if (digits === "") return res;
 
     let lastIndex = digits.length - 1;
-    let next = []
-    let arr = map[digits[lastIndex]]
+    let next = [];
+    let arr = map[digits[lastIndex]];
 
-    for (let c of arr)
-      for (let i of res) 
-        next.push(c + i) // O(n* 4^n) n-> res.length
+    for (let c of arr) for (let i of res) next.push(c + i); // O(n* 4^n) n-> res.length
 
-    digits = digits.substring(0, digits.length - 1)
+    digits = digits.substring(0, digits.length - 1);
     return iterate(digits, next);
   }
 
-  return iterate(digits)
+  return iterate(digits);
 };
 
 // console.log(letterCombinations('23'))
@@ -2376,28 +2432,28 @@ var letterCombinations = function(digits) {
  ** Sorting TC|O(n log(n)) SC|O(1)
  */
 // Brute Force TC|O(n^2) SC|O(n)
-var largestNumber = function(nums) {
-  nums = nums.map(n => n.toString())
-  
-  for (let i = 0; i < nums.length; i++){
+var largestNumber = function (nums) {
+  nums = nums.map((n) => n.toString());
+
+  for (let i = 0; i < nums.length; i++) {
     for (let j = i + 1; j < nums.length; j++) {
-        if (nums[i] + nums[j] < nums[j] + nums[i]){
-            temp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = temp;
-        }
+      if (nums[i] + nums[j] < nums[j] + nums[i]) {
+        temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+      }
     }
-}
-res = nums.join('');
-return res == 0 ? '0' : res;
+  }
+  res = nums.join("");
+  return res == 0 ? "0" : res;
 };
 
 // TC|O(n log(n)) SC|O(1)
 var largestNumber = (nums) => {
-  nums = nums.sort((a, b) => (b + '' + a ) - (a + '' + b)).join('');
+  nums = nums.sort((a, b) => b + "" + a - (a + "" + b)).join("");
 
-  return nums == 0 ? '0' : nums
-}
+  return nums == 0 ? "0" : nums;
+};
 // console.log(largestNumber([123,897,89, 4, 99]))
 
 /**
@@ -2405,19 +2461,19 @@ var largestNumber = (nums) => {
  ** Math
  */
 
-var getNoZeroIntegers = function(n) {
-    for (let i = 1;i < n; i++) 
-        if (isNoZeros(n - i, n - (n - i))) return [n - i, n - (n - i)];
-        
-    function isNoZeros(n1, n2) {
-        while (n1 > 0) {
-            if (n1 % 10 === 0 && n1 > 0) return false;
-            n1 = Math.floor(n1 / 10);
-            if (n2 % 10 === 0 && n2 > 0) return false;
-            n2 = Math.floor(n2 / 10);
-        }    
-        return true;
+var getNoZeroIntegers = function (n) {
+  for (let i = 1; i < n; i++)
+    if (isNoZeros(n - i, n - (n - i))) return [n - i, n - (n - i)];
+
+  function isNoZeros(n1, n2) {
+    while (n1 > 0) {
+      if (n1 % 10 === 0 && n1 > 0) return false;
+      n1 = Math.floor(n1 / 10);
+      if (n2 % 10 === 0 && n2 > 0) return false;
+      n2 = Math.floor(n2 / 10);
     }
+    return true;
+  }
 };
 // console.log(getNoZeroIntegers(1010));
 // console.log(getNoZeroIntegers(4040));
@@ -2427,35 +2483,35 @@ var getNoZeroIntegers = function(n) {
  ** Math
  */
 
-var minFlips = function(a, b, c) {
+var minFlips = function (a, b, c) {
   let map = {
-    '000': 0,
-      '001': 1,
-      '010': 1,
-      '011': 0,
-      '100': 1,
-      '101': 0,
-      '110': 2,
-      '111': 0,
-    }
+    "000": 0,
+    "001": 1,
+    "010": 1,
+    "011": 0,
+    100: 1,
+    101: 0,
+    110: 2,
+    111: 0,
+  };
   let flips = 0;
-  let zeros= '000000000000000000000000000000000000000000000000000000000000'
+  let zeros = "000000000000000000000000000000000000000000000000000000000000";
 
-  a = (a).toString(2)
-  b = (b).toString(2)
-  c = (c).toString(2)
+  a = a.toString(2);
+  b = b.toString(2);
+  c = c.toString(2);
 
   let maxLength = Math.max(a.length, b.length, c.length);
 
-  a = zeros.substring(0, (maxLength - a.length)) + a
-  b = zeros.substring(0, (maxLength - b.length)) + b
-  c = zeros.substring(0, (maxLength - c.length)) + c
+  a = zeros.substring(0, maxLength - a.length) + a;
+  b = zeros.substring(0, maxLength - b.length) + b;
+  c = zeros.substring(0, maxLength - c.length) + c;
 
-  for(let i = 0; i < maxLength; i++){
-      flips += map[a[i]+b[i]+c[i]]
+  for (let i = 0; i < maxLength; i++) {
+    flips += map[a[i] + b[i] + c[i]];
   }
 
-  return flips
+  return flips;
 };
 
 var minFlips = (a, b, c) => {
@@ -2494,18 +2550,18 @@ var minFlips = (a, b, c) => {
  ** Bit Manipulation
  */
 
-var isPowerOfTwo = n => n > 0 && !(n & (n - 1))
+var isPowerOfTwo = (n) => n > 0 && !(n & (n - 1));
 // console.log(isPowerOfTwo(1))
 
 /**
  * 64. Number of 1 Bits
  ** Bit Manipulation
  */
-var hammingWeight = function(n) {
+var hammingWeight = function (n) {
   let counter = 0;
   while (n) {
-      n = n & (n - 1)
-      counter ++
+    n = n & (n - 1);
+    counter++;
   }
   return counter;
 };
@@ -2514,52 +2570,665 @@ var hammingWeight = function(n) {
 /**
  * 65. Longest Substring with At Least K Repeating Characters
  ** Sliding Window
- ** TC|O(n), SC|O(1)  
+ ** TC|O(n), SC|O(1)
  */
 // My solution
 var characterReplacement = function (s, k) {
-  let st = 0, e = 0, map = {}, max = 0, strLength = 0, mostRepeating = 0
+  let st = 0,
+    e = 0,
+    map = {},
+    max = 0,
+    strLength = 0,
+    mostRepeating = 0;
 
   while (e < s.length) {
-      map[s[e]] = (map[s[e]] || 0) + 1
-      strLength = (e - st) + 1
-      // mostRepeating = Object.keys(map)
-      //     .reduce((acc, x) => Math.max(acc, map[x]), 0)
-      mostRepeating = Math.max(mostRepeating, map[s[e]])
+    map[s[e]] = (map[s[e]] || 0) + 1;
+    strLength = e - st + 1;
+    // mostRepeating = Object.keys(map)
+    //     .reduce((acc, x) => Math.max(acc, map[x]), 0)
+    mostRepeating = Math.max(mostRepeating, map[s[e]]);
 
-      if (strLength - mostRepeating > k) {
-          map[s[st]]--
-          st++, e ++
-          max = Math.max(max, strLength - 1)
-          continue
-      }
+    if (strLength - mostRepeating > k) {
+      map[s[st]]--;
+      st++, e++;
+      max = Math.max(max, strLength - 1);
+      continue;
+    }
 
-      e++
-      max = Math.max(max, strLength)
+    e++;
+    max = Math.max(max, strLength);
   }
-  return max
-}
-// 
+  return max;
+};
 
 var characterReplacement = function (s, k) {
-  let st = 0, map = [], max = 0, strLength = 0, mostRepeating = 0
+  let st = 0,
+    map = [],
+    max = 0,
+    strLength = 0,
+    mostRepeating = 0;
 
-  for (let e = 0;e < s.length; e++) {
-      map[s[e]] = (map[s[e]] || 0) + 1
-      strLength = (e - st) + 1
-      mostRepeating = Math.max(mostRepeating, map[s[e]])
+  for (let e = 0; e < s.length; e++) {
+    map[s[e]] = (map[s[e]] || 0) + 1;
+    strLength = e - st + 1;
+    mostRepeating = Math.max(mostRepeating, map[s[e]]);
 
-      if (strLength - mostRepeating > k) {
-          map[s[st]]--
-          st++ 
-      }
+    if (strLength - mostRepeating > k) {
+      map[s[st]]--;
+      st++;
+    }
 
-      max = Math.max(max, (e - st) + 1)
+    max = Math.max(max, e - st + 1);
   }
-  return max
+  return max;
+};
+
+// console.log(characterReplacement('ABAB', 2))
+// console.log(characterReplacement("AABA", 0))
+// console.log(characterReplacement('AABABBA', 1))
+
+/**
+ * 66. Find Minimum in Rotated Sorted Array
+ ** TC|O(logN) SC|O(1)
+ ** Binary Search
+ */
+
+var findMin = function (nums) {
+  if (nums.length === 1 || nums[0] < nums[nums.length - 1]) return nums[0];
+  let left = 0,
+    right = nums.length - 1;
+
+  while (left < right) {
+    let mid = Math.floor((right + left) / 2);
+    if (mid >= 0 && nums[mid] > nums[mid + 1]) {
+      return nums[mid + 1];
+    } else if (nums[left] <= nums[mid]) {
+      left = mid + 1;
+    } else {
+      right = mid;
+    }
+  }
+};
+// console.log(findMin([3, 1, 2]));
+
+var findMin = (nums) => {
+  let l = 0;
+  let r = nums.length - 1;
+  while (l < r) {
+    const m = ~~((l + r) / 2);
+    if (nums[m] > nums[r]) l = m + 1;
+    else r = m;
+  }
+  return nums[l];
+};
+
+/*
+ * 67. Search in Rotated Sorted Array
+ ** Binary Search
+ ** TC|O(logN) SC|O(1)
+ */
+// solved in java
+
+/**
+ * 68. Search in Rotated Sorted Array II
+ ** Binary Search
+ ** Tc|O(logN)
+ */
+// solved in java
+
+/**
+ * 69. Search in a Sorted Array of Unknown Size
+ * Sorted Search, No Size
+ */
+// Java
+
+/**
+ * 10.5 Sparse Search
+ */
+/**
+ *  Given a sorted array of strings that is interspersed with empty strings, write a 
+method to find the location of a given string
+ */
+// Java
+function spareSearch(strings, str) {
+  if (strings === null || str === null || str === "") return -1;
+  return spareSearch(strings, str, 0, strings.length - 1);
+
+  function spareSearch(stings, str, first, last) {
+    if (first > last) return -1;
+    let mid = (last + first) / 2;
+
+    if (strings[mid] === "") {
+      const left = mid - 1;
+      const right = mid + 1;
+      for (;;) {
+        if (left > first && right > last) return -1;
+        else if (left >= first && strings[left] !== "") {
+          mid = left;
+          break;
+        } else if (right < last && strings[right] !== "") {
+          mid = right;
+          break;
+        }
+        left--;
+        right++;
+      }
+    }
+    if (str === strings[mid]) return mid;
+    else if (str.localeCompare(strings[mid]) < 0)
+      // search left
+      return spareSearch(strings, str, first, mid - 1);
+    else return spareSearch(strings, str, mid + 1, last);
+  }
+}
+
+var strings = ["at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""];
+// console.log(spareSearch(strings, "ball"));
+
+/**
+ * 70. Delete the Middle Node of a Linked List
+ */
+// in java
+
+/**
+ * Remove Nth Node From End of List
+ */
+// in java
+
+var removeNthFromEnd = (head, n) => {
+  if (!head.next && n === 1) return null;
+  let k;
+  return checkOther(head, n);
+
+  function checkOther(head, n) {
+    if (!head.next) {
+      k = n;
+      return head;
+    }
+    checkOther(head.next, n);
+    k--;
+    if (k === 0) head.next = head.next.next;
+    if (k === 1) return head.next;
+    return head;
+  }
+};
+
+/**
+ * Delete Middle Node:
+ *  Implement an algorithm to delete a node in the middle (i.e., any node but 
+the first and last node, not necessarily the exact middle) of a singly linked list, given only access to 
+that node. 
+EXAMPLE 
+Input:the node c from the linked list a->b->c->d->e->f 
+Result: nothing is returned, but the new linked list looks like a ->b->d->e->f
+ */
+// java
+var deleteMidNode = (node) => {
+  while (!node || !node.next) return false;
+  node.data = node.next.data;
+  node.next = node.next.next;
+  return true;
+};
+
+/**
+ * 71. Partition List
+ */
+var partition = function (head, x) {
+  let fdum = new ListNode(0),
+    bdum = new ListNode(0),
+    front = fdum,
+    back = bdum,
+    curr = head;
+  while (curr) {
+    if (curr.val < x) (front.next = curr), (front = curr);
+    else (back.next = curr), (back = curr);
+    curr = curr.next;
+  }
+  (front.next = bdum.next), (back.next = null);
+  return fdum.next;
+};
+let head = new ListNode(1);
+head.next = new ListNode(4);
+head.next.next = new ListNode(3);
+head.next.next.next = new ListNode(2);
+head.next.next.next.next = new ListNode(5);
+head.next.next.next.next.next = new ListNode(0);
+console.log(partition(head, 3));
+// 1-> 4-> 3-> 2-> 5-> 2
+// 1-> 2-> 2-> 4-> 3-> 5
+for (let node = head; node; node = node.next) {
+  console.log(node.val);
+}
+
+/**
+ * 72. Binary Tree Inorder Traversal
+ */
+let a = new TreeNode("a");
+let b = new TreeNode("b");
+let c = new TreeNode("c");
+let d = new TreeNode("d");
+let e = new TreeNode("e");
+let f = new TreeNode("f");
+
+a.left = b;
+a.right = c;
+b.left = d;
+b.right = e;
+c.left = f;
+
+//        a
+//       / \
+//     b     c
+//    / \   / \
+//   d   e  f
+
+var inorderTraversal = function (root, list = []) {
+  if (!root) return [];
+  inorderTraversal(root.left, list);
+  list.push(root.val);
+  inorderTraversal(root.right, list);
+  return list;
+};
+// console.log(inorderTraversal(a));
+
+/**
+ * 73. Invert Binary Tree
+ */
+
+//        a
+//       / \
+//     b     c
+//    / \   / \
+//   d   e  f
+var invertTree = function (root) {
+  let res = new TreeNode(root.val);
+  let p = res;
+  let stack = [];
+  let curr = root;
+  while (stack.length > 0 || curr) {
+    while (curr) {
+      stack.push(curr);
+      curr = curr.left;
+      if (curr) {
+        p.right = curr;
+        p = p.right;
+      }
+    }
+    curr = stack.pop();
+    curr = curr.right;
+    if (curr) {
+      p.left = curr;
+      p = p.left;
+    }
+  }
+  return res;
+};
+// console.log(invertTree(a));
+
+/**
+ * 74. Maximum Depth of Binary Tree
+ ** Tree, DFS, BFS
+ */
+var maxDepth = function (root) {
+  if (!root) return 0;
+  return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+};
+
+var maxDepth = function (root) {
+  if (!root) return 0;
+
+  let queue = [root];
+  let depth = 0;
+
+  while (queue.length > 0) {
+    for (let i = queue.length; i > 0; i--) {
+      let curr = queue.shift();
+      if (curr.left) queue.push(curr.left);
+      if (curr.right) queue.push(curr.right);
+    }
+    depth++;
+  }
+  return depth;
+};
+
+/**
+ * 75. Search a 2D Matrix
+ */
+// class Solution {
+//   boolean state = false;
+//   public boolean searchMatrix(int[][] matrix, int target) {
+//       for (int[] array: matrix) {
+//           binarySearch(array, target);
+//       }
+//       return state;
+//   }
+//   public void binarySearch(int[] array, int target){
+//       int low = 0, high = array.length - 1;
+//       while(low <= high) {
+//           int mid = (low + high) / 2;
+//           if (array[mid] > target) {
+//               high = mid - 1;
+//           } else if (array[mid] < target) {
+//               low = mid + 1;
+//           } else {
+//               state = true;
+//               return;
+//           }
+//       }
+//       return;
+//   }
+// }
+
+/**
+ * 76. Arranging Coins
+ */
+var arrangeCoins = function (n) {
+  let low = 1,
+    high = n;
+  while (low <= high) {
+    let mid = Math.floor(low + (high - low) / 2);
+    let guess = Math.floor((mid * (mid + 1)) / 2);
+    if (guess == n) return mid;
+    if (guess > n) high = mid - 1;
+    else low = mid + 1;
+  }
+  return high;
+};
+//java
+/**
+ class Solution {
+    public int arrangeCoins(int n) {
+        long i = 0;
+        int counter = 1;
+        long num = new Long(n);
+        while (true) {
+            i += counter;
+            if (num == i) return counter;
+            else if (num < i) return counter - 1;
+            counter ++;
+        }
+    }
 }
 
 
-console.log(characterReplacement('ABAB', 2))
-console.log(characterReplacement("AABA", 0))
-console.log(characterReplacement('AABABBA', 1))
+// 1, 3, 6, 10, 15
+
+// 5
+// 5  
+// 1, 3, 6, 10, 15, 21
+// 1, 2, 3,  4,  5,  6
+ */
+/**
+class Solution {
+    public int arrangeCoins(int n) {
+        return (int)(Math.sqrt(2 * (long)n + 0.25) - 0.5); 
+    }
+}
+
+// n <= k(k+1)/2
+// using complete the square technique
+
+// 2n <= k**2 + k
+// 2n <= (k + 1/2)^2 - 1/4
+// 2n + 1/4 <= (k + 1/2)^2
+// sqrt(2n + 1/4) <= k + 1
+// sqrt(2n + 1/4) - 1/2 <= k
+// k = sqrt(2n + 1/4) - 1/2
+ */
+
+/**
+ * 78. Min Stack
+ */
+class MinStack {
+  constructor() {
+    this.stack = [];
+    this.min = [];
+  }
+
+  /**
+   * @param {number} val
+   * @return {void}
+   */
+  push(val) {
+    if (this.min.length === 0 || this.min[this.min.length - 1] >= val) {
+      this.min.push(val);
+    }
+    this.stack.push(val);
+  }
+
+  /**
+   * @return {void}
+   */
+  pop() {
+    if (this.stack[this.stack.length - 1] === this.min[this.min.length - 1])
+      this.min.pop();
+    this.stack.pop();
+  }
+
+  /**
+   * @return {number}
+   */
+  top() {
+    return this.stack[this.stack.length - 1];
+  }
+
+  /**
+   * @return {number}
+   */
+  getMin() {
+    return this.min[this.min.length - 1];
+  }
+}
+
+class MinStack {
+  constructor() {
+    this.stack = [];
+    this.minArr = [];
+  }
+  /**
+   * @param {number} val
+   * @return {void}
+   */
+  push(val) {
+    if (this.minArr.length === 0) {
+      this.minArr.push(val);
+    } else if (val <= this.minArr[this.minArr.length - 1]) {
+      this.minArr.push(val);
+    }
+    this.stack.push(val);
+  }
+  /**
+   * @return {void}
+   */
+  pop() {
+    let popped = this.stack.pop();
+    if (popped === this.minArr[this.minArr.length - 1]) {
+      this.minArr.pop();
+    }
+    return popped;
+  }
+  /**
+   * @return {number}
+   */
+  top() {
+    return this.stack[this.stack.length - 1];
+  }
+  /**
+   * @return {number}
+   */
+  getMin() {
+    return this.minArr[this.minArr.length - 1];
+  }
+}
+
+class MinStack {
+  constructor() {
+    this.stack = [];
+    this.min = [];
+  }
+
+  /**
+   * @param {number} val
+   * @return {void}
+   */
+  push(val) {
+    if (this.min.length === 0 || this.min[this.min.length - 1] >= val) {
+      this.min.push(val);
+    }
+    this.stack.push(val);
+  }
+
+  /**
+   * @return {void}
+   */
+  pop() {
+    if (this.stack[this.stack.length - 1] === this.min[this.min.length - 1])
+      this.min.pop();
+    this.stack.pop();
+  }
+
+  /**
+   * @return {number}
+   */
+  top() {
+    return this.stack[this.stack.length - 1];
+  }
+
+  /**
+   * @return {number}
+   */
+  getMin() {
+    return this.min[this.min.length - 1];
+  }
+}
+
+/*
+class MinStack {
+    private Stack<Integer> stack;
+    private Stack<Integer> minStc;
+
+    public MinStack() {
+        stack = new Stack();
+        minStc = new Stack();
+    }
+    
+    public void push(int val) {
+        if (stack.empty() || val <= minStc.peek()) {
+            minStc.push(val);
+        }
+        stack.push(val);
+    }
+    
+    public void pop() {
+        int popped = stack.pop();
+        if (popped == minStc.peek()) { // stack.peek().eqauls(minStc.peek())
+            minStc.pop();
+        }
+    }
+    
+    public int top() {
+        return stack.peek();
+    }
+    
+    public int getMin() {
+        return minStc.peek();
+    }
+}
+*/
+
+/**
+ * 79. Baseball Game
+ */
+/**
+ * @param {string[]} operations
+ * @return {number}
+ */
+var calPoints = function (operations) {
+  let stack = [];
+  let sum = 0;
+  for (let i of operations) {
+    switch (i) {
+      case "+":
+        sumOp = stack[stack.length - 1] + stack[stack.length - 2];
+        sum += sumOp;
+        stack.push(sumOp);
+        break;
+      case "D":
+        doubleOp = stack[stack.length - 1] * 2;
+        sum += doubleOp;
+        stack.push(doubleOp);
+        break;
+      case "C":
+        removedElement = stack[stack.length - 1];
+        sum -= removedElement;
+        stack.pop();
+        break;
+      default: // any integer
+        stack.push(parseInt(i));
+        sum += stack[stack.length - 1];
+    }
+  }
+
+  return sum;
+};
+// ["5","2","C","D","+"]
+// [5] | sum = 5
+// [5, 2] | sum = 7
+// [5] | sum = 5
+// [5, 10] | sum = 15
+// [5, 10, 15] | sum  = 15 + 10 + 5 = 30
+// sum = 30
+
+// ["5","-2","4","C","D","9","+","+"]
+// [5]
+// [5, -2]
+// [5, -2, 4]
+// [5, -2]
+// [5, -2, -4]
+// [5, -2, -4, 9]
+// [5, -2, -4, 9, 5]
+// [5, -2, -4, 9, 5, 14]
+// sum = 27
+
+// Java
+/*
+class Solution {
+    public int calPoints(String[] operations) {
+        // define constants for operations
+        final String PLUS = "+";
+        final String DOUBLE = "D";
+        final String CANCEL = "C";
+
+        // use a stack to store previous scores
+        Stack<Integer> stack = new Stack<>();
+        int sum = 0;
+        for (String i: operations) {
+            switch (i) {
+                case PLUS :
+                    int sumOp = stack.peek() + stack.get(stack.size() -2);
+                    sum += sumOp;
+                    stack.push(sumOp);
+                    break;
+                case DOUBLE :
+                    int doubled = stack.peek() * 2;
+                    sum += doubled;
+                    stack.push(doubled);
+                    break;
+                case CANCEL :
+                    int removedEle = stack.pop();
+                    sum -= removedEle;
+                    break;
+                default: 
+                    int num = Integer.parseInt(i);
+                    sum += num;
+                    stack.push(num);
+            }
+        }
+        return sum;
+    }
+}
+*/
+
+/**
+ *
+ */

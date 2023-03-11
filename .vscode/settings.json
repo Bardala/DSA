@@ -1,5 +1,9 @@
 {
     "cSpell.words": [
+        "inorder",
+        "Listy",
+        "maplist",
         "Neighbour"
-    ]
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }
