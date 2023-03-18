@@ -3,7 +3,8 @@
         "inorder",
         "Listy",
         "maplist",
-        "Neighbour"
+        "Neighbour",
+        "Postorder"
     ],
     "java.debug.settings.onBuildFailureProceed": true
 }

@@ -2803,12 +2803,12 @@ for (let node = head; node; node = node.next) {
 /**
  * 72. Binary Tree Inorder Traversal
  */
-let a = new TreeNode("a");
-let b = new TreeNode("b");
-let c = new TreeNode("c");
-let d = new TreeNode("d");
-let e = new TreeNode("e");
-let f = new TreeNode("f");
+var a = new TreeNode("a");
+var b = new TreeNode("b");
+var c = new TreeNode("c");
+var d = new TreeNode("d");
+var e = new TreeNode("e");
+var f = new TreeNode("f");
 
 a.left = b;
 a.right = c;
@@ -3230,5 +3230,297 @@ class Solution {
 */
 
 /**
- *
+ * 80. Same Tree
+ ** Tree, DFS, BFS
  */
+var isSameTree = function (p, q) {
+  if (!q && !p) return true;
+  if (!q || !p) return false;
+  if (q.val !== p.val) return false;
+  return true && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+};
+
+var isSameTree = function (p, q) {
+  let stackP = [p];
+  let stackQ = [q];
+  while (stackQ.length > 0 || stackP.length > 0) {
+    let currP = stackP.pop();
+    let currQ = stackQ.pop();
+    if (currP?.val !== currQ?.val) return false;
+    if (currP?.right || currQ?.right) {
+      stackP.push(currP.right);
+      stackQ.push(currQ.right);
+    }
+    if (currP?.left || currQ?.left) {
+      stackP.push(currP.left);
+      stackQ.push(currQ.left);
+    }
+  }
+  return true;
+};
+
+/**
+ * 81.Lowest Common Ancestor of a Binary Search
+ * Tree, DFS
+ */
+var lowestCommonAncestor = function (root, p, q) {
+  // If root is null or equal to either p or q, return root
+  if (root.val === p.val || root.val === q.val) return root;
+  // If both p and q are smaller than root, find LCA in left subtree
+  if (p.val < root.val && q.val < root.val)
+    return lowestCommonAncestor(root.left, p, q);
+  // If both p and q are larger than root, find LCA in right subtree
+  if (p.val > root.val && q.val > root.val)
+    return lowestCommonAncestor(root.right, p, q);
+  // If one of p or q is smaller and one is larger than root, return root as LCA
+  return root;
+};
+
+/**
+ * 82. Binary Tree Level Order Traversal
+ * Tree, BFS, Queue
+ */
+var levelOrder = function (root) {
+  if (!root) return [];
+  let queue = [root];
+  let result = [];
+  while (queue.length > 0) {
+    let size = queue.length;
+    let level = [];
+    for (let i = 0; i < size; i++) {
+      let node = queue.shift();
+      level.push(node.val);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    result.push(level); // [[1],]
+  }
+  return result;
+};
+
+var levelOrder = function (root) {
+  if (!root) return [];
+  let queue = [[root]];
+  let res = [[root.val]];
+  while (queue.length > 0) {
+    let { vals, nodes } = addLevel(queue.shift());
+    if (vals.length === 0) break;
+    res.push(vals);
+    queue.push(nodes);
+  }
+  return res;
+
+  function addLevel(arr) {
+    let vals = [];
+    let nodes = [];
+    while (arr.length > 0) {
+      let curr = arr.shift();
+      if (curr.left) {
+        vals.push(curr.left.val);
+        nodes.push(curr.left);
+      }
+      if (curr.right) {
+        vals.push(curr.right.val);
+        nodes.push(curr.right);
+      }
+    }
+    return { vals, nodes };
+  }
+};
+
+// create a tree [3,9,20,null,null,15,7]
+// var b = new TreeNode(3);
+// var c = new TreeNode(9);
+// var d = new TreeNode(20);
+// var e = new TreeNode(15);
+// var f = new TreeNode(7);
+
+// b.left = c;
+// b.right = d;
+// d.left = e;
+// d.right = f;
+
+// console.log(levelOrder(b));
+
+/**
+ * 83. Validate Binary Search Tree
+ * Tree, DFS
+ * Time: O(n) Space: O(h) h is the height of the tree
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isValidBST = function (root, min = -Infinity, max = Infinity) {
+  if (!root) return true;
+  if (root.val <= min || root.val >= max) return false;
+  return (
+    isValidBST(root.left, min, root.val) &&
+    isValidBST(root.right, root.val, max)
+  );
+};
+
+var isValidBST = function (root) {
+  let res = inorderTraverse(root);
+  console.log(res);
+  for (let i = 1; i < res.length; i++) if (res[i] <= res[i - 1]) return false;
+  return true;
+
+  function inorderTraverse(root, res = []) {
+    if (!root) return [];
+    inorderTraverse(root.left, res);
+    res.push(root.val);
+    inorderTraverse(root.right, res);
+    return res;
+  }
+};
+
+/**
+ * 84. Lowest Common Ancestor of a Binary Tree
+ * Tree, DFS
+ * Time: O(n) Space: O(h) h is the height of the tree
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function (root, p, q) {
+  if (!root) return null;
+  if (root.val == p.val || root.val == q.val) {
+    return root;
+  }
+  let left = lowestCommonAncestor(root.left, p, q);
+  let right = lowestCommonAncestor(root.right, p, q);
+  if (left && right) return root;
+  if (left || right) return left || right;
+};
+
+var lowestCommonAncestor = function (root, p, q) {
+  if (!root || root === p || root === q) return root;
+  let left = lowestCommonAncestor(root.left, p, q);
+  let right = lowestCommonAncestor(root.right, p, q);
+  if (left && right) return root;
+  return left || right;
+};
+
+/**
+ * 85. Kth Smallest Element in a BST
+ * Tree, DFS
+ * Recursive TC|O(N) SC|O(N), iteration TC|O(H + K) SC|O(H)
+ */
+// Recursive
+var kthSmallest = function (root, k) {
+  let res = inorderTraverse(root);
+  return res[k - 1];
+
+  function inorderTraverse(root, res = []) {
+    if (!root) return [];
+    inorderTraverse(root.left, res);
+    res.push(root.val);
+    inorderTraverse(root.right, res);
+    return res;
+  }
+};
+
+// Iteration
+var kthSmallest = function (root, k) {
+  let stack = [];
+  let curr = root;
+  let res = [];
+  while (curr || stack.length > 0) {
+    while (curr) {
+      stack.push(curr);
+      curr = curr.left;
+    }
+    curr = stack.pop();
+    res.push(curr.val);
+    if (res.length == k) return res.pop();
+    curr = curr.right;
+  }
+};
+
+/**
+ * 86. Construct Binary Tree from Inorder and Postorder Traversal
+ * Tree, DFS
+ * Time: O(n) Space: O(h) h is the height of the tree
+ */
+
+/**
+ * @param {number[]} preorder
+ * @param {number[]} inorder
+ * @return {TreeNode}
+ */
+function buildTree(preorder, inorder) {
+  if (!preorder.length || !inorder.length) return null;
+
+  const root = new TreeNode(preorder[0]);
+  const mid = inorder.indexOf(root.val);
+  root.left = buildTree(preorder.slice(1, mid + 1), inorder.slice(0, mid));
+  root.right = buildTree(preorder.slice(mid + 1), inorder.slice(mid + 1));
+  return root;
+}
+
+// test
+const preorder = [3, 9, 20, 15, 7];
+const inorder = [9, 3, 15, 20, 7];
+const root = buildTree(preorder, inorder);
+// console.log(root);
+
+// tree
+//     3
+//    / \
+//   9  20
+//     /  \
+//    15   7
+
+/**
+ * 87. Binary Tree Maximum Path Sum
+ * Tree, DFS
+ * Time: O(n) Space: O(h) h is the height of the tree
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxPathSum = function (root) {
+  let max = -1000;
+  def(root);
+  return max;
+
+  function def(root) {
+    if (!root) return 0; // the smallest value
+    // let max = root.val
+    let left = def(root.left);
+    let right = def(root.right);
+
+    max = Math.max(
+      max,
+      root.val,
+      root.val + left,
+      root.val + right,
+      root.val + left + right
+    );
+
+    let maxSum = Math.max(root.val, root.val + left, root.val + right);
+
+    return maxSum;
+  }
+};
+
+// make a tree [-10,9,20,null,null,15,7]
+let a = new TreeNode(-10);
+a.left = new TreeNode(9);
+a.right = new TreeNode(20);
+a.right.left = new TreeNode(15);
+a.right.right = new TreeNode(7);
+
+// console.log(maxPathSum(a));
+// tree
+//     -10
+//    / \
+//   9   20
+//      / \
+//     15  7
+// max = 42
