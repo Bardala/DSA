@@ -1,0 +1,205 @@
+# Learning SQL
+
+## Some of The Most Important SQL Commands
+
+    SELECT - extracts data from a database
+    UPDATE - updates data in a database
+    DELETE - deletes data from a database
+    INSERT INTO - inserts new data into a database
+    CREATE DATABASE - creates a new database
+    ALTER DATABASE - modifies a database
+    CREATE TABLE - creates a new table
+    ALTER TABLE - modifies a table
+    DROP TABLE - deletes a table
+    CREATE INDEX - creates an index (search key)
+    DROP INDEX - deletes an index
+
+### SQL SELECT Statement
+
+- ex: SELECT \* FROM table-name;
+- ex: SELECT name, id FROM user;
+
+### SQL SELECT DISTINCT
+
+The SELECT DISTINCT statement is used to return only distinct (different) values.
+Inside a table, a column often contains many duplicate values; and sometimes you only want to list the different (distinct) values.
+
+- ex: SELECT DISTINCT country FROM customer;
+
+### SQL WHERE Clause
+
+The WHERE clause is used to filter records.
+
+It is used to extract only those records that fulfill a specified condition.
+
+- ex: SELECT c1, c2 FROM table_name WHERE condition;
+- ex: SELECT \* FROM customer WHERE country='Egypt';
+
+#### Operators in The WHERE Clause
+
+= Equal
+
+>     Greater than
+>
+> < Less than
+> = Greater than or equal
+> <= Less than or equal
+> <> Not equal. Note: In some versions of SQL this operator may be written as !=
+> BETWEEN Between _ AND _ a certain range
+> LIKE Search for a pattern
+> IN To specify multiple possible values for a column
+
+- ex: SELECT \* FROM Products WHERE Price BETWEEN 50 AND 60;
+- ex: SELECT \* FROM Customers WHERE City LIKE 's%';
+- ex: SELECT \* FROM Customer WHERE City IN ('Paris', 'London');
+
+### SQL AND, OR and NOT Operators
+
+- ex: SELECT \* FROM customer WHERE country='Egypt' AND city='Cairo';
+- ex: SELECT \* FROM customer WHERE OR ;
+- ex: SELECT \* FROM products WHERE NOT country='Germany';
+
+### SQL ORDER BY Keyword
+
+The ORDER BY keyword is used to sort the result-set in ascending or descending order.
+The ORDER BY keyword sorts the records in ascending order by default. To sort the records in descending order, use the DESC keyword.
+
+- ex: SELECT \* FROM customers ORDER BY country, customerName
+- ex: SELECT \* FROM customers ORDER BY country ASC, customerName DESC
+- ex: SELECT \* FROM customers ORDER BY country DESC
+
+### The SQL INSERT INTO Statement
+
+The INSERT INTO statement is used to insert new records in a table.
+
+#### INSERT INTO Syntax
+
+It is possible to write the INSERT INTO statement in two ways:
+
+1. Specify both the column names and the values to be inserted:
+   INSERT INTO table_name (column1, column2, column3, ...)
+   VALUES (value1, value2, value3, ...);
+
+2. If you are adding values for all the columns of the table, you do not need to specify the column names in the SQL query. However, make sure the order of the values is in the same order as the columns in the table. Here, the INSERT INTO syntax would be as follows:
+   INSERT INTO table_name
+   VALUES (value1, value2, value3, ...);
+
+- ex: INSERT INTO customers (name, city, address, country)
+  VALUES ('Islam', 'Cairo', 'El-Shorouck', 'Egypt');
+
+-ex: INSERT INTO customers VALUES ('44','Islam', 'Cairo', 'El-Shorouck', 'Egypt')
+
+### SQL NULL Values
+
+A field with a NULL value is a field with no value.
+
+If a field in a table is optional, it is possible to insert a new record or update a record without adding a value to this field. Then, the field will be saved with a NULL value.
+
+### How to Test for NULL Values?
+
+We will have to use the IS NULL and IS NOT NULL operators instead.
+
+SELECT column_names
+FROM table_name
+WHERE column_name IS NULL;
+
+SELECT column_names
+FROM table_name
+WHERE column_name IS NOT NULL;
+
+- ex: SELECT customerName, contactName, Address FROM customers WHERE address IS NULL;
+- ex: SELECT customerName, contactName, Address FROM customers WHERE address IS NOT NULL;
+
+### SQL UPDATE Statement
+
+The UPDATE statement is used to modify the existing records in a table.
+
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+
+#### UPDATE Table
+
+- ex: UPDATE customers SET name='islam', city='Cairo' WHERE customerId = 1;
+
+#### UPDATE Multiple Records
+
+- ex: UPDATE customers SET city='Cairo' WHERE country='Egypt';
+
+### SQL DELETE Statement
+
+The DELETE statement is used to delete existing records in a table.
+
+DELETE FROM table_name WHERE condition;
+
+```sql
+DELETE FROM customer WHERE customerName='Ali';
+DELETE FROM Customers;
+```
+
+### SQL TOP, LIMIT, FETCH FIRST or ROWNUM Clause (Not studied yet)
+
+The SELECT TOP clause is used to specify the number of records to return.
+
+The SELECT TOP clause is useful on large tables with thousands of records. Returning a large number of records can impact performance.
+
+SQL Server / MS Access Syntax:
+
+```sql
+SELECT TOP number|percent column_name(s)
+FROM table_name
+WHERE condition;
+```
+
+### SQL MIN() and MAX() Functions
+
+```sql
+SELECT MIN(column_name)
+FROM table_name
+WHERE condition;
+
+SELECT MAX(column_name)
+FROM table_name
+WHERE condition;
+
+select min(price) as smallestPrice from products
+```
+
+### SQL COUNT(), AVG() and SUM() Functions
+
+The COUNT() function returns the number of rows that matches a specified criterion.
+
+The AVG() function returns the average value of a numeric column.
+
+The SUM() function returns the total sum of a numeric column.
+
+```sql
+SELECT COUNT(column_name)
+FROM table_name
+WHERE condition;
+
+SELECT AVG(column_name)
+FROM table_name
+WHERE condition;
+
+SELECT SUM(column_name)
+FROM table_name
+WHERE condition;
+```
+
+### SQL Joins
+
+A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+
+```sql
+SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+```
+
+#### Different Types of SQL JOINs
+
+- (INNER) JOIN: Returns records that have matching values in both tables
+- LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table
+- RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table
+- FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table
