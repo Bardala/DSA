@@ -203,3 +203,114 @@ INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
 - LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table
 - RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table
 - FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table
+
+### SQL INNER JOIN Keyword
+
+The INNER JOIN keyword selects records that have matching values in both tables
+
+```sql
+SELECT column_name(s)
+FROM table1
+INNER JOIN table2
+ON table1.column_name = table2.column_name;
+```
+
+```sql
+select orders.orderID, customer.customerName
+from orders
+inner join customers on orders.customerID = customers.customerID
+```
+
+Note: The INNER JOIN keyword selects all rows from both tables as long as there is a match between the columns. If there are records in the "Orders" table that do not have matches in "Customers", these orders will not be shown!
+
+```sql
+# JOIN THREE TABLES
+select orders.orderId, customer.customerName, shipper.shipperName
+from ((orders
+inner join customers on orders.customerId = customer.customerId)
+inner join shippers on orders.shipperId = shipper.shipperId)
+```
+
+### SQL LEFT JOIN Keyword
+
+The LEFT JOIN keyword returns all records from the left table (table1), and the matching records from the right table (table2). The result is 0 records from the right side, if there is no match.
+
+```sql
+SELECT column_name(s)
+FROM table1
+LEFT JOIN table2
+ON table1.column_name = table2.column_name;
+```
+
+```sql
+select customers.customerName, orders.orderId
+from customers
+left join orders on customers.customerId = orders.customerId
+order by customers.customerName
+```
+
+Note: The LEFT JOIN keyword returns all records from the left table (Customers), even if there are no matches in the right table (Orders).
+
+### SQL RIGHT JOIN Keyword
+
+The RIGHT JOIN keyword returns all records from the right table (table2), and the matching records from the left table (table1). The result is 0 records from the left side, if there is no match.
+
+```sql
+SELECT column_name(s)
+FROM table1
+RIGHT JOIN table2
+ON table1.column_name = table2.column_name;
+```
+
+```sql
+select orders.orderId, employees.firstName, employees.lastName
+from orders
+right join employees on orders.employeeId = employees.employeeId
+order by orders.orderId
+```
+
+### SQL FULL OUTER JOIN Keyword
+
+The FULL OUTER JOIN keyword returns all records when there is a match in left (table1) or right (table2) table records.
+Tip: FULL OUTER JOIN and FULL JOIN are the same.
+
+```sql
+SELECT column_name(s)
+FROM table1
+FULL OUTER JOIN table2
+ON table1.column_name = table2.column_name
+WHERE condition;
+```
+
+Note: FULL OUTER JOIN can potentially return very large result-sets!
+
+```sql
+select customers.customerName, orders.orderId
+from customers
+full join orders on customer.customerId = orders.customerId
+order by customers.customerName
+```
+
+Note: The FULL OUTER JOIN keyword returns all matching records from both tables whether the other table matches or not. So, if there are rows in "Customers" that do not have matches in "Orders", or if there are rows in "Orders" that do not have matches in "Customers", those rows will be listed as well.
+
+### SQL Self Join
+
+A self join is a regular join, but the table is joined with itself.
+
+```sql
+SELECT column_name(s)
+FROM table1 T1, table1 T2
+WHERE condition;
+```
+
+T1 and T2 are different table aliases for the same table.
+
+```sql
+select a.customerName as customerA, b.customerName as customerB, a.city
+from customers a, customers b
+where customerA <> customerB
+and a.city = b.city
+order by a.city
+```
+
+the above code returns the customers which are from the same city
