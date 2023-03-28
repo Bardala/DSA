@@ -316,3 +316,47 @@ order by a.city
 ```
 
 the above code returns the customers which are from the same city
+
+### SQL CASE Expression
+
+The CASE expression goes through conditions and returns a value when the first condition is met (like an if-then-else statement). So, once a condition is true, it will stop reading and return the result. If no conditions are true, it returns the value in the ELSE clause.
+If there is no ELSE part and no conditions are true, it returns NULL.
+
+```sql
+CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    WHEN conditionN THEN resultN
+    ELSE result
+END;
+```
+
+```sql
+select customerName, city,
+case
+    when city = 'Berlin' then 'Germany'
+    when city = 'Madrid' then 'Spain'
+    else 'Other'
+end as country
+from customers
+```
+
+```sql
+SELECT OrderID, Quantity,
+CASE
+    WHEN Quantity > 30 THEN 'The quantity is greater than 30'
+    WHEN Quantity = 30 THEN 'The quantity is 30'
+    ELSE 'The quantity is under 30'
+END AS QuantityText
+FROM OrderDetails;
+```
+
+```sql
+SELECT CustomerName, City, Country
+FROM Customers
+ORDER BY
+(CASE
+    WHEN City IS NULL THEN Country
+    ELSE City
+END);
+```
