@@ -360,3 +360,153 @@ ORDER BY
     ELSE City
 END);
 ```
+
+### SQL UNION Operator
+
+The UNION operator is used to combine the result-set of two or more SELECT statements.
+
+Each SELECT statement within UNION must have the same number of columns
+The columns must also have similar data types
+The columns in each SELECT statement must also be in the same order
+
+```sql
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;
+```
+
+#### UNION ALL Syntax
+
+The UNION operator selects only distinct values by default. To allow duplicate values, use UNION ALL:
+
+```sql
+SELECT column_name(s) FROM table1
+UNION ALL
+SELECT column_name(s) FROM table2;
+```
+
+The following SQL statement returns the German cities (only distinct values) from both the "Customers" and the "Suppliers" table
+
+```sql
+select customerName, city, country
+from customers
+where country = 'Germany'
+union
+select customerName, city, country
+from customers
+where country = 'France'
+```
+
+for duplicates values, use UNION ALL
+
+```sql
+select city, country from customers
+where country = 'Germany'
+union all
+select city, country from Suppliers
+where country = 'Germany'
+order by city
+```
+
+### SQL GROUP BY Statement
+
+The GROUP BY statement groups rows that have the same values into summary rows, like "find the number of customers in each country".
+
+The GROUP BY statement is often used with aggregate functions (COUNT(), MAX(), MIN(), SUM(), AVG()) to group the result-set by one or more columns.
+
+```sql
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+ORDER BY column_name(s);
+```
+
+```sql
+select count(CustomerID), Country
+from Customers
+group by Country
+```
+
+```sql
+select count(CustomerID) as counts, Country
+from Customers
+group by Country
+order by counts desc
+```
+
+```sql
+select Shippers.ShipperName, count(Orders.orderID) as NumberOfOrders
+from Orders left join Shippers
+on Orders.ShipperID = Shippers.ShipperID
+group by Shippers.ShipperName
+order by NumberOfOrders desc
+```
+
+### The SQL HAVING Clause
+
+The HAVING clause was added to SQL because the WHERE keyword cannot be used with aggregate functions.
+
+### CONCAT() Function
+
+The CONCAT() function is used to combine two or more text values.
+
+```sql
+SELECT CONCAT(column1, column2, column3, ...)
+FROM table_name;
+```
+
+```sql
+select concat(firstName, ' ', lastName) as fullName
+from employees
+```
+
+```SQL
+select
+user_id,
+concat(
+  upper(
+    left(name, 1)
+  ),
+  lower(
+    substring(name, 2)
+  )
+)
+as name
+from Users
+order by user_id
+```
+
+### GROUP_CONCAT Function
+
+the difference between CONCAT() and GROUP_CONCAT() is that GROUP_CONCAT() can be used with GROUP BY, distinct, order by, and separator.
+
+The GROUP_CONCAT() function in MySQL is used to concatenate data from multiple rows into one field. This is an aggregate (GROUP BY) function which returns a String value, if the group contains at least one non-NULL value. Otherwise, it returns NULL.
+
+```sql
+SELECT col1, col2, ..., colN
+GROUP_CONCAT ( [DISTINCT] col_name1
+[ORDER BY clause]  [SEPARATOR str_val] )
+FROM table_name GROUP BY col_name2;
+```
+
+```sql
+SELECT GROUP_CONCAT(column_name)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s);
+```
+
+```sql
+select GROUP_CONCAT(firstName, ' ', lastName) as fullName
+from employees
+```
+
+```sql
+select
+sell_date,
+count(distinct product) as num_sold,
+group_concat(distinct product) as products
+from activities
+group by sell_date
+```

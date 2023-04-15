@@ -388,6 +388,7 @@ var arr = [1, 2, 3, 4];
 
 /**
  * 13. The kth Factor of n
+ * https://leetcode.com/problems/the-kth-factor-of-n/
  */
 function kthFactor(n, k) {
   let arr = [];
@@ -398,6 +399,7 @@ function kthFactor(n, k) {
 
 /**
  * 14. Longest Subarray of 1's After Deleting One Element
+ * https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/
  */
 
 // var longestSubarray = function (A) {
@@ -427,7 +429,7 @@ var longestSubarray = function (nums) {
   }
   return max;
 };
-//console.log(longestSubarray([0, 1, 1, 1, 0, 1, 1, 0, 1]));
+//console.log(longestSubarray([0, 1, 1, 1, 0, 1, 1, 0, 1])); // 5
 
 /**
  * 15. Check If Two String Arrays are Equivalent
@@ -3640,9 +3642,26 @@ trie.insert("app");
 console.log(trie.search("app")); // true
 
 /**
- * 89. Number of Matching Subsequences
+ * 89. Is Subsequence
  * String, Two Pointers, Binary Search
- * TC|O(N) where N is the number of words letters which not repeated
+ * TC|O(N) where N is t.length
+ */
+// function isSubsequence(s: string, t: string): boolean {
+//   let j = 0, count = 0
+//   for (let i = 0; i < t.length; i++) {
+//     if (s[j] === t[i]) {
+//       count++
+//       j++
+//     }
+//   }
+//   return count === s.length
+// };
+// console.log(isSubsequence('abc', 'ahbgdc'))
+
+/**
+ * 90. Number of Matching Subsequences
+ * String, Two Pointers, Binary Search
+ * TC|O(N*M) where N is the number of words letters which not repeated, M is the length of s
  * SC|O(N) where N is the number of words letters which not repeated
  * https://leetcode.com/problems/number-of-matching-subsequences
  */
@@ -3673,3 +3692,4 @@ console.log(trie.search("app")); // true
 //     return count === s.length
 //   };
 // };
+// console.log(numMatchingSubseq("abcde", ["a", "bb", "acd", "ace"]))
