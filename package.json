@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "typescript": "^5.0.2"
-  },
-  "scripts": {
-    "start": "nodemon ProblemSolving/Javascript/workspace.js"
-  }
-}

@@ -223,6 +223,8 @@ bst.add(5);
 bst.add(7);
 bst.add(20);
 
+//
+
 console.log(bst.findMinHeight());
 console.log(bst.findMaxHeight());
 console.log(bst.isBalanced());

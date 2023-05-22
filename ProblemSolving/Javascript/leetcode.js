@@ -1,3 +1,5 @@
+import { Trie } from "./dataStructure";
+
 class ListNode {
   constructor(val, next) {
     this.val = val === undefined ? 0 : val;
@@ -3048,87 +3050,87 @@ class Solution {
 /**
  * 78. Min Stack
  */
-class MinStack {
-  constructor() {
-    this.stack = [];
-    this.min = [];
-  }
+// class MinStack {
+//   constructor() {
+//     this.stack = [];
+//     this.min = [];
+//   }
 
-  /**
-   * @param {number} val
-   * @return {void}
-   */
-  push(val) {
-    if (this.min.length === 0 || this.min[this.min.length - 1] >= val) {
-      this.min.push(val);
-    }
-    this.stack.push(val);
-  }
+//   /**
+//    * @param {number} val
+//    * @return {void}
+//    */
+//   push(val) {
+//     if (this.min.length === 0 || this.min[this.min.length - 1] >= val) {
+//       this.min.push(val);
+//     }
+//     this.stack.push(val);
+//   }
 
-  /**
-   * @return {void}
-   */
-  pop() {
-    if (this.stack[this.stack.length - 1] === this.min[this.min.length - 1])
-      this.min.pop();
-    this.stack.pop();
-  }
+//   /**
+//    * @return {void}
+//    */
+//   pop() {
+//     if (this.stack[this.stack.length - 1] === this.min[this.min.length - 1])
+//       this.min.pop();
+//     this.stack.pop();
+//   }
 
-  /**
-   * @return {number}
-   */
-  top() {
-    return this.stack[this.stack.length - 1];
-  }
+//   /**
+//    * @return {number}
+//    */
+//   top() {
+//     return this.stack[this.stack.length - 1];
+//   }
 
-  /**
-   * @return {number}
-   */
-  getMin() {
-    return this.min[this.min.length - 1];
-  }
-}
+//   /**
+//    * @return {number}
+//    */
+//   getMin() {
+//     return this.min[this.min.length - 1];
+//   }
+// }
 
-class MinStack {
-  constructor() {
-    this.stack = [];
-    this.minArr = [];
-  }
-  /**
-   * @param {number} val
-   * @return {void}
-   */
-  push(val) {
-    if (this.minArr.length === 0) {
-      this.minArr.push(val);
-    } else if (val <= this.minArr[this.minArr.length - 1]) {
-      this.minArr.push(val);
-    }
-    this.stack.push(val);
-  }
-  /**
-   * @return {void}
-   */
-  pop() {
-    let popped = this.stack.pop();
-    if (popped === this.minArr[this.minArr.length - 1]) {
-      this.minArr.pop();
-    }
-    return popped;
-  }
-  /**
-   * @return {number}
-   */
-  top() {
-    return this.stack[this.stack.length - 1];
-  }
-  /**
-   * @return {number}
-   */
-  getMin() {
-    return this.minArr[this.minArr.length - 1];
-  }
-}
+// class MinStack {
+//   constructor() {
+//     this.stack = [];
+//     this.minArr = [];
+//   }
+//   /**
+//    * @param {number} val
+//    * @return {void}
+//    */
+//   push(val) {
+//     if (this.minArr.length === 0) {
+//       this.minArr.push(val);
+//     } else if (val <= this.minArr[this.minArr.length - 1]) {
+//       this.minArr.push(val);
+//     }
+//     this.stack.push(val);
+//   }
+//   /**
+//    * @return {void}
+//    */
+//   pop() {
+//     let popped = this.stack.pop();
+//     if (popped === this.minArr[this.minArr.length - 1]) {
+//       this.minArr.pop();
+//     }
+//     return popped;
+//   }
+//   /**
+//    * @return {number}
+//    */
+//   top() {
+//     return this.stack[this.stack.length - 1];
+//   }
+//   /**
+//    * @return {number}
+//    */
+//   getMin() {
+//     return this.minArr[this.minArr.length - 1];
+//   }
+// }
 
 class MinStack {
   constructor() {
@@ -3579,11 +3581,11 @@ var maxPathSum = function (root) {
 };
 
 // make a tree [-10,9,20,null,null,15,7]
-let a = new TreeNode(-10);
-a.left = new TreeNode(9);
-a.right = new TreeNode(20);
-a.right.left = new TreeNode(15);
-a.right.right = new TreeNode(7);
+// let a = new TreeNode(-10);
+// a.left = new TreeNode(9);
+// a.right = new TreeNode(20);
+// a.right.left = new TreeNode(15);
+// a.right.right = new TreeNode(7);
 
 // console.log(maxPathSum(a));
 // tree
@@ -3599,39 +3601,6 @@ a.right.right = new TreeNode(7);
  * Tree, Trie, DFS
  * Time: O(n) Space: O(n)
  */
-class Trie {
-  constructor() {
-    this.root = {};
-  }
-
-  insert(word) {
-    let node = this.root;
-    for (let c of word) {
-      if (node[c] == null) node[c] = {};
-      node = node[c];
-    }
-    node.isWord = true;
-  }
-
-  traverse(word) {
-    let node = this.root;
-    for (let c of word) {
-      node = node[c];
-      if (node == null) return null;
-    }
-
-    return node;
-  }
-
-  search(word) {
-    const node = this.traverse(word);
-    return node?.isWord === true;
-  }
-
-  startsWith(prefix) {
-    return this.traverse(prefix) != null;
-  }
-}
 
 let trie = new Trie();
 trie.insert("apple");
@@ -3693,3 +3662,105 @@ console.log(trie.search("app")); // true
 //   };
 // };
 // console.log(numMatchingSubseq("abcde", ["a", "bb", "acd", "ace"]))
+
+/**
+ * 91. Last Stone Weight
+ * Heap, Greedy, priority queue
+ * TC|O(NlogN) where N is the length of stones
+ * SC|O(N) where N is the length of stones
+ * with priority queue TC|O(logN)
+ */
+
+class PriorityQueue {
+  constructor() {
+    this.heap = [];
+  }
+  isEmpty() {
+    return this.heap.length === 0;
+  }
+
+  insert(item, priority) {
+    this.heap.push({ item, priority });
+    this._heapifyUp(this.heap.length - 1);
+  }
+
+  extractMax() {
+    const max = this.heap[0];
+    const last = this.heap.pop();
+    if (!this.isEmpty()) {
+      this.heap[0] = last;
+      this._heapifyDown(0);
+    }
+    return max.item;
+  }
+
+  _heapifyUp(i) {
+    const parent = Math.floor((i - 1) / 2);
+    if (i > 0 && this.heap[i].priority > this.heap[parent].priority) {
+      [this.heap[i], this.heap[parent]] = [this.heap[parent], this.heap[i]];
+      this._heapifyUp(parent);
+    }
+  }
+
+  _heapifyDown(i) {
+    const leftChild = 2 * i + 1;
+    const rightChild = 2 * i + 2;
+    let largest = i;
+    if (
+      leftChild < this.heap.length &&
+      this.heap[leftChild].priority > this.heap[largest].priority
+    ) {
+      largest = leftChild;
+    }
+    if (
+      rightChild < this.heap.length &&
+      this.heap[rightChild].priority > this.heap[largest].priority
+    ) {
+      largest = rightChild;
+    }
+    if (largest !== i) {
+      [this.heap[i], this.heap[largest]] = [this.heap[largest], this.heap[i]];
+      this._heapifyDown(largest);
+    }
+  }
+}
+
+function lastStoneWeight(stones) {
+  const pq = new PriorityQueue();
+  for (const stone of stones) {
+    pq.insert(stone, stone);
+  }
+  while (pq.heap.length > 1) {
+    const y = pq.extractMax();
+    const x = pq.extractMax();
+    if (x !== y) {
+      pq.insert(x - y, x - y);
+    }
+  }
+  return pq.heap.length === 1 ? pq.heap[0].item : 0;
+}
+
+// class KthLargest {
+//   constructor(k, nums) {
+//     this.k = k;
+//     this.pq = new PriorityQueue();
+//     for (const num of nums) {
+//       this.add(num);
+//     }
+//   }
+
+//   add(val) {
+//     this.pq.insert(val, val);
+//     if (this.pq.heap.length > this.k) {
+//       this.pq.extractMax();
+//     }
+//     return this.pq.heap[0].item;
+//   }
+// }
+
+// const kthLargest = new KthLargest(3, [4, 5, 8, 2]);
+// console.log(kthLargest.add(3)); // returns 4
+// console.log(kthLargest.add(5)); // returns 5
+// console.log(kthLargest.add(10)); // returns 5
+// console.log(kthLargest.add(9)); // returns 8
+// console.log(kthLargest.add(4)); // returns 8
