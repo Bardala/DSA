@@ -402,7 +402,13 @@ function deserialize(data: string): TreeNode | null {
     return root
 };
 
-/**Backtracking */
+/**Backtracking 
+ * Time Complexity : The time complexity of a backtracking algorithm depends on the number of possible solutions and the constraints of the problem.
+    In general, the time complexity can be expressed as O(b^d),
+    where b is the branching factor (the number of choices at each level) and d is the depth of the search tree (the maximum length of a solution).
+ * Space Complexity : The space complexity of a backtracking algorithm depends on the amount of memory used by the recursive calls and the auxiliary data structures. 
+    In general, the space complexity can be expressed as O(d + s), where d is the maximum depth of the recursion and s is the size of the auxiliary data structures.
+*/
 /**
  * 2.1 Subsets (medium)
  * https://leetcode.com/problems/subsets/description/
@@ -555,4 +561,204 @@ function subsetsWithDup(nums: number[]): number[][] {
 
         backtrack(subset, index + 1);
     }
+}
+
+/**
+ * 2.5 Combination Sum II (medium)
+ * https://leetcode.com/problems/combination-sum-ii/description/
+ * TC|O(N * 2^N) SC|O(N)
+ */
+function combinationSum2(candidates: number[], target: number): number[][] {
+    const solution: number[][] = []
+    candidates.sort((a, b) => a - b)
+    backtrack([], 0, 0)
+    return solution
+
+    function backtrack(combination: number[], sum: number, index: number): void {
+        if (index === candidates.length || sum > target) {
+            if (sum === target) {
+                solution.push([...combination])
+            }
+            return
+        }
+
+        sum += candidates[index]
+        combination.push(candidates[index])
+        backtrack(combination, sum, index + 1)
+
+        while (candidates[index] === candidates[index + 1]) index++
+
+        sum -= combination.pop()
+        backtrack(combination, sum, index + 1)
+    }
+};
+
+/**
+ * 2.6 Word Search
+ * https://leetcode.com/problems/word-search/
+ * TC|O(4*w + c) SC|O(w)
+ * The time complexity of a backtracking algorithm depends on the number of possible solutions and the constraints of the problem. In general, the time complexity can be expressed as O(b^d), where b is the branching factor (the number of choices at each level) and d is the depth of the search tree (the maximum length of a solution).
+In this case, the function exist() is a backtracking algorithm that tries to find a word in a grid of characters. The branching factor is at most 4, since each cell has at most 4 adjacent cells (horizontally or vertically). The depth is equal to the length of the word, since each character in the word corresponds to one level in the search tree. Therefore, the time complexity of exist() is O(4^w), where w is the length of the word.
+The function backtrack() is a helper function that checks if a given cell can be part of the solution and recursively explores the adjacent cells. The time complexity of backtrack() is also O(4^w), since it has the same branching factor and depth as exist(). However, backtrack() also modifies the board by marking visited cells with ‘*’, which adds some constant time to each call. Therefore, the overall time complexity of backtrack() is O(4^w + c), where c is some constant.
+ */
+function exist(board: string[][], word: string): boolean {
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[0].length; j++) {
+            if (board[i][j] === word[0]) {
+                if (dfs(board, word, 0, i, j)) return true;
+            }
+        }
+    }
+
+    return false;
+};
+
+function dfs(board: string[][], word: string, wordIndex: number, r: number, c: number): boolean {
+    if (wordIndex === word.length) return true;
+
+    if (r < 0 ||
+        r > board.length - 1 ||
+        c < 0 ||
+        c > board[0].length ||
+        board[r][c] !== word[wordIndex]
+    ) return false;
+
+    board[r][c] = '#';
+    let isFound = (
+        dfs(board, word, wordIndex + 1, r + 1, c) ||
+        dfs(board, word, wordIndex + 1, r - 1, c) ||
+        dfs(board, word, wordIndex + 1, r, c + 1) ||
+        dfs(board, word, wordIndex + 1, r, c - 1)
+    );
+
+    board[r][c] = word[wordIndex];
+    return isFound;
+}
+
+/**
+ * 2.7 Palindrome Partitioning (medium)
+ * https://leetcode.com/problems/palindrome-partitioning/description/
+ * TC|O(N * 2^N) SC|O(N), N is the length of the string
+ */
+let partition = (s: string): string[][] => {
+    const solution: string[][] = []
+    dfs(0, [])
+    return solution
+
+    function dfs(start: number, currentList: string[]): void {
+        if (start >= s.length) solution.push([...currentList])
+
+        for (let end = start; end < s.length; end++) {
+            if (isPalindrome(start, end)) {
+                currentList.push(s.substring(start, end + 1))
+                dfs(end + 1, currentList)
+                // backtrack and remove the last substring
+                currentList.pop()
+            }
+        }
+    }
+
+    function isPalindrome(low: number, high: number): boolean {
+        while (low < high)
+            if (s[low++] !== s[high--]) return false
+        return true
+    }
+};
+
+/**
+ * 2.8 Letter Combinations of a Phone Number (medium)
+ * https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/
+ * TC|O(3^N * 4^M) SC|O(N + M) N is the digits that have 3 letters, M is the digits that have 4 letters 
+ */
+function letterCombinations(digits: string): string[] {
+    if (digits.length === 0) return []
+    // base case: return an empty array if the input is empty
+    let map: { [key: string]: string } = {
+        '2': 'abc',
+        '3': 'def',
+        '4': 'ghi',
+        '5': 'jkl',
+        '6': 'mno',
+        '7': 'pqrs',
+        '8': 'tuv',
+        '9': 'wxyz'
+    }
+    let res: string[] = []
+    dfs(0, [])
+    return res
+
+    function dfs(index: number, path: string[]): void {
+        if (index === digits.length) {
+            res.push(path.join(''))
+            return
+        }
+
+        let letters: string = map[digits[index]]
+
+        for (let letter of letters) {
+            path.push(letter)
+            dfs(index + 1, path)
+            path.pop()
+        }
+    }
+};
+
+/**
+ * 2.9 N-Queens (hard)
+ * https://leetcode.com/problems/n-queens/description/
+ * TC|O(N!) SC|O(N^2)
+ */
+function solveNQueens(n: number): string[][] {
+    let res: string[][] = backtrack(n, 0, [], [])
+    return res
+};
+
+function backtrack(n: number, index: number, res: string[][], path: number[][]): string[][] {
+    const state = onAttack(path)
+    if (state) return
+
+    if (!state && path.length === n) {
+        let strArr = convertToStrShape(path)
+        res.push(strArr)
+    }
+
+    for (let i = 0; i < n && index < n; i++) {
+        path.push([index, i])
+        backtrack(n, index + 1, res, path)
+        path.pop()
+    }
+
+    return res
+}
+
+function onAttack(path: number[][]): boolean {
+    if (path.length === 1) return false
+
+    for (let i = 0; i < path.length - 1; i++) {
+        const n = path[i]
+        for (let j = i + 1; j < path.length; j++) {
+            const m = path[j]
+            // check is there on the same raw or culomn
+            if (n[0] === m[0] || n[1] === m[1]) return true
+            // check is there on the same diagonal
+            if (Math.abs(m[0] - n[0]) === Math.abs(m[1] - n[1])) return true
+        }
+    }
+
+    return false
+}
+
+function convertToStrShape(path: number[][]): string[] {
+    const length = path.length
+    let res: string[] = []
+    for (let i = 0; i < length; i++) {
+        const curr = path[i][1]
+        let str = ''
+        for (let j = 0; j < length; j++) {
+            if (j === curr) str += 'Q'
+            else str += '.'
+        }
+        res.push(str)
+    }
+    return res
 }
