@@ -1,7 +1,10 @@
-import { TreeNode } from "./DS"
+import { ListNode, TreeNode, GraphNode } from "./classes"
 
-/* 1. Trees */
 /**
+ * @Trees
+*/
+/**
+ * @Trees
  * 1.1 Binary Tree Inorder Traversal (easy)
  * https://leetcode.com/problems/binary-tree-inorder-traversal/description/
  * Stack
@@ -50,6 +53,7 @@ function inorderTraversalIteratively(root: TreeNode | null): number[] {
 }
 
 /**
+ * @Trees
  * 1.2 Invert Binary Tree (easy)
  * https://leetcode.com/problems/invert-binary-tree/description/
  * Stack
@@ -75,6 +79,7 @@ function invertTree(root: TreeNode | null): TreeNode | null {
 };
 
 /**
+ * @Trees
  * 1.3 Maximum Depth of Binary Tree (easy)
  * Queue
  * https://leetcode.com/problems/maximum-depth-of-binary-tree/description/
@@ -115,6 +120,7 @@ function maxDepthRecursively(root: TreeNode | null): number {
 }
 
 /**
+ * @Trees
  * 1.4 Same Tree (easy)
  * https://leetcode.com/problems/same-tree/description/
  * TC|O(N) SC|O(N)
@@ -160,6 +166,7 @@ function isSameTreeIteratively(p: TreeNode | null, q: TreeNode | null): boolean 
 // console.log(isSameTreeIteratively(p, r)) // false
 
 /**
+ * @Trees
  * 1.5 Subtree of Another Tree (easy)
  * https://leetcode.com/problems/subtree-of-another-tree/description/
  * TC|O(NM) SC|O(N+M)
@@ -180,6 +187,7 @@ function isSubtree(root: TreeNode | null, subRoot: TreeNode | null): boolean {
 };
 
 /**
+ * @Trees
  * 1.6 Lowest Common Ancestor of a Binary Tree (medium)
  * https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/
  * TC|O(N) SC|O(N)
@@ -193,6 +201,7 @@ function lowestCommonAncestor(root: TreeNode | null, p: TreeNode | null, q: Tree
 };
 
 /**
+ * @Trees
  * 1.7 Binary Tree Level Order Traversal (medium)
  * https://leetcode.com/problems/binary-tree-level-order-traversal/description/
  * TC|O(N) SC|O(N)
@@ -218,6 +227,7 @@ function levelOrder(root: TreeNode | null): number[][] {
 // console.log(levelOrder(root))
 
 /**
+ * @Trees
  * 1.8 Validate Binary Search Tree (medium)
  * https://leetcode.com/problems/validate-binary-search-tree/description/
  * TC|O(N) SC|O(N)
@@ -238,6 +248,7 @@ function isValidBSTInorderTraverse(root: TreeNode | null): boolean {
 }
 
 /**
+ * @Trees
  * 1.9 Kth Smallest Element in a BST (medium)
  * https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
  * TC|O(H + K) SC|O(H) H is the height of the tree 
@@ -287,12 +298,14 @@ function kthSmallest(root: TreeNode | null, k: number): number {
 };
 
 /**
+ * @Trees
  * 1.10 Construct Binary Tree from Preorder and Inorder Traversal (medium)
  * https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
 */
 
 
 /**
+ * @Trees
  * 1.11 Binary Tree Maximum Path Sum (hard)
  * https://leetcode.com/problems/binary-tree-maximum-path-sum/description/
  * TC|O(N) SC|O(H) H is the height of the tree
@@ -333,6 +346,7 @@ function maxPathSum(root: TreeNode | null): number {
 
 
 /**
+ * @Trees
  * 1.12 Serialize and Deserialize Binary Tree (hard)
  */
 
@@ -402,7 +416,8 @@ function deserialize(data: string): TreeNode | null {
     return root
 };
 
-/**Backtracking 
+/**
+ * @Backtracking 
  * Time Complexity : The time complexity of a backtracking algorithm depends on the number of possible solutions and the constraints of the problem.
     In general, the time complexity can be expressed as O(b^d),
     where b is the branching factor (the number of choices at each level) and d is the depth of the search tree (the maximum length of a solution).
@@ -434,6 +449,7 @@ function subsets(nums: number[]): number[][] {
 }
 
 /**
+ * @Backtracking
  * 2.2 Combination Sum (medium)
  * https://leetcode.com/problems/combination-sum/description/
  * TC|O(N * 2^N) SC|O(N)
@@ -468,6 +484,7 @@ function combinationSum(candidates: number[], target: number): number[][] {
 };
 
 /**
+ * @Backtracking
  * 2.3 Permutations (medium)
  * https://leetcode.com/problems/permutations/description/
  */
@@ -533,6 +550,7 @@ function permute(nums: number[]): number[][] {
 }
 
 /**
+ * @Backtracking
  * 2.4 Subsets II (medium)
  * https://leetcode.com/problems/subsets-ii/description/
  * TC|O(N * 2^N) SC|O(N)
@@ -564,6 +582,7 @@ function subsetsWithDup(nums: number[]): number[][] {
 }
 
 /**
+ * @Backtracking
  * 2.5 Combination Sum II (medium)
  * https://leetcode.com/problems/combination-sum-ii/description/
  * TC|O(N * 2^N) SC|O(N)
@@ -594,6 +613,7 @@ function combinationSum2(candidates: number[], target: number): number[][] {
 };
 
 /**
+ * @Backtracking
  * 2.6 Word Search
  * https://leetcode.com/problems/word-search/
  * TC|O(4*w + c) SC|O(w)
@@ -636,6 +656,7 @@ function dfs(board: string[][], word: string, wordIndex: number, r: number, c: n
 }
 
 /**
+ * @Backtracking
  * 2.7 Palindrome Partitioning (medium)
  * https://leetcode.com/problems/palindrome-partitioning/description/
  * TC|O(N * 2^N) SC|O(N), N is the length of the string
@@ -666,6 +687,7 @@ let partition = (s: string): string[][] => {
 };
 
 /**
+ * @Backtracking
  * 2.8 Letter Combinations of a Phone Number (medium)
  * https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/
  * TC|O(3^N * 4^M) SC|O(N + M) N is the digits that have 3 letters, M is the digits that have 4 letters 
@@ -704,11 +726,12 @@ function letterCombinations(digits: string): string[] {
 };
 
 /**
+ * @Backtracking
  * 2.9 N-Queens (hard)
  * https://leetcode.com/problems/n-queens/description/
  * TC|O(N!) SC|O(N^2)
  */
-function solveNQueens(n: number): string[][] {
+let solveNQueens = (n: number): string[][] => {
     let res: string[][] = backtrack(n, 0, [], [])
     return res
 };
@@ -762,3 +785,161 @@ function convertToStrShape(path: number[][]): string[] {
     }
     return res
 }
+
+solveNQueens = (n: number): string[][] => {
+    const result: string[][] = [];
+
+    const backtrack = (curRow: number, curState: number[], results: string[][]) => {
+        if (curRow === n) {
+            const board: string[] = [];
+            for (let i = 0; i < n; i++) {
+                let row = '';
+                for (let j = 0; j < n; j++) {
+                    if (curState[i] === j) {
+                        row += 'Q';
+                    } else {
+                        row += '.';
+                    }
+                }
+                board.push(row);
+            }
+            results.push(board);
+            return;
+        }
+
+        for (let i = 0; i < n; i++) {
+            let safe = true;
+            for (let j = 0; j < curRow; j++) {
+                const diff = Math.abs(curState[j] - i);
+                if (diff === 0 || diff === curRow - j) {
+                    safe = false;
+                    break;
+                }
+            }
+            if (safe) {
+                const nextState = curState.slice();
+                nextState[curRow] = i;
+                backtrack(curRow + 1, nextState, results);
+            }
+        }
+    }
+
+    backtrack(0, [], result);
+
+    return result;
+};
+
+/**
+ * @Graphs
+ */
+
+/**
+ * @Graphs
+ * 3.1 Number of Islands (medium)
+ * https://leetcode.com/problems/number-of-islands/description/
+ * TC|O(M*N) SC|O(M*N)
+ */
+function numIslands(grid: string[][]): number {
+    let res: number = 0
+    for (let i = 0; i < grid.length; i++)
+        for (let j = 0; j < grid[0].length; j++) {
+            if (grid[i][j] === '1') {
+                res++
+                dfs(i, j)
+            }
+        }
+    return res
+
+    function dfs(r: number, c: number): void {
+        if (r >= grid.length || c >= grid[0].length || r < 0 || c < 0 || grid[r][c] !== '1') return
+
+        grid[r][c] = '*'
+        dfs(r, c + 1)
+        dfs(r + 1, c)
+        dfs(r - 1, c)
+        dfs(r, c - 1)
+    }
+};
+
+/**
+ * 3.2 Max Area of Island (medium)
+ * https://leetcode.com/problems/max-area-of-island/description/
+ * TC|O(M*N) SC|O(M*N)
+ */
+function maxAreaOfIsland(grid: number[][]): number {
+    let res: number = 0
+    let area: number
+
+    for (let i = 0; i < grid.length; i++)
+        for (let j = 0; j < grid[0].length; j++)
+            if (grid[i][j] === 1) {
+                area = 0
+                dfs(i, j)
+                res = Math.max(res, area)
+            }
+
+    return res
+
+    function dfs(r: number, c: number): void {
+        if (c < 0 || r < 0 || r >= grid.length || c >= grid[0].length || grid[r][c] !== 1) return
+
+        grid[r][c] = 8
+
+        area++
+        dfs(r, c + 1)
+        dfs(r + 1, c)
+        dfs(r, c - 1)
+        dfs(r - 1, c)
+    }
+};
+
+
+/**
+ * @Graph
+ * 3.3 Clone Graph (medium)
+ * https://leetcode.com/problems/clone-graph/description/
+ * TC|O(V+E) SC|O(V+E),  where V is the number of nodes and E is the number of edges in the input graph.
+ */
+let cloneGraph = (node: GraphNode | null): GraphNode | null => {
+    if (!node) return null
+    let map: GraphNode[] = new Array(101).fill(null)
+    let clone: GraphNode = new GraphNode(node.val)
+    dfs(node, clone)
+    return clone
+
+    function dfs(head: GraphNode, clone: GraphNode): void {
+        map[head.val] = clone
+
+        for (let n of head.neighbors) {
+            if (!map[n.val]) {
+                let newNode: GraphNode = new GraphNode(n.val)
+                clone.neighbors.push(newNode)
+                dfs(n, newNode)
+            } else {
+                clone.neighbors.push(map[n.val])
+            }
+
+        }
+
+    }
+};
+
+cloneGraph = (node: GraphNode | null): GraphNode | null => {
+    if (!node) return null
+
+    const map = new Map<GraphNode, GraphNode>().set(node, new GraphNode(node.val))
+    const queue: GraphNode[] = [node]
+
+    while (queue.length) {
+        const curr = queue.shift()!
+        curr.neighbors.forEach((n: GraphNode) => {
+            if (!map.has(n)) {
+                queue.push(n)
+                map.set(n, new GraphNode(n.val))
+            }
+            map.get(curr)!.neighbors.push(map.get(n)!)
+        })
+    }
+
+    return map.get(node)!
+};
