@@ -943,3 +943,162 @@ cloneGraph = (node: GraphNode | null): GraphNode | null => {
 
     return map.get(node)!
 };
+
+/**
+ * @Graph stupid question I can't understand it
+ * 3.4 Pacific Atlantic Water Flow (medium)
+ * https://leetcode.com/problems/pacific-atlantic-water-flow/description/
+ */
+
+/**
+ * @Graph
+ * 3.5 Surrounded Regions (medium)
+ * https://leetcode.com/problems/surrounded-regions/description/
+ * TC|O(M*N) SC|O(M*N)
+ */
+
+// helper function
+function solve(board: string[][]): void {
+    let r = board.length
+    let c = board[0].length
+
+    // [["X","O","X","O","X","O"],
+    //  ["O","X","O","X","O","X"],
+    //  ["X","O","X","O","X","O"],
+    //  ["O","X","O","X","O","X"]]
+
+    // loop over left and right borders
+    for (let i = 0; i < r; i++) {
+        if (board[i][0] === 'O') dfs(i, 0)
+        if (board[i][c - 1] === 'O') dfs(i, c - 1)
+    }
+
+    //loop over top and bottom borders
+    for (let i = 0; i < c; i++) {
+        if (board[0][i] === 'O') dfs(0, i)
+        if (board[r - 1][i] === 'O') dfs(r - 1, i)
+    }
+
+    for (let i = 0; i < r; i++) {
+        for (let j = 0; j < c; j++) {
+            if (board[i][j] === 'P') board[i][j] = 'O'
+            else if (board[i][j] === 'O') board[i][j] = 'X'
+        }
+    }
+
+    function dfs(r: number, c: number): void {
+        if (r == board.length || c == board[0].length || r < 0 || c < 0 || board[r][c] !== 'O') return
+
+        board[r][c] = 'P'
+
+        dfs(r, c + 1)
+        dfs(r + 1, c)
+        dfs(r - 1, c)
+        dfs(r, c - 1)
+    }
+};
+
+/**
+ * @Graph
+ * 3.6 Rotting Oranges (medium)
+ * https://leetcode.com/problems/rotting-oranges/description/
+ * TC|O(M*N) SC|O(M*N)
+ */
+let orangesRotting = (grid: number[][]): number => {
+    let [ROWS, COLS, minutes, fresh] = [grid.length, grid[0].length, 0, 0]
+    let queue: number[][] = []
+    let dirs = [
+        [0, 1],
+        [0, -1],
+        [1, 0],
+        [-1, 0]
+    ]
+
+    for (let i = 0; i < ROWS; i++)
+        for (let j = 0; j < COLS; j++)
+            if (grid[i][j] === 1) fresh++
+            else if (grid[i][j] === 2) queue.push([i, j])
+
+    while (queue.length && fresh) {
+        let qLen = queue.length
+
+        // loop through all current rotten oranges 
+        for (let rotten = 0; rotten < qLen; rotten++) {
+            let [row, col] = queue.shift()
+
+            // damage all fresh neighbors of the current rotten orange
+            for (let dir of dirs) {
+                let [r, c] = [row + dir[0], col + dir[1]]
+
+                if (
+                    r < 0 ||
+                    r >= ROWS ||
+                    c < 0 ||
+                    c >= COLS ||
+                    grid[r][c] !== 1
+                ) continue
+
+                grid[r][c] = 2
+                fresh--
+                queue.push([r, c])
+            }
+        }
+        minutes++
+    }
+    return fresh > 0 ? -1 : minutes
+}
+
+
+/**
+ * @Graph
+ * 3.7 Course Schedule (medium)
+ * https://leetcode.com/problems/course-schedule/description/
+ * TC|O(V+E) SC|O(V+E)
+ */
+
+let canFinish = (numCourses: number, prerequisites: number[][]): boolean => {
+    let set: Set<number> = new Set()
+    let visited: Record<number, number[]> = {}
+
+    for (let i = 0; i < numCourses; i++) visited[i] = []
+    for (let [r, c] of prerequisites) visited[r].push(c)
+    for (let crs = 0; crs < numCourses; crs++) if (!dfs(crs)) return false
+    return true
+
+    function dfs(crs: number): boolean {
+        if (set.has(crs)) return false
+        if (!visited[crs].length) return true
+        set.add(crs)
+
+        for (let c of visited[crs]) if (!dfs(c)) return false
+
+        set.delete(crs)
+        visited[crs] = []
+        return true
+    }
+}
+
+canFinish = (numCourses: number, prerequisites: number[][]): boolean => {
+    const set = new Set<number>()
+    const map = new Map<number, number[]>()
+
+    for (let arr of prerequisites)
+        if (!map.has(arr[0])) map.set(arr[0], [arr[1]])
+        else map.get(arr[0]).push(arr[1])
+
+    for (let course of map.keys()) if (!dfs(course)) return false
+    return true
+
+    function dfs(course: number): boolean {
+        if (set.has(course)) return false
+        if (!map.has(course) || !map.get(course)) return true
+        set.add(course)
+
+        for (let c of map.get(course)) if (!dfs(c)) return false
+
+        set.delete(course)
+        map.set(course, null)
+        return true
+    }
+};
+
