@@ -1,4 +1,4 @@
-import { Trie } from "./dataStructure";
+import { Trie } from './dataStructure';
 
 class ListNode {
   constructor(val, next) {
@@ -6,6 +6,7 @@ class ListNode {
     this.next = next === undefined ? null : next;
   }
 }
+
 class TreeNode {
   constructor(val, left, right) {
     this.val = val === undefined ? 0 : val;
@@ -145,7 +146,7 @@ M             1000
 //   return res;
 // }
 
-var romanToInt = (s) => {
+var romanToInt = s => {
   let res = 0;
   let map = {
     I: 1,
@@ -176,30 +177,34 @@ var romanToInt = (s) => {
  ** Space Complexity O(1)
  ** https://leetcode.com/problems/longest-common-prefix/
  */
-
-// function longestCommonPrefix(strs) {
-//   if (strs.length === 0) return "";
-//   let prefix = strs[0];
-//   for (let i = 1; i < strs.length; i++) {
-//     while (strs[i].indexOf(prefix) !== 0)
-//       prefix = prefix.substring(0, prefix.length - 1);
-//   }
-//   return prefix;
-// }
-
-var longestCommonPrefix = (strs) => {
-  if (strs.length === 0) return "";
-  let prefix = "";
-  prefix = strs[0];
+// Approach 1: Horizontal scanning
+var longestCommonPrefix = strs => {
+  if (strs.length === 0) return '';
+  let prefix = strs[0];
   for (let c of strs) {
-    while (c.indexOf(prefix) !== 0)
-      prefix = prefix.substring(0, prefix.length - 1);
+    while (c.indexOf(prefix) !== 0) prefix = prefix.substring(0, prefix.length - 1);
   }
   return prefix;
 };
 
-const strs = ["flower", "flow", "flight"];
-//console.log(longestCommonPrefix(strs));
+// Approach 2: Vertical scanning
+var longestCommonPrefix = strs => {
+  if (strs.length === 0) return '';
+  const firstStr = strs[0];
+  for (let i = 0; i < firstStr.length; i++) {
+    const c = firstStr[i];
+    for (let j = 1; j < strs.length; j++) {
+      const comparedStr = strs[j];
+      if (c !== comparedStr[i]) return comparedStr.substring(0, i);
+    }
+  }
+  return firstStr;
+};
+
+// there is another several approaches, check them >> https://leetcode.com/problems/longest-common-prefix/editorial/
+
+const strs = ['flower', 'flow', 'flight'];
+// console.log(longestCommonPrefix(strs));
 
 /**
  * 5. Remove Duplicates from Sorted Array
@@ -210,10 +215,14 @@ const strs = ["flower", "flow", "flight"];
  */
 function removeDuplicates(nums) {
   if (nums.length == 0) return [];
-  for (let i = 0; i < nums.length; )
-    nums[i] === nums[i + 1] ? nums.splice(i, 1) : i++;
-  return; //console.log(nums);
+  for (let i = 0; i < nums.length; ) nums[i] === nums[i + 1] ? nums.splice(i, 1) : i++;
+  return;
 }
+
+function removeDuplicates(nums) {
+  return [...new Set(nums)];
+}
+
 removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3]);
 removeDuplicates([1, 1, 2]);
 
@@ -226,7 +235,7 @@ removeDuplicates([1, 1, 2]);
  */
 var removeElement = function (nums, val) {
   for (let i = 0; i < nums.length; ) nums[i] == val ? nums.splice(i, 1) : i++;
-  return [nums.length, nums];
+  return nums;
 };
 
 var nums = [0, 1, 2, 2, 3, 0, 4, 2],
@@ -269,9 +278,9 @@ function reverseString(s) {
  * https://leetcode.com/problems/reverse-string-ii/
  */
 function reverseStr(s, k) {
-  let arr = s.split("");
+  let arr = s.split('');
   arr = arr.splice(0, k).reverse();
-  return arr.join("") + s.slice(k);
+  return arr.join('') + s.slice(k);
 }
 //console.log(reverseStr("abcdefg", 3)); //cbadefg
 
@@ -301,10 +310,10 @@ function trailingZeroes(num) {
   }
   return divider + res;
 }
-//test
-// for (let i = 0; i <= 200; i++) {
-//   console.log(`${i}! = ` + trailingZeroes(i));
-// }
+
+const trailingZeroes = n => (n < 5 ? 0 : Math.floor(n / 5) + trailingZeroes(Math.floor(n / 5)));
+
+// todo: revision from here:
 
 /**
  * 10. Is Subsequence
@@ -341,9 +350,9 @@ function isSubsequence(s, t) {
   return count === s.length;
 }
 
-let s = "leeeeeetcode";
+let s = 'leeeeeetcode';
 let t =
-  "yyyyylyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyytyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyycyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyoyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyydyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy";
+  'yyyyylyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyytyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyycyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyoyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyydyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy';
 // console.log(isSubsequence(s, t));
 
 /**
@@ -437,7 +446,7 @@ var longestSubarray = function (nums) {
  * 15. Check If Two String Arrays are Equivalent
  */
 var arrayStringsAreEqual = function (word1, word2) {
-  return word1.join("") == word2.join("");
+  return word1.join('') == word2.join('');
 };
 
 /**
@@ -592,13 +601,13 @@ var nums = [1, 2],
  ** stack O(n) ,
  * Set is better than Map to store () {} [], Map doesn't work with me
  */
-var isValid = (str) => {
+var isValid = str => {
   let set = new Set(),
-    arr = str.split(""),
-    check = "";
-  set.add("()");
-  set.add("[]");
-  set.add("{}");
+    arr = str.split(''),
+    check = '';
+  set.add('()');
+  set.add('[]');
+  set.add('{}');
   if (str.length % 2 !== 0) return false;
   for (let i = 0; i < str.length && i >= 0; ) {
     check = arr[i] + arr[i + 1];
@@ -611,27 +620,27 @@ var isValid = (str) => {
   return arr.length == 0;
 };
 
-var isValid = (str) => {
+var isValid = str => {
   for (let i = str.length / 2; i > 0; i--) {
-    str = str.replace(/\(\)|\[\]|\{\}/, "");
+    str = str.replace(/\(\)|\[\]|\{\}/, '');
   }
   return str.length == 0;
 };
 
 // Stack
-var isValid = (str) => {
+var isValid = str => {
   let stack = [];
 
   for (let c of str)
     switch (c) {
-      case "{":
-        stack.push("}");
+      case '{':
+        stack.push('}');
         break;
-      case "[":
-        stack.push("]");
+      case '[':
+        stack.push(']');
         break;
-      case "(":
-        stack.push(")");
+      case '(':
+        stack.push(')');
         break;
       default:
         if (stack.pop() !== c) return false;
@@ -672,8 +681,7 @@ var twoSum = function (numbers, target) {
   let map = new Map();
   for (let i = 0; i < numbers.length; i++) map.set(numbers[i], i);
   for (let i = 0; i < numbers.length; i++) {
-    if (map.has(target - numbers[i]))
-      return [i + 1, map.get(target - numbers[i]) + 1];
+    if (map.has(target - numbers[i])) return [i + 1, map.get(target - numbers[i]) + 1];
   }
 };
 // test
@@ -794,7 +802,7 @@ var lengthOfLastWord = function (s) {
 //   return digits;
 // };// this solution does not work with big numbers.
 
-var plusOne = (digits) => {
+var plusOne = digits => {
   let length = digits.length;
   for (let i = 1; i < length + 1; i++) {
     if (digits[length - i] + 1 == 10) {
@@ -835,13 +843,13 @@ var addBinary = function (a, b) {
 //console.log(addBinary("11", "1"));
 
 var addBinary = function (a, b) {
-  let sum = "";
+  let sum = '';
   let carry = 0;
   let i = a.length - 1;
   let j = b.length - 1;
   while (i >= 0 || j >= 0) {
-    let x = i >= 0 ? a[i] - "0" : 0;
-    let y = j >= 0 ? b[j] - "0" : 0;
+    let x = i >= 0 ? a[i] - '0' : 0;
+    let y = j >= 0 ? b[j] - '0' : 0;
     let temp = x + y + carry;
     sum = (temp % 2) + sum;
     carry = Math.floor(temp / 2);
@@ -932,7 +940,7 @@ var merge = function (nums1, m, nums2, n) {
  ** TC : O(n), SC : O(n)
  */
 var lengthOfLongestSubstring = function (s) {
-  let arr = s.split(""),
+  let arr = s.split(''),
     repeats = 0,
     set = new Set(),
     i = 0;
@@ -984,30 +992,28 @@ var lengthOfLongestSubstring = function (s) {
  */
 
 var reverseWords = function (s) {
-  let reversed = "",
-    reversedString = "";
+  let reversed = '',
+    reversedString = '';
   for (let i of s) {
-    if (i !== " ") {
+    if (i !== ' ') {
       reversed = i + reversed;
     } else {
       reversedString.length !== 0
-        ? (reversedString += " " + reversed)
+        ? (reversedString += ' ' + reversed)
         : (reversedString += reversed);
-      reversed = "";
+      reversed = '';
     }
   }
-  return reversedString.length === 0
-    ? reversed
-    : reversedString + " " + reversed;
+  return reversedString.length === 0 ? reversed : reversedString + ' ' + reversed;
 };
 //console.log(reverseWords(`Let's take LeetCode contest`));
 //console.log(reverseWords(`ehhhhhheh`));
 
 var reverseWords = function (s) {
-  let arr = s.split(" ");
-  let reversed = "";
+  let arr = s.split(' ');
+  let reversed = '';
   for (let i of arr) {
-    reversed += i.split("").reverse().join("") + " ";
+    reversed += i.split('').reverse().join('') + ' ';
   }
   return reversed.trim();
 };
@@ -1016,15 +1022,15 @@ var reverseWords = function (s) {
 
 var reverseWords = function (s) {
   return s
-    .split(" ")
-    .map((word) => word.split("").reverse().join(""))
-    .join(" ");
+    .split(' ')
+    .map(word => word.split('').reverse().join(''))
+    .join(' ');
 };
 //console.log(reverseWords(`Let's take LeetCode contest`));
 //console.log(reverseWords(`ehhhhhheh`));
 
 var reverseWords = function (s) {
-  return s.split("").reverse().join("").split(" ").reverse().join(" ");
+  return s.split('').reverse().join('').split(' ').reverse().join(' ');
 };
 
 /**
@@ -1259,7 +1265,7 @@ function maxSubArray(nums) {
 //  That means the value of the current index is bigger than the last sum,
 // so we won't need this element
 // so we will remove this index and all the indexes before it
-var maxSubArray = (nums) => {
+var maxSubArray = nums => {
   let sum = 0,
     max = nums[0];
   for (let i = 0; i < nums.length; ) {
@@ -1397,11 +1403,7 @@ var checkInclusion = (s1, s2) => {
   }
 
   while (end < s2.length) {
-    if (
-      windowWeight === weight &&
-      isPermutation(s1, s2.substring(start, end + 1))
-    )
-      return true;
+    if (windowWeight === weight && isPermutation(s1, s2.substring(start, end + 1))) return true;
     end++;
     if (end === s2.length) return false;
     windowWeight += s2[end].charCodeAt(0);
@@ -1426,10 +1428,10 @@ var checkInclusion = (s1, s2) => {
  * 39. Longest Palindromic Substring
  */
 var longestPalindrome = function (s) {
-  let res = "";
+  let res = '';
   for (let i = 0; i < s.length; i++) {
-    let subStr = "";
-    let reverse = "";
+    let subStr = '';
+    let reverse = '';
     for (let j = i; j <= s.length; j++) {
       reverse = s[j] + reverse;
       subStr = s.slice(i, j + 1);
@@ -1567,11 +1569,9 @@ var floodFill = function (image, sr, sc, newColor) {
     let [x, y] = queue.shift();
     image[x][y] = newColor;
     if (x > 0 && image[x - 1][y] == oldColor) queue.push([x - 1, y]);
-    if (x < image.length - 1 && image[x + 1][y] == oldColor)
-      queue.push([x + 1, y]);
+    if (x < image.length - 1 && image[x + 1][y] == oldColor) queue.push([x + 1, y]);
     if (y > 0 && image[x][y - 1] == oldColor) queue.push([x, y - 1]);
-    if (y < image[0].length - 1 && image[x][y + 1] == oldColor)
-      queue.push([x, y + 1]);
+    if (y < image[0].length - 1 && image[x][y + 1] == oldColor) queue.push([x, y + 1]);
   }
   return image;
 };
@@ -1693,7 +1693,7 @@ var isIsomorphic = function (s, t) {
     }
     arr2.push(map2.get(t[i]));
   }
-  return arr.join("") == arr2.join("");
+  return arr.join('') == arr2.join('');
 };
 // enhanced solution
 var isIsomorphic = function (s, t) {
@@ -1907,6 +1907,7 @@ var containsDuplicate = function (nums) {
 //   return firstSum === secondSum;
 // };
 
+// * Hash Map
 // Time complexity O(n + m)
 // Space complexity O(n)
 // Perfect Solution
@@ -1960,13 +1961,11 @@ var isAnagram = (s, t) => {
   return reorder(s) === reorder(t); /* Time O(N * logN) | Space O(N) */
 };
 
-const reorder = (str) =>
+const reorder = str =>
   str
-    .split("") /* Time O(N)          | Space O(N) */
-    .sort((a, b) =>
-      a.localeCompare(b),
-    ) /* Time O(N * log(N)) | Space O(1 || log(N)) */
-    .join(""); /* Time O(N)          | Space O(N) */
+    .split('') /* Time O(N)          | Space O(N) */
+    .sort((a, b) => a.localeCompare(b)) /* Time O(N * log(N)) | Space O(1 || log(N)) */
+    .join(''); /* Time O(N)          | Space O(N) */
 // console.log(isAnagram("anagram", "nagaram"));
 
 /**
@@ -1991,15 +1990,15 @@ function reverseInt(x, rev = 0, sign = 1) {
 /**
  * 52. Group Anagrams
  ** Hash Map
- ** time complexity O(n*l*log l) n-> strs.length l-> str.length
+ ** time complexity O(n*l*log l) n-> strs.length, l-> str.length
  ** space complexity O(n*l) n-> strs.length l-> str.length
  */
 
 const groupAnagrams = function (strs) {
   let groups = {};
-  strs.forEach((str) => {
+  strs.forEach(str => {
     // O(n) n-> strs.length
-    const sortedStr = [...str].sort().join(""); // O(log l) l-> str.length  // O(l)
+    const sortedStr = [...str].sort().join(''); // O(log l) l-> str.length  // O(l)
     if (groups[sortedStr]) groups[sortedStr].push(str);
     else groups[sortedStr] = [str];
   });
@@ -2079,7 +2078,7 @@ const groupAnagrams = function (strs) {
 var topKFrequent = function (nums, k) {
   let map = {};
 
-  nums.forEach((num) => {
+  nums.forEach(num => {
     // O(n) n-> nums.length
     if (map[num]) map[num][1] += 1;
     else map[num] = [num, 1];
@@ -2087,7 +2086,7 @@ var topKFrequent = function (nums, k) {
 
   return Object.values(map)
     .sort((a, b) => b[1] - a[1]) // O(n log n) n-> nums.length
-    .map((d) => d[0]) // O(n) n-> nums.length
+    .map(d => d[0]) // O(n) n-> nums.length
     .splice(0, k); // O(1)
 };
 
@@ -2171,7 +2170,7 @@ var topKFrequent = function (nums, k) {
 // };
 
 // Enhancing last solution
-var productExceptSelf = (nums) => {
+var productExceptSelf = nums => {
   let val = 1;
   let res = [1];
 
@@ -2194,7 +2193,7 @@ var productExceptSelf = (nums) => {
  ** Space complexity O(n) n-> nums.length
  */
 
-var longestConsecutive = (nums) => {
+var longestConsecutive = nums => {
   let set = new Set(nums);
   let length;
   let longest = 0;
@@ -2228,47 +2227,47 @@ var longestConsecutive = (nums) => {
 
 var isPalindrome = function (s) {
   const alphabet = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'o',
+    'p',
+    'q',
+    'r',
+    's',
+    't',
+    'u',
+    'v',
+    'w',
+    'x',
+    'y',
+    'z',
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
   ];
   let set = new Set(alphabet);
-  let word = "",
-    reverse = "",
-    letter = "";
+  let word = '',
+    reverse = '',
+    letter = '';
   for (let l of s) {
     letter = l.toLowerCase();
     if (set.has(letter)) {
@@ -2284,44 +2283,44 @@ var isPalindrome = function (s) {
 //* Time complexity O(n) n-> nums.length
 //* Space complexity O(1) constant because it is O(2*set.length)
 
-var isPalindrome = (s) => {
+var isPalindrome = s => {
   const alphabet = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'o',
+    'p',
+    'q',
+    'r',
+    's',
+    't',
+    'u',
+    'v',
+    'w',
+    'x',
+    'y',
+    'z',
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
   ];
   let set = new Set(alphabet);
 
@@ -2346,7 +2345,7 @@ var isPalindrome = (s) => {
 // Brute Force
 // Time Complexity O(n^3)
 // Space Complexity O(strArr.length + n ) n -> nums.length
-var threeSum = (nums) => {
+var threeSum = nums => {
   let res = [],
     strArr = [],
     newArr = [];
@@ -2355,8 +2354,8 @@ var threeSum = (nums) => {
       for (let k = j + 1; k < nums.length; k++) {
         if (nums[i] + nums[j] + nums[k] === 0) {
           newArr = [nums[i], nums[j], nums[k]].sort((a, b) => a - b);
-          !strArr.includes(newArr.join("")) ? res.push(newArr) : res;
-          strArr.push(newArr.join(""));
+          !strArr.includes(newArr.join('')) ? res.push(newArr) : res;
+          strArr.push(newArr.join(''));
         }
       }
     }
@@ -2367,7 +2366,7 @@ var threeSum = (nums) => {
 // Two Pointers && Divide and Conquer
 // Time Complexity O(n^2) -> O(n log(n)) + O(n^2)
 //
-var threeSum = (nums) => {
+var threeSum = nums => {
   let res = [],
     set = new Set();
   nums = nums.sort((a, b) => a - b); // O(n log(n))
@@ -2382,19 +2381,19 @@ var threeSum = (nums) => {
       if (action === 0) {
         let newArr = [nums[i], sortedArr[l], sortedArr[r]].sort(
           //join -> O(1)
-          (a, b) => a - b,
+          (a, b) => a - b
         );
-        !set.has(newArr.join("")) && res.push(newArr); //join -> O(1)
+        !set.has(newArr.join('')) && res.push(newArr); //join -> O(1)
         l++;
         r--;
-        set.add(newArr.join("")); //join -> O(1)
+        set.add(newArr.join('')); //join -> O(1)
       }
     }
   }
   return res;
 };
 
-var threeSum = (nums) => {
+var threeSum = nums => {
   let res = [];
   nums = nums.sort((a, b) => a - b);
 
@@ -2470,18 +2469,18 @@ var maxProfit = function (prices) {
  */
 var letterCombinations = function (digits) {
   const map = {
-    2: ["a", "b", "c"],
-    3: ["d", "e", "f"],
-    4: ["g", "h", "i"],
-    5: ["j", "k", "l"],
-    6: ["m", "n", "o"],
-    7: ["p", "q", "r", "s"],
-    8: ["t", "u", "v"],
-    9: ["w", "x", "y", "z"],
+    2: ['a', 'b', 'c'],
+    3: ['d', 'e', 'f'],
+    4: ['g', 'h', 'i'],
+    5: ['j', 'k', 'l'],
+    6: ['m', 'n', 'o'],
+    7: ['p', 'q', 'r', 's'],
+    8: ['t', 'u', 'v'],
+    9: ['w', 'x', 'y', 'z'],
   };
 
-  function iterate(digits, res = [""]) {
-    if (digits === "") return res;
+  function iterate(digits, res = ['']) {
+    if (digits === '') return res;
 
     let lastIndex = digits.length - 1;
     let next = [];
@@ -2504,7 +2503,7 @@ var letterCombinations = function (digits) {
  */
 // Brute Force TC|O(n^2) SC|O(n)
 var largestNumber = function (nums) {
-  nums = nums.map((n) => n.toString());
+  nums = nums.map(n => n.toString());
 
   for (let i = 0; i < nums.length; i++) {
     for (let j = i + 1; j < nums.length; j++) {
@@ -2515,15 +2514,15 @@ var largestNumber = function (nums) {
       }
     }
   }
-  res = nums.join("");
-  return res == 0 ? "0" : res;
+  res = nums.join('');
+  return res == 0 ? '0' : res;
 };
 
 // TC|O(n log(n)) SC|O(1)
-var largestNumber = (nums) => {
-  nums = nums.sort((a, b) => b + "" + a - (a + "" + b)).join("");
+var largestNumber = nums => {
+  nums = nums.sort((a, b) => b + '' + a - (a + '' + b)).join('');
 
-  return nums == 0 ? "0" : nums;
+  return nums == 0 ? '0' : nums;
 };
 // console.log(largestNumber([123,897,89, 4, 99]))
 
@@ -2533,8 +2532,7 @@ var largestNumber = (nums) => {
  */
 
 var getNoZeroIntegers = function (n) {
-  for (let i = 1; i < n; i++)
-    if (isNoZeros(n - i, n - (n - i))) return [n - i, n - (n - i)];
+  for (let i = 1; i < n; i++) if (isNoZeros(n - i, n - (n - i))) return [n - i, n - (n - i)];
 
   function isNoZeros(n1, n2) {
     while (n1 > 0) {
@@ -2556,17 +2554,17 @@ var getNoZeroIntegers = function (n) {
 
 var minFlips = function (a, b, c) {
   let map = {
-    "000": 0,
-    "001": 1,
-    "010": 1,
-    "011": 0,
+    '000': 0,
+    '001': 1,
+    '010': 1,
+    '011': 0,
     100: 1,
     101: 0,
     110: 2,
     111: 0,
   };
   let flips = 0;
-  let zeros = "000000000000000000000000000000000000000000000000000000000000";
+  let zeros = '000000000000000000000000000000000000000000000000000000000000';
 
   a = a.toString(2);
   b = b.toString(2);
@@ -2621,7 +2619,7 @@ var minFlips = (a, b, c) => {
  ** Bit Manipulation
  */
 
-var isPowerOfTwo = (n) => n > 0 && !(n & (n - 1));
+var isPowerOfTwo = n => n > 0 && !(n & (n - 1));
 // console.log(isPowerOfTwo(1))
 
 /**
@@ -2722,7 +2720,7 @@ var findMin = function (nums) {
 };
 // console.log(findMin([3, 1, 2]));
 
-var findMin = (nums) => {
+var findMin = nums => {
   let l = 0;
   let r = nums.length - 1;
   while (l < r) {
@@ -2762,22 +2760,22 @@ method to find the location of a given string
  */
 // Java
 function spareSearch(strings, str) {
-  if (strings === null || str === null || str === "") return -1;
+  if (strings === null || str === null || str === '') return -1;
   return spareSearch(strings, str, 0, strings.length - 1);
 
   function spareSearch(stings, str, first, last) {
     if (first > last) return -1;
     let mid = (last + first) / 2;
 
-    if (strings[mid] === "") {
+    if (strings[mid] === '') {
       const left = mid - 1;
       const right = mid + 1;
       for (;;) {
         if (left > first && right > last) return -1;
-        else if (left >= first && strings[left] !== "") {
+        else if (left >= first && strings[left] !== '') {
           mid = left;
           break;
-        } else if (right < last && strings[right] !== "") {
+        } else if (right < last && strings[right] !== '') {
           mid = right;
           break;
         }
@@ -2793,7 +2791,7 @@ function spareSearch(strings, str) {
   }
 }
 
-var strings = ["at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""];
+var strings = ['at', '', '', '', 'ball', '', '', 'car', '', '', 'dad', '', ''];
 // console.log(spareSearch(strings, "ball"));
 
 /**
@@ -2834,7 +2832,7 @@ Input:the node c from the linked list a->b->c->d->e->f
 Result: nothing is returned, but the new linked list looks like a ->b->d->e->f
  */
 // java
-var deleteMidNode = (node) => {
+var deleteMidNode = node => {
   while (!node || !node.next) return false;
   node.data = node.next.data;
   node.next = node.next.next;
@@ -2874,12 +2872,12 @@ for (let node = head; node; node = node.next) {
 /**
  * 72. Binary Tree Inorder Traversal
  */
-var a = new TreeNode("a");
-var b = new TreeNode("b");
-var c = new TreeNode("c");
-var d = new TreeNode("d");
-var e = new TreeNode("e");
-var f = new TreeNode("f");
+var a = new TreeNode('a');
+var b = new TreeNode('b');
+var c = new TreeNode('c');
+var d = new TreeNode('d');
+var e = new TreeNode('e');
+var f = new TreeNode('f');
 
 a.left = b;
 a.right = c;
@@ -3153,8 +3151,7 @@ class MinStack {
    * @return {void}
    */
   pop() {
-    if (this.stack[this.stack.length - 1] === this.min[this.min.length - 1])
-      this.min.pop();
+    if (this.stack[this.stack.length - 1] === this.min[this.min.length - 1]) this.min.pop();
     this.stack.pop();
   }
 
@@ -3219,17 +3216,17 @@ var calPoints = function (operations) {
   let sum = 0;
   for (let i of operations) {
     switch (i) {
-      case "+":
+      case '+':
         sumOp = stack[stack.length - 1] + stack[stack.length - 2];
         sum += sumOp;
         stack.push(sumOp);
         break;
-      case "D":
+      case 'D':
         doubleOp = stack[stack.length - 1] * 2;
         sum += doubleOp;
         stack.push(doubleOp);
         break;
-      case "C":
+      case 'C':
         removedElement = stack[stack.length - 1];
         sum -= removedElement;
         stack.pop();
@@ -3338,11 +3335,9 @@ var lowestCommonAncestor = function (root, p, q) {
   // If root is null or equal to either p or q, return root
   if (root.val === p.val || root.val === q.val) return root;
   // If both p and q are smaller than root, find LCA in left subtree
-  if (p.val < root.val && q.val < root.val)
-    return lowestCommonAncestor(root.left, p, q);
+  if (p.val < root.val && q.val < root.val) return lowestCommonAncestor(root.left, p, q);
   // If both p and q are larger than root, find LCA in right subtree
-  if (p.val > root.val && q.val > root.val)
-    return lowestCommonAncestor(root.right, p, q);
+  if (p.val > root.val && q.val > root.val) return lowestCommonAncestor(root.right, p, q);
   // If one of p or q is smaller and one is larger than root, return root as LCA
   return root;
 };
@@ -3425,10 +3420,7 @@ var levelOrder = function (root) {
 var isValidBST = function (root, min = -Infinity, max = Infinity) {
   if (!root) return true;
   if (root.val <= min || root.val >= max) return false;
-  return (
-    isValidBST(root.left, min, root.val) &&
-    isValidBST(root.right, root.val, max)
-  );
+  return isValidBST(root.left, min, root.val) && isValidBST(root.right, root.val, max);
 };
 
 var isValidBST = function (root) {
@@ -3566,13 +3558,7 @@ var maxPathSum = function (root) {
     let left = def(root.left);
     let right = def(root.right);
 
-    max = Math.max(
-      max,
-      root.val,
-      root.val + left,
-      root.val + right,
-      root.val + left + right,
-    );
+    max = Math.max(max, root.val, root.val + left, root.val + right, root.val + left + right);
 
     let maxSum = Math.max(root.val, root.val + left, root.val + right);
 
@@ -3603,12 +3589,12 @@ var maxPathSum = function (root) {
  */
 
 let trie = new Trie();
-trie.insert("apple");
-console.log(trie.search("apple")); // true
-console.log(trie.search("app")); // false
-console.log(trie.startsWith("app")); // true
-trie.insert("app");
-console.log(trie.search("app")); // true
+trie.insert('apple');
+console.log(trie.search('apple')); // true
+console.log(trie.search('app')); // false
+console.log(trie.startsWith('app')); // true
+trie.insert('app');
+console.log(trie.search('app')); // true
 
 /**
  * 89. Is Subsequence

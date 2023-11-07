@@ -28,3 +28,8 @@ export class GraphNode {
         this.neighbors = (neighbors === undefined ? [] : neighbors)
     }
 }
+
+export interface Track {
+    finite: boolean | null,
+    nextCourses: number[]
+}
