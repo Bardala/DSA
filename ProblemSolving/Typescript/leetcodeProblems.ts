@@ -89,30 +89,33 @@ function invertTree(root: TreeNode | null): TreeNode | null {
   which is equivalent to O(n) in big O notation. 😊
   */
 
-// The best answer between this answer and the last answer depends on the shape and size of the tree. If the tree is balanced and has many nodes, then the iterative answer using a queue may be better, as it uses less space than the recursive answer.
+// The best answer between this answer and the last answer depends on the shape and size of the tree.
+// If the tree is balanced and has many nodes, then the iterative answer using a queue may be better, as it uses less space than the recursive answer.
 // However, if the tree is skewed or has few nodes, then the recursive answer may be better,
 // as it uses less time than the iterative answer. 😊
 
 function maxDepth(root: TreeNode | null): number {
   if (!root) return 0;
-
-  let queue: TreeNode[] | null = [root] as TreeNode[];
-  let depth: number = 0;
+  let queue = [root],
+    depth = 0;
 
   while (queue.length > 0) {
-    for (let i = queue.length; i > 0; i--) {
-      let curr = queue.shift() as TreeNode | null;
-
-      if (curr) {
-        if (curr.left) queue.push(curr.left);
-        if (curr.right) queue.push(curr.right);
-      }
+    let size = queue.length;
+    for (let i = 0; i < size; i++) {
+      let curr = queue.shift();
+      if (curr?.left) queue.push(curr.left);
+      if (curr?.right) queue.push(curr.right);
     }
-
     depth++;
   }
   return depth;
 }
+
+//     3
+//    / \
+//   9  20
+//     /  \
+//    15   7
 
 function maxDepthRecursively(root: TreeNode | null): number {
   if (!root) return 0;
@@ -128,31 +131,20 @@ function maxDepthRecursively(root: TreeNode | null): number {
 
 function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
   if (!p && !q) return true;
-  if (!p || !q) return false;
-  if (p.val !== q.val) return false;
-
+  if (!p || !q || p.val !== q.val) return false;
   return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
 }
 
 function isSameTreeIteratively(p: TreeNode | null, q: TreeNode | null): boolean {
-  let stackP = [p] as TreeNode[];
-  let stackQ = [q] as TreeNode[];
+  let stackP = [p],
+    stackQ = [q];
 
   while (stackP.length > 0) {
-    let p = stackP.pop() as TreeNode | null;
-    let q = stackQ.pop() as TreeNode | null;
-
+    (p = stackP.pop()), (q = stackQ.pop());
     if (p?.val !== q?.val) return false;
 
-    if (p) {
-      stackP.push(p.left!);
-      stackP.push(p.right!);
-    }
-
-    if (q) {
-      stackQ.push(q.left!);
-      stackQ.push(q.right!);
-    }
+    p && stackP.push(p.left), stackP.push(p.right);
+    q && stackQ.push(q.left), stackQ.push(q.right);
   }
   return true;
 }
@@ -185,6 +177,7 @@ function isSubtree(root: TreeNode | null, subRoot: TreeNode | null): boolean {
   }
 }
 
+// todo: For Tree start Revision from here
 /**
  * *Trees
  * 1.6 Lowest Common Ancestor of a Binary Tree (medium)
@@ -1236,3 +1229,58 @@ function reorderList(head: ListNode | null): void {
     (p1 = temp1), (p2 = temp2);
   }
 }
+
+/**
+ * * Hash Table
+ * * 5.1 Most Frequent Even Element
+ */
+function mostFrequentEven(nums: number[]): number {
+  let mapEven: { [key: number]: number } = {},
+    max = 0,
+    res = -1;
+  for (let i = 0; i < nums.length; i++) {
+    const currNum = nums[i];
+    if (currNum % 2 == 0) {
+      mapEven[currNum] = mapEven[currNum] + 1 || 1;
+      if (mapEven[currNum] > max || (mapEven[currNum] == max && currNum < res)) {
+        (res = currNum), (max = mapEven[currNum]);
+      }
+    }
+  }
+  return res;
+}
+// console.log(mostFrequentEven([1, 2, 2, 3, 3, 3, 4, 4, 4, 4]));
+
+/**
+ * * Hash Table
+ * * 5.2 Contiguous Array
+ */
+// function findMaxLength(nums: number[]): number {
+//   let map: { [key: number]: number } = { 0: -1 };
+//   let max = 0;
+//   let count = 0;
+
+//   for (let i = 0; i < nums.length; i++) {
+//     count += nums[i] === 1 ? 1 : -1;
+//     if (map[count] !== undefined) {
+//       max = Math.max(max, i - map[count]);
+//     } else {
+//       map[count] = i;
+//     }
+//   }
+
+//   return max;
+// }
+
+function findMaxLength(nums: number[]): number {
+  let map: { [key: number]: number } = { 0: -1 };
+  let max = 0,
+    count = 0;
+  for (let i = 0; i < nums.length; i++) {
+    count += nums[i] === 1 ? 1 : -1;
+    map[count] !== undefined ? (max = Math.max(max, i - map[count])) : (map[count] = i);
+  }
+  return max;
+}
+
+console.log(findMaxLength([0, 0, 1]));
