@@ -1283,4 +1283,23 @@ function findMaxLength(nums: number[]): number {
   return max;
 }
 
-console.log(findMaxLength([0, 0, 1]));
+/**
+ * * Count Negative Numbers in a Sorted Matrix
+ * * Tags: Matrix, Binary Search
+ * https://leetcode.com/problems/count-negative-numbers-in-a-sorted-matrix/
+ * TC|O(N+M) SC|O(1)
+ */
+function countNegatives(grid: number[][]): number {
+  let row = grid.length,
+    column = grid[0].length,
+    counter = 0;
+  let i = row - 1,
+    j = 0;
+  while (i >= 0 && j < column) {
+    if (grid[i][j] < 0) {
+      counter += column - j;
+      i--;
+    } else j++;
+  }
+  return counter;
+}
