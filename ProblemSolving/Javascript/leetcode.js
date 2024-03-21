@@ -3739,3 +3739,61 @@ function lastStoneWeight(stones) {
 // console.log(kthLargest.add(10)); // returns 5
 // console.log(kthLargest.add(9)); // returns 8
 // console.log(kthLargest.add(4)); // returns 8
+
+/**
+ * *150. Evaluate Reverse Polish Notation
+ * Stack
+ * TC|O(N) SC|O(N)
+ * https://leetcode.com/problems/evaluate-reverse-polish-notation/
+ */
+var evalRPN = function (tokens) {
+  let token = tokens.pop();
+
+  if (!isNaN(token)) return parseInt(token);
+
+  let rightSide = evalRPN(tokens);
+  let leftSide = evalRPN(tokens);
+  switch (token) {
+    case '+':
+      return leftSide + rightSide;
+    case '-':
+      return leftSide - rightSide;
+    case '*':
+      return leftSide * rightSide;
+    case '/':
+      return Math.trunc(leftSide / rightSide);
+  }
+};
+
+var evalRPN = function (tokens) {
+  let operand = new Set(['+', '-', '/', '*']);
+  let stack = [];
+
+  tokens.forEach(token => {
+    if (operand.has(token)) {
+      let rightSide = stack.pop();
+      let leftSide = stack.pop();
+      let result;
+
+      switch (token) {
+        case '+':
+          result = leftSide + rightSide;
+          break;
+        case '-':
+          result = leftSide - rightSide;
+          break;
+        case '*':
+          result = leftSide * rightSide;
+          break;
+        case '/':
+          result = Math.trunc(leftSide / rightSide);
+          break;
+      }
+      stack.push(result);
+    } else stack.push(Number(token));
+  });
+  return stack.pop();
+};
+
+// console.log(evalRPN(["2", "1", "+", "3", "*"])); // 9
+console.log(evalRPN(['4', '13', '5', '/', '+'])); //
