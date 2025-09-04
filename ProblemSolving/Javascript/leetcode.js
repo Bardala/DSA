@@ -1,4 +1,4 @@
-import { Trie } from './dataStructure';
+import { Trie } from './Trie.class';
 
 class ListNode {
   constructor(val, next) {
@@ -959,7 +959,9 @@ var lengthOfLongestSubstring = function (s) {
   let left = 0,
     right = 0,
     max = 0;
+
   let set = new Set();
+
   while (right < s.length) {
     if (!set.has(s[right])) {
       set.add(s[right++]);
