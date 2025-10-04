@@ -93,12 +93,12 @@ function removeDuplicates(nums) {
     else r++, l++;
   return nums;
 }
-console.log(removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]));
-console.log(removeDuplicates([1, 1, 2]));
-console.log(removeDuplicates([1, 1]));
+console.log(removeDups([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]));
+console.log(removeDups([1, 1, 2]));
+console.log(removeDups([1, 1]));
 // nested Loop O(N^2);
 //
-var maxSubArray = (nums) => {
+var maxSubArray = nums => {
   let sum = 0,
     max = nums[0];
   for (let i = 0; i < nums.length; i++) {
@@ -121,7 +121,7 @@ console.log(maxSubArray([-1, 0, -2]));
  * 00. Maximum SubArray
  */
 
-var maxSubArray = (nums) => {
+var maxSubArray = nums => {
   let sum = 0,
     max = nums[0];
   for (let i = 0; i < nums.length; ) {

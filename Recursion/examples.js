@@ -3,7 +3,7 @@
  */
 
 function reverseString(str) {
-  if (str === "") return "";
+  if (str === '') return '';
   return reverseString(str.substring(1)) + str[0];
 }
 // console.log(reverseString("hello"));
@@ -28,8 +28,7 @@ function isPalindromeStr(str) {
   // base case
   if (str.length === 0 || str.length === 1) return true;
 
-  if (str[0] === str[str.length - 1])
-    return isPalindromeStr(str.substring(1, str.length - 2));
+  if (str[0] === str[str.length - 1]) return isPalindromeStr(str.substring(1, str.length - 2));
   // Addition base case to handle non-palindromes
   return false;
 }
@@ -39,7 +38,7 @@ function isPalindromeStr(str) {
  * Convert Decimal to Binary
  */
 
-var decimalToBinary = (num, str = "") => {
+var decimalToBinary = (num, str = '') => {
   if (num === 0) return str || 0;
 
   str = (num % 2) + str;
@@ -159,7 +158,7 @@ class Node {
 var list = new Node(1, new Node(2, new Node(3, new Node(4, new Node(5)))));
 
 // Head Recursion
-var reverseList = (list) => {
+var reverseList = list => {
   if (!list || !list.next) return list;
 
   let pointer = reverseList(list.next);
@@ -236,10 +235,10 @@ var mergeTwoLists = (l1, l2, head) => {
 
   if (l1.val < l2.val) {
     head = l1;
-    head.next = mergeTwoLists(l1.next, l2);
+    head.next = mergeTwoListsTs(l1.next, l2);
   } else {
     head = l2;
-    head.next = mergeTwoLists(l1, l2.next);
+    head.next = mergeTwoListsTs(l1, l2.next);
   }
   return head;
 };
@@ -247,7 +246,7 @@ var mergeTwoLists = (l1, l2, head) => {
  * factorial
  */
 // Head Recursion
-var factorial = (num) => {
+var factorial = num => {
   if (num === 1) return 1;
 
   return num * factorial(num - 1);
@@ -266,7 +265,7 @@ console.log(factorial(4));
  * Fibonacci
  */
 // Head Recursion
-var fibonacci = (num) => {
+var fibonacci = num => {
   if (num <= 1) return num;
 
   return fibonacci(num - 1) + fibonacci(num - 2);
